@@ -17,3 +17,6 @@ C:\Users\Paul\Google Drive\CUHK\IERG3080\Project\PokemonGoClone\PokemonGoClone\o
 C:\Users\Paul\Google Drive\CUHK\IERG3080\Project\PokemonGoClone\PokemonGoClone\obj\Debug\PokemonGoClone.exe
 C:\Users\Paul\Google Drive\CUHK\IERG3080\Project\PokemonGoClone\PokemonGoClone\obj\Debug\PokemonGoClone.pdb
 C:\Users\Paul\Google Drive\CUHK\IERG3080\Project\PokemonGoClone\PokemonGoClone\obj\Debug\Views\TrainerCreationView.g.cs
+C:\Users\Paul\Google Drive\CUHK\IERG3080\Project\PokemonGoClone\PokemonGoClone\obj\Debug\Views\TrainerCreationView.baml
+C:\Users\Paul\Google Drive\CUHK\IERG3080\Project\PokemonGoClone\PokemonGoClone\obj\Debug\Views\MapView.g.cs
+C:\Users\Paul\Google Drive\CUHK\IERG3080\Project\PokemonGoClone\PokemonGoClone\obj\Debug\Views\MapView.baml

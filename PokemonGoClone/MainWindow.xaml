@@ -8,7 +8,15 @@
         xmlns:viewmodel="clr-namespace:PokemonGoClone.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="480" Width="640">
-
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewmodel:StartViewModel}">
+            <view:StartView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodel:TrainerCreationViewModel}">
+            <view:TrainerCreationView/>
+        </DataTemplate>
+    </Window.Resources>
+    
     <Window.DataContext>
         <viewmodel:MainWindowViewModel/>
     </Window.DataContext>

@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 namespace PokemonGoClone.Models.Abilities
 {
     // This is an example class to showcase the 
-    public class Headbutt : Ability
+    public class Ability001 : Ability
     {
-        public Headbutt()
+        public Ability001()
         {
             Name = "Headbutt";
             Id = 0;
@@ -23,7 +23,7 @@ namespace PokemonGoClone.Models.Abilities
             MaxCharge = 10;
             Charge = MaxCharge;
 
-            Accurancy = 90;
+            Accurancy = 0.9;
         }
         public override void Use(Pokemon caster, Pokemon target)
         {

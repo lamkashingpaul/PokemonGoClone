@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Paul\Google Drive\CUHK\IERG3080\Project\PokemonGoClone\PokemonGoClone\App.xaml
-3-1351380747
+4158499929
 
-231476406490
+27-1679324066
 13-1505183044
-MainWindow.xaml;Views\StartView.xaml;Views\TrainerCreationView.xaml;
+MainWindow.xaml;Views\MapView.xaml;Views\StartView.xaml;Views\TrainerCreationView.xaml;
 
-False
+True
 

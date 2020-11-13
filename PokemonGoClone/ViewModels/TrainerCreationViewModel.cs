@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PokemonGoClone.ViewModels
 {
-    public class TrainerCreationViewModel
+    public class TrainerCreationViewModel : ViewModelBase
     {
     }
 }

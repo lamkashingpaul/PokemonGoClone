@@ -1,33 +1,79 @@
-﻿using System;
+﻿using PokemonGoClone.Views;
+using PokemonGoClone.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using PokemonGoClone.Utilities;
 
 namespace PokemonGoClone.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
         // All models
-        
 
         // All available views
+        private object _startView;
+        private object _trainerCreationView;
+        private object _mapView;
         private object _currentView;
 
         // All availabe viewmodels
+        private object _startViewModel;
+        private object _trainerCreationViewModel;
+        private object _mapViewModel;
         private object _currentViewModel;
 
-        // All ICommands to navigate between views
+        // All ICommands to navigate between views and viewmodels
+        private ICommand _goTtoStartViewModelCommand;
+        private ICommand _goToTrainerCreationViewModelCommand;
+        private ICommand _goToMapViewModelCommand;
+
+        private ICommand _closeWindowCommand;
+
+        // All properties of ICommands for views and viewmodels navigation
+        public ICommand GoToStartViewModelCommand
+        {
+            get { return _goTtoStartViewModelCommand ?? (_goTtoStartViewModelCommand = new RelayCommand(x => { GotoStartViewModel(); })); }
+        }
+        public ICommand GoToTrainerCreationViewModelCommand
+        {
+            get { return _goToTrainerCreationViewModelCommand ?? (_goToTrainerCreationViewModelCommand = new RelayCommand(x => { GotoTrainerCreationViewModel(); })); }
+        }
+        public ICommand GoToMapViewModelCommand
+        {
+            get { return _goToMapViewModelCommand ?? (_goToMapViewModelCommand = new RelayCommand(x => { GoToMapViewModel(); })); }
+        }
+        public ICommand CloseWindowCommand
+        {
+            get { return _closeWindowCommand ?? (_closeWindowCommand = new RelayCommand(x => { CloseWindow(x); })); }
+        }
+
+        // More ICommands for initializing the game
+        private ICommand _trainerCreationCommand;
+
+        // All properties of ICommands for initializing the game
+        public ICommand TrainerCreationCommand
+        {
+            get { return _trainerCreationCommand ?? (_trainerCreationCommand = new RelayCommand(x => { TrainerCreation(x); })); }
+        }
+
 
         // Default constructor
         public MainWindowViewModel()
         {
             // Create instance for all views and viewmodels
+            _startViewModel = new StartViewModel();
+            _startView = new StartView();
 
+            _trainerCreationViewModel = new TrainerCreationViewModel();
+            _trainerCreationView = new TrainerCreationView();
 
             // Set up the startup view and viewmodels
-            CurrentView = null;
-            CurrentViewModel = null;
+            CurrentViewModel = _startViewModel;
+            CurrentView = _startView;
         }
 
         // All properties of views and viewmodels
@@ -51,5 +97,41 @@ namespace PokemonGoClone.ViewModels
             }
         }
 
+        // All RelayCommands for views and viewmodels navigation
+        private void GotoStartViewModel()
+        {
+            CurrentViewModel = _startViewModel;
+            CurrentView = _startView;
+        }
+        private void GotoTrainerCreationViewModel()
+        {
+            CurrentViewModel = _trainerCreationViewModel;
+            CurrentView = _trainerCreationView;
+        }
+        private void GoToMapViewModel()
+        {
+            CurrentViewModel = _mapViewModel;
+            CurrentView = _mapView;
+        }
+        private void CloseWindow(object Windows)
+        {
+            (Windows as System.Windows.Window)?.Close();
+        }
+
+        // All RelayCommands for initializing the game
+        private void TrainerCreation(object nameOfTrainer)
+        {
+            string name = nameOfTrainer?.ToString();
+            if (name == null)
+            {
+                 
+            } else
+            {
+                Console.WriteLine(name);
+                Console.WriteLine(name);
+                _mapView = new MapView();
+                _mapViewModel = new MapViewModel();
+            }
+        }
     }
 }
