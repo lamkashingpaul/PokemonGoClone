@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using PokemonGoClone.Utilities;
+using System.Windows.Controls;
 
 namespace PokemonGoClone.ViewModels
 {
@@ -59,7 +60,6 @@ namespace PokemonGoClone.ViewModels
         {
             get { return _trainerCreationCommand ?? (_trainerCreationCommand = new RelayCommand(x => { TrainerCreation(x); })); }
         }
-
 
         // Default constructor
         public MainWindowViewModel()
@@ -119,19 +119,29 @@ namespace PokemonGoClone.ViewModels
         }
 
         // All RelayCommands for initializing the game
-        private void TrainerCreation(object nameOfTrainer)
+        private void TrainerCreation(object values)
         {
-            string name = nameOfTrainer?.ToString();
-            if (name == null)
+            var list = (object[])values;
+            var textBox = list[0] as TextBox;
+            var choice = (int)list[1];
+
+            string name = textBox.Text;
+
+            if (string.IsNullOrEmpty(name))
             {
-                 
-            } else
-            {
-                Console.WriteLine(name);
-                Console.WriteLine(name);
-                _mapView = new MapView();
-                _mapViewModel = new MapViewModel();
+                Console.WriteLine("You must enter your name.");
+                return;
             }
+            
+            if (name == "whosyourdaddy")
+            {
+                Console.WriteLine("Cheat mode on.");
+            }
+
+            Console.WriteLine(name);
+            Console.WriteLine(choice);
+            _mapView = new MapView();
+            _mapViewModel = new MapViewModel();
         }
     }
 }

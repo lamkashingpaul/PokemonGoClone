@@ -8,5 +8,6 @@ namespace PokemonGoClone.ViewModels
 {
     public class MapViewModel : ViewModelBase
     {
+
     }
 }

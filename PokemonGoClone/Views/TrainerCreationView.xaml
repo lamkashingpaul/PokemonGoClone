@@ -4,34 +4,56 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PokemonGoClone.Views"
+             xmlns:util="clr-namespace:PokemonGoClone.Utilities"
              mc:Ignorable="d" 
              d:DesignHeight="480" d:DesignWidth="640"
              Background="White">
+    
+    <UserControl.Resources>
+        <util:MultipleBindingConverter x:Key="MultipleBindingConverter"></util:MultipleBindingConverter>
+    </UserControl.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="128"/>
+            <RowDefinition Height="64"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="64"/>
         </Grid.RowDefinitions>
 
-        <UniformGrid Grid.Column="0" Grid.Row="1" Margin="10" Columns="3">
-            <StackPanel>
-                <RadioButton x:Name="blue" HorizontalAlignment="Center" IsChecked="True"/>
-            </StackPanel>
-            <StackPanel>
-                <RadioButton x:Name="red" HorizontalAlignment="Center"/>
-            </StackPanel>
-            <StackPanel>
-                <RadioButton x:Name="green" HorizontalAlignment="Center"/>
-            </StackPanel>
-        </UniformGrid>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" FontSize="24" Margin="10">Pick up your Pokemon</TextBlock>
 
+        <ItemsControl ItemsSource="{Binding CurrentViewModel.StartPokemon}" Grid.Column="0" Grid.Row="1">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="1" Columns="3" Margin="32"></UniformGrid>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <RadioButton GroupName="Id"
+                                 VerticalAlignment="Center"
+                                 VerticalContentAlignment="Center"
+                                 Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.CurrentViewModel.UpdateChoiceCommand}"
+                                 CommandParameter="{Binding Id}">
+                        <RadioButton.Content>
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Image Source="{Binding ImageSource}"></Image>
+                                <TextBlock Text="{Binding Name}" FontSize="26"/>
+                            </StackPanel>
+                        </RadioButton.Content>
+                    </RadioButton>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        
         <DockPanel Grid.Column="0" Grid.Row="2" Margin="10" LastChildFill="True">
             <Button DockPanel.Dock="Left" Content="Back to Start" Margin="10" FontSize="12" Command="{Binding GoToStartViewModelCommand}"/>
             <Button DockPanel.Dock="Right" Content="Confierm" Margin="10" FontSize="12" Command="{Binding TrainerCreationCommand}">
                 <Button.CommandParameter>
-                    <MultiBinding Converter="">
-                        
+                    <MultiBinding Converter="{StaticResource MultipleBindingConverter}">
+                        <Binding ElementName="nameOfTrainer"/>
+                        <Binding Path="CurrentViewModel.Choice"/>
                     </MultiBinding>
                 </Button.CommandParameter>
             </Button>

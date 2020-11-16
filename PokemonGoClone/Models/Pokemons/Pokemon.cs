@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace PokemonGoClone.Models.Pokemons
 {
@@ -13,6 +14,8 @@ namespace PokemonGoClone.Models.Pokemons
         private int _id;
         private List<Ability> _abilities;
         private double _accurancy;
+
+        private string _imageSource;
 
         // Default constructor
         public Pokemon(int id, string name, int level, int maxHealth, Ability randomAbility)
@@ -24,7 +27,19 @@ namespace PokemonGoClone.Models.Pokemons
             Health = maxHealth;
             Abilities.Add(randomAbility);
             Accurancy = 1;
+
+            ImageSource = $"/PokemonGoClone;component/Images/Pokemons/{Id:D3}.png";
         }
+
+        // Constructor for Starting Pokemon
+        public Pokemon(int id, string name)
+        {
+            Id = id;
+            Name = name;
+
+            ImageSource = $"/PokemonGoClone;component/Images/Pokemons/{Id:D3}.png";
+        }
+
 
         // All properties of Pokemon class
         public int Id
@@ -33,6 +48,15 @@ namespace PokemonGoClone.Models.Pokemons
             set
             {
                 _id = value;
+            }
+        }
+
+        public string ImageSource
+        {
+            get { return _imageSource; }
+            set
+            {
+                _imageSource = value;
             }
         }
 
