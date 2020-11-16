@@ -62,15 +62,16 @@
     <Compile Include="Models\Items\Pokeball.cs" />
     <Compile Include="Models\Pokemons\Pokemon.cs" />
     <Compile Include="Models\Abilities\Ability.cs" />
+    <Compile Include="Models\Tile.cs" />
     <Compile Include="Models\Trainers\Trainer.cs" />
     <Compile Include="Utilities\EventArgs.cs" />
     <Compile Include="Utilities\EventRaiser.cs" />
-    <Compile Include="Utilities\ImageConverter.cs" />
     <Compile Include="Utilities\MultipleBindingConverter.cs" />
     <Compile Include="Utilities\RelayCommand.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\MapViewModel.cs" />
     <Compile Include="ViewModels\ModalDialogViewModel.cs" />
+    <Compile Include="ViewModels\ObservableObject.cs" />
     <Compile Include="ViewModels\StartViewModel.cs" />
     <Compile Include="ViewModels\TrainerCreationViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
@@ -139,9 +140,7 @@
     <Folder Include="Resources\Abilities\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\Pokemons\001.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Resource Include="Images\Pokemons\001.png" />
     <Resource Include="Images\Pokemons\002.png" />
     <Resource Include="Images\Pokemons\003.png" />
     <Resource Include="Images\Pokemons\004.png" />
@@ -292,6 +291,28 @@
     <Resource Include="Images\Pokemons\149.png" />
     <Resource Include="Images\Pokemons\150.png" />
     <Resource Include="Images\Pokemons\151.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Character.png" />
+    <Resource Include="Assets\Tileset.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Tiles\001.png" />
+    <Resource Include="Images\Tiles\002.png" />
+    <Resource Include="Images\Tiles\003.png" />
+    <Resource Include="Images\Tiles\004.png" />
+    <Resource Include="Images\Tiles\005.png" />
+    <Resource Include="Images\Tiles\006.png" />
+    <Resource Include="Images\Tiles\007.png" />
+    <Resource Include="Images\Tiles\008.png" />
+    <Resource Include="Images\Tiles\009.png" />
+    <Resource Include="Images\Tiles\010.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Players\PlayerA.png" />
+    <Resource Include="Images\Players\PlayerD.png" />
+    <Resource Include="Images\Players\PlayerS.png" />
+    <Resource Include="Images\Players\PlayerW.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

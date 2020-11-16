@@ -132,16 +132,9 @@ namespace PokemonGoClone.ViewModels
                 Console.WriteLine("You must enter your name.");
                 return;
             }
-            
-            if (name == "whosyourdaddy")
-            {
-                Console.WriteLine("Cheat mode on.");
-            }
 
-            Console.WriteLine(name);
-            Console.WriteLine(choice);
             _mapView = new MapView();
-            _mapViewModel = new MapViewModel();
+            _mapViewModel = new MapViewModel(name, choice);
         }
     }
 }

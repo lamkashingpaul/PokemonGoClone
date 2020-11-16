@@ -21,11 +21,7 @@ namespace PokemonGoClone.Models.Trainers
             Name = name;
             Level = 1;
             Health = 128;
-        //            private string _name;
-        //private int _level;
-        //private int _health;
-        //private int _maxHealth;
-    }
+        }
 
         // All methods of Trainer class
         public void AddPokemon (Pokemon pokemon)
