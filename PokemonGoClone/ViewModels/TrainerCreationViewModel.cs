@@ -14,8 +14,8 @@ namespace PokemonGoClone.ViewModels
     public class TrainerCreationViewModel : ViewModelBase
     {
         private int _choice;
-        public ObservableCollection<Pokemon> StartPokemon { get; private set; }
-        public ObservableCollection<BitmapImage> StartPokemonImage { get; private set; }
+        public System.Collections.ObjectModel.ObservableCollection<Pokemon> StartPokemon { get; private set; }
+        public System.Collections.ObjectModel.ObservableCollection<BitmapImage> StartPokemonImage { get; private set; }
 
         // All ICommands for the viewmodel
         private ICommand _updateChoiceCommand;
@@ -29,7 +29,7 @@ namespace PokemonGoClone.ViewModels
         // Default constructor
         public TrainerCreationViewModel()
         {
-            StartPokemon = new ObservableCollection<Pokemon>
+            StartPokemon = new System.Collections.ObjectModel.ObservableCollection<Pokemon>
             {
                 new Pokemon(001, "Bulbasaur"),
                 new Pokemon(004, "Charmander"),

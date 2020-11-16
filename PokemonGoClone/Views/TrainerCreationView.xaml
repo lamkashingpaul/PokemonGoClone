@@ -38,7 +38,10 @@
                                  CommandParameter="{Binding Id}">
                         <RadioButton.Content>
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Image Source="{Binding ImageSource}"></Image>
+                                <Image Source="{Binding ImageSource}"
+                                       MaxHeight="64"
+                                       MaxWidth="64"
+                                       />
                                 <TextBlock Text="{Binding Name}" FontSize="26"/>
                             </StackPanel>
                         </RadioButton.Content>

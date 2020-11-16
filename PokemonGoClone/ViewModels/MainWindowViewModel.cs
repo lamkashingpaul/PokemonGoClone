@@ -67,9 +67,11 @@ namespace PokemonGoClone.ViewModels
             // Create instance for all views and viewmodels
             _startViewModel = new StartViewModel();
             _startView = new StartView();
+            _mapView = new MapView();
 
             _trainerCreationViewModel = new TrainerCreationViewModel();
             _trainerCreationView = new TrainerCreationView();
+            _mapViewModel = new MapViewModel();
 
             // Set up the startup view and viewmodels
             CurrentViewModel = _startViewModel;
@@ -129,12 +131,13 @@ namespace PokemonGoClone.ViewModels
 
             if (string.IsNullOrEmpty(name))
             {
+                // ModalDialog implementation needed
                 Console.WriteLine("You must enter your name.");
                 return;
             }
 
-            _mapView = new MapView();
-            _mapViewModel = new MapViewModel(name, choice);
+            CurrentView = _mapView;
+            CurrentViewModel = _mapViewModel;
         }
     }
 }

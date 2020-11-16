@@ -15,8 +15,6 @@ namespace PokemonGoClone.Models.Pokemons
         private List<Ability> _abilities;
         private double _accurancy;
 
-        private string _imageSource;
-
         // Default constructor
         public Pokemon(int id, string name, int level, int maxHealth, Ability randomAbility)
         {
@@ -48,15 +46,6 @@ namespace PokemonGoClone.Models.Pokemons
             set
             {
                 _id = value;
-            }
-        }
-
-        public string ImageSource
-        {
-            get { return _imageSource; }
-            set
-            {
-                _imageSource = value;
             }
         }
 

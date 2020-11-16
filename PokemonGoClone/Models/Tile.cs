@@ -14,11 +14,19 @@ namespace PokemonGoClone.Models
 
         private string _imageSource;
 
-        public Tile(char texture, int xCoordinate, int yCoordinate)
+        // Default constructor
+        public Tile()
+        {
+
+        }
+
+        // Constructor used to draw the map
+        public Tile(char texture, int xCoordinate, int yCoordinate, string imageSource)
         {
             Texture = texture;
             XCoordinate = xCoordinate;
             YCoordinate = yCoordinate;
+            ImageSource = $"/PokemonGoClone;component/Images/Tiles/{imageSource}.png";
         }
 
         public char Texture
