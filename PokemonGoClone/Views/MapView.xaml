@@ -17,10 +17,11 @@
         <ItemsControl ItemsSource="{Binding CurrentViewModel.Map}" Grid.Column="0" Grid.Row="1">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <!--<UniformGrid Rows="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.CurrentViewModel.ROW}"
-                                 Columns="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.CurrentViewModel.COL}"
-                                 Margin="32"></UniformGrid>-->
-                    <Grid ShowGridLines="False">
+                    <Grid MinHeight="528"
+                          MinWidth="528"
+                          MaxHeight="528"
+                          MaxWidth="528"
+                          UseLayoutRounding="True">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition/>
@@ -53,7 +54,7 @@
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Image Source="{Binding ImageSource}" Stretch="UniformToFill" />
+                    <Image Source="{Binding ImageSource}"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
 
@@ -65,5 +66,57 @@
             </ItemsControl.ItemContainerStyle>
         </ItemsControl>
 
+        <ItemsControl ItemsSource="{Binding CurrentViewModel.Trainers}" Grid.Column="0" Grid.Row="1">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid MinHeight="528"
+                          MinWidth="528"
+                          MaxHeight="528"
+                          MaxWidth="528"
+                          UseLayoutRounding="True">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Image Source="{Binding ImageSource}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Grid.Column" Value="{Binding YCoordinate}"/>
+                    <Setter Property="Grid.Row" Value="{Binding XCoordinate}"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            
+        </ItemsControl>
     </Grid>
 </UserControl>

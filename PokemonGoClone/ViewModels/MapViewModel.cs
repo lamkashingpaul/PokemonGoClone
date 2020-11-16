@@ -16,7 +16,7 @@ namespace PokemonGoClone.ViewModels
         private const int _col = 11;
         private const int _row = 11;
 
-        private Trainer _player;
+        public List<Trainer> Trainers { get; private set; }
         public List<Tile> Map { get; private set; }
 
         public MapViewModel()
@@ -57,6 +57,14 @@ namespace PokemonGoClone.ViewModels
             }
 
             // Create player
+            Trainers = new List<Trainer>
+            {
+                new Trainer("test", "Player")
+                {
+                    XCoordinate = ROW / 2,
+                    YCoordinate = COL / 2,
+                }
+            };     
         }
 
         public string Name
