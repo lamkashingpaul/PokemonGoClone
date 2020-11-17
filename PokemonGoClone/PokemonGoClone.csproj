@@ -55,23 +55,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Models\Abilities\Ability001.cs" />
-    <Compile Include="Models\Being.cs" />
-    <Compile Include="Models\Items\Potion.cs" />
-    <Compile Include="Models\Items\Item.cs" />
-    <Compile Include="Models\Items\Pokeball.cs" />
-    <Compile Include="Models\Pokemons\Pokemon.cs" />
-    <Compile Include="Models\Abilities\Ability.cs" />
-    <Compile Include="Models\Tile.cs" />
-    <Compile Include="Models\Trainers\Trainer.cs" />
+    <Compile Include="Models\Abilities\AbilityModel001.cs" />
+    <Compile Include="Models\BeingModel.cs" />
+    <Compile Include="Models\Items\PotionModel.cs" />
+    <Compile Include="Models\Items\ItemModel.cs" />
+    <Compile Include="Models\Items\PokeballModel.cs" />
+    <Compile Include="Models\Pokemons\PokemonModel.cs" />
+    <Compile Include="Models\Abilities\AbilityModel.cs" />
+    <Compile Include="Models\TileModel.cs" />
+    <Compile Include="Models\Trainers\TrainerModel.cs" />
     <Compile Include="Utilities\EventArgs.cs" />
     <Compile Include="Utilities\EventRaiser.cs" />
     <Compile Include="Utilities\MultipleBindingConverter.cs" />
     <Compile Include="Utilities\RelayCommand.cs" />
+    <Compile Include="ViewModels\BagViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\MapViewModel.cs" />
     <Compile Include="ViewModels\ModalDialogViewModel.cs" />
-    <Compile Include="ViewModels\ObservableObject.cs" />
     <Compile Include="ViewModels\StartViewModel.cs" />
     <Compile Include="ViewModels\TrainerCreationViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />

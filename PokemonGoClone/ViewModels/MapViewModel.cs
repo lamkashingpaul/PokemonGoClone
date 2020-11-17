@@ -1,10 +1,12 @@
 ﻿using PokemonGoClone.Models;
 using PokemonGoClone.Models.Trainers;
+using PokemonGoClone.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace PokemonGoClone.ViewModels
 {
@@ -16,25 +18,47 @@ namespace PokemonGoClone.ViewModels
         private const int _col = 11;
         private const int _row = 11;
 
-        public List<Trainer> Trainers { get; private set; }
-        public List<Tile> Map { get; private set; }
+        public List<TrainerModel> Trainers { get; private set; }
+        public List<TileModel> Map { get; private set; }
+
+        private ICommand _moveWCommand;
+        private ICommand _moveSCommand;
+        private ICommand _moveACommand;
+        private ICommand _moveDCommand;
+
+        public ICommand MoveWCommand
+        {
+            get { return _moveWCommand ?? (_moveWCommand = new RelayCommand(x => { MoveW(); })); }
+        }
+        public ICommand MoveSCommand
+        {
+            get { return _moveSCommand ?? (_moveSCommand = new RelayCommand(x => { MoveS(); })); }
+        }
+        public ICommand MoveACommand
+        {
+            get { return _moveACommand ?? (_moveACommand = new RelayCommand(x => { MoveA(); })); }
+        }
+        public ICommand MoveDCommand
+        {
+            get { return _moveDCommand ?? (_moveDCommand = new RelayCommand(x => { MoveD(); })); }
+        }
 
         public MapViewModel()
         {
             // Draw the boundary of map
-            Map = new List<Tile>
+            Map = new List<TileModel>
             {
-                new Tile('B', 0, 0, "005"),
-                new Tile('B', 0, COL - 1, "007"),
-                new Tile('B', ROW - 1, 0, "009"),
-                new Tile('B', ROW - 1, COL - 1, "010")
+                new TileModel('B', 0, 0, "005"),
+                new TileModel('B', 0, COL - 1, "007"),
+                new TileModel('B', ROW - 1, 0, "009"),
+                new TileModel('B', ROW - 1, COL - 1, "010")
             };
 
             for (int i = 0; i < ROW; i += ROW - 1)
             {
                 for (int j = 1; j < COL - 1; j++)
                 {
-                    Map.Add(new Tile('B', i, j, "006"));
+                    Map.Add(new TileModel('B', i, j, "006"));
                 }
             }
 
@@ -42,7 +66,7 @@ namespace PokemonGoClone.ViewModels
             {
                 for (int j = 1; j < ROW - 1; j++)
                 {
-                    Map.Add(new Tile('B', j, i, "008"));
+                    Map.Add(new TileModel('B', j, i, "008"));
                 }
             }
 
@@ -52,14 +76,14 @@ namespace PokemonGoClone.ViewModels
                 for (int j = 1; j < COL - 1; j++)
                 {
                     string randomGrass = $"{rng.Next(1, 4):D3}";
-                    Map.Add(new Tile('G', i, j, randomGrass));
+                    Map.Add(new TileModel('G', i, j, randomGrass));
                 }
             }
 
             // Create player
-            Trainers = new List<Trainer>
+            Trainers = new List<TrainerModel>
             {
-                new Trainer("test", "Player")
+                new TrainerModel("test", "Player")
                 {
                     XCoordinate = ROW / 2,
                     YCoordinate = COL / 2,
@@ -93,6 +117,47 @@ namespace PokemonGoClone.ViewModels
         public int ROW
         {
             get { return _row; }
+        }
+
+        private void MoveW()
+        {
+            Console.WriteLine("WWW");
+            Trainers[0].Facing = 'W';
+            var frontTile = Map.Find(x => x.XCoordinate == Trainers[0].XFacing && x.YCoordinate == Trainers[0].YFacing);
+            if (frontTile.Texture == 'G')
+            {
+                Trainers[0].XCoordinate -= 1;
+            }
+        }
+        private void MoveS()
+        {
+            Console.WriteLine("SSS");
+            Trainers[0].Facing = 'S';
+            var frontTile = Map.Find(x => x.XCoordinate == Trainers[0].XFacing && x.YCoordinate == Trainers[0].YFacing);
+            if (frontTile.Texture == 'G')
+            {
+                Trainers[0].XCoordinate += 1;
+            }
+        }
+        private void MoveA()
+        {
+            Console.WriteLine("AAA");
+            Trainers[0].Facing = 'A';
+            var frontTile = Map.Find(x => x.XCoordinate == Trainers[0].XFacing && x.YCoordinate == Trainers[0].YFacing);
+            if (frontTile.Texture == 'G')
+            {
+                Trainers[0].YCoordinate -= 1;
+            }
+        }
+        private void MoveD()
+        {
+            Console.WriteLine("AAA");
+            Trainers[0].Facing = 'D';
+            var frontTile = Map.Find(x => x.XCoordinate == Trainers[0].XFacing && x.YCoordinate == Trainers[0].YFacing);
+            if (frontTile.Texture == 'G')
+            {
+                Trainers[0].YCoordinate += 1;
+            }
         }
     }
 }

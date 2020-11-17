@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace PokemonGoClone.Models.Items
 {
-    public class Potion : Item
+    public class PotionModel : ItemModel
     {
-        public override void Use(Trainer trainer, Pokemon target)
+        public override void Use(TrainerModel trainer, PokemonModel target)
         {
             target.Health = target.MaxHealth;
             Charge -= 1;

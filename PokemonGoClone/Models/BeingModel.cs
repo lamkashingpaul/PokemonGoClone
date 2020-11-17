@@ -8,9 +8,10 @@ namespace PokemonGoClone.Models
 {
     // This is an abstract class for all beings in the game.
     // All beings are expected to share all following fields.
-    public abstract class Being : Tile
+    public abstract class BeingModel : TileModel
     {
         private string _name;
+        private string _type;
         private int _level;
         private int _health;
         private int _maxHealth;
@@ -26,6 +27,17 @@ namespace PokemonGoClone.Models
             set
             {
                 _name = value;
+                OnPropertyChanged(nameof(Name));
+            }
+        }
+
+        public string Type
+        {
+            get { return _type; }
+            set
+            {
+                _type = value;
+                OnPropertyChanged(nameof(Type));
             }
         }
 
@@ -35,6 +47,7 @@ namespace PokemonGoClone.Models
             set
             {
                 _level = value;
+                OnPropertyChanged(nameof(Level));
             }
         }
 
@@ -44,6 +57,7 @@ namespace PokemonGoClone.Models
             set
             {
                 _health = value;
+                OnPropertyChanged(nameof(Health));
             }
         }
          public int MaxHealth
@@ -52,6 +66,7 @@ namespace PokemonGoClone.Models
             set
             {
                 _maxHealth = value;
+                OnPropertyChanged(nameof(MaxHealth));
             }
         }
 
@@ -79,6 +94,9 @@ namespace PokemonGoClone.Models
                     XFacing = XCoordinate;
                     YFacing = YCoordinate + 1;
                 }
+
+                ImageSource = $"/PokemonGoClone;component/Images/{Type}s/{Type}{Facing}.png";
+                OnPropertyChanged(nameof(Facing));
             }
         }
 
@@ -88,6 +106,7 @@ namespace PokemonGoClone.Models
             set
             {
                 _xFacing = value;
+                OnPropertyChanged(nameof(XFacing));
             }
         }
 
@@ -97,6 +116,7 @@ namespace PokemonGoClone.Models
             set
             {
                 _yFacing = value;
+                OnPropertyChanged(nameof(YFacing));
             }
         }
     }

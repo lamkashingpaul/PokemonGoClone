@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 namespace PokemonGoClone.Models.Abilities
 {
     // This is an example class to showcase the 
-    public class Ability001 : Ability
+    public class AbilityModel001 : AbilityModel
     {
-        public Ability001()
+        public AbilityModel001()
         {
             Name = "Headbutt";
             Id = 0;
@@ -25,7 +25,7 @@ namespace PokemonGoClone.Models.Abilities
 
             Accurancy = 0.9;
         }
-        public override void Use(Pokemon caster, Pokemon target)
+        public override void Use(PokemonModel caster, PokemonModel target)
         {
             double chance = Rng.NextDouble();
             if (caster.Accurancy * this.Accurancy >= chance)

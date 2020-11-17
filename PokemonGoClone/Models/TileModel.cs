@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PokemonGoClone.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PokemonGoClone.Models
 {
-    public class Tile
+    public class TileModel : ViewModelBase
     {
         private char _texture;
         private int _xCoordinate;
@@ -15,13 +16,13 @@ namespace PokemonGoClone.Models
         private string _imageSource;
 
         // Default constructor
-        public Tile()
+        public TileModel()
         {
 
         }
 
         // Constructor used to draw the map
-        public Tile(char texture, int xCoordinate, int yCoordinate, string imageSource)
+        public TileModel(char texture, int xCoordinate, int yCoordinate, string imageSource)
         {
             Texture = texture;
             XCoordinate = xCoordinate;
@@ -35,6 +36,7 @@ namespace PokemonGoClone.Models
             set
             {
                 _texture = value;
+                OnPropertyChanged(nameof(Texture));
             }
         }
         public int XCoordinate
@@ -43,6 +45,7 @@ namespace PokemonGoClone.Models
             set
             {
                 _xCoordinate = value;
+                OnPropertyChanged(nameof(XCoordinate));
             }
         }
         public int YCoordinate
@@ -51,6 +54,7 @@ namespace PokemonGoClone.Models
             set
             {
                 _yCoordinate = value;
+                OnPropertyChanged(nameof(YCoordinate));
             }
         }
 
@@ -60,6 +64,7 @@ namespace PokemonGoClone.Models
             set
             {
                 _imageSource = value;
+                OnPropertyChanged(nameof(ImageSource));
             }
         }
     }

@@ -2,24 +2,38 @@
 using PokemonGoClone.Models.Trainers;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PokemonGoClone.Models.Items
+namespace PokemonGoClone.Models.Abilities
 {
-    public abstract class Item
-    {
-        // All fields shared by Item class
+    public abstract class AbilityModel
+    {   
+        // All fields shared by Ability class
         private string _name;
         private int _id;
         private string _description;
 
+        private int _damage;
+
+        private int _level;
         private int _charge;
         private int _maxCharge;
 
-        // All methods of Item class
-        public abstract void Use(Trainer trainer, Pokemon target);
+        private double _accurancy;
+
+        private Random _rng;
+
+        // Default constructor
+        public AbilityModel()
+        {
+            Rng = new Random();
+        }
+
+        // All methods of Ability class
+        public abstract void Use(PokemonModel caster, PokemonModel target);
 
         // All properties of fields
         public string Name
@@ -49,6 +63,23 @@ namespace PokemonGoClone.Models.Items
             }
         }
 
+        public int Damage
+        {
+            get { return _damage; }
+            set
+            {
+                _damage = value;
+            }
+        }
+
+        public int Level
+        {
+            get { return _level; }
+            set
+            {
+                _level = value;
+            }
+        }
         public int Charge
         {
             get { return _charge; }
@@ -64,6 +95,24 @@ namespace PokemonGoClone.Models.Items
             set
             {
                 _maxCharge = value;
+            }
+        }
+
+        public double Accurancy
+        {
+            get { return _accurancy; }
+            set
+            {
+                _accurancy = value;
+            }
+        }
+
+        public Random Rng
+        {
+            get { return _rng; }
+            set
+            {
+                _rng = value;
             }
         }
     }

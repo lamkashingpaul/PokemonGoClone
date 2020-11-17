@@ -24,4 +24,12 @@
     <Grid>
         <ContentControl Content="{Binding CurrentView}" />
     </Grid>
+
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding CurrentViewModel.MoveWCommand}" Key="W"/>
+        <KeyBinding Command="{Binding CurrentViewModel.MoveSCommand}" Key="S"/>
+        <KeyBinding Command="{Binding CurrentViewModel.MoveACommand}" Key="A"/>
+        <KeyBinding Command="{Binding CurrentViewModel.MoveDCommand}" Key="D"/>
+    </Window.InputBindings>
+    
 </Window>

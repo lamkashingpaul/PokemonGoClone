@@ -8,15 +8,15 @@ using System.Windows.Media.Imaging;
 
 namespace PokemonGoClone.Models.Pokemons
 {
-    public class Pokemon : Being
+    public class PokemonModel : BeingModel
     {
         // All fields of Pokemon class
         private int _id;
-        private List<Ability> _abilities;
+        private List<AbilityModel> _abilities;
         private double _accurancy;
 
         // Default constructor
-        public Pokemon(int id, string name, int level, int maxHealth, Ability randomAbility)
+        public PokemonModel(int id, string name, int level, int maxHealth, AbilityModel randomAbility)
         {
             Id = id;
             Name = name;
@@ -30,7 +30,7 @@ namespace PokemonGoClone.Models.Pokemons
         }
 
         // Constructor for Starting Pokemon
-        public Pokemon(int id, string name)
+        public PokemonModel(int id, string name)
         {
             Id = id;
             Name = name;
@@ -49,7 +49,7 @@ namespace PokemonGoClone.Models.Pokemons
             }
         }
 
-        public List<Ability> Abilities
+        public List<AbilityModel> Abilities
         {
             get { return _abilities; }
             set
@@ -66,7 +66,7 @@ namespace PokemonGoClone.Models.Pokemons
             }
         }
 
-        public void AddAbility(Ability ability)
+        public void AddAbility(AbilityModel ability)
         {
             if (!Abilities.Exists(x => x.Id == ability.Id))
             {
@@ -74,7 +74,7 @@ namespace PokemonGoClone.Models.Pokemons
             }
         }
 
-        public void DropAbility(Ability ability)
+        public void DropAbility(AbilityModel ability)
         {
             Abilities.Remove(ability);
         }

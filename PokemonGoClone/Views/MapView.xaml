@@ -9,12 +9,11 @@
              Background="White">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="64"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="64"/>
         </Grid.RowDefinitions>
 
-        <ItemsControl ItemsSource="{Binding CurrentViewModel.Map}" Grid.Column="0" Grid.Row="1">
+        <ItemsControl ItemsSource="{Binding CurrentViewModel.Map}" Grid.Column="0" Grid.Row="0">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid MinHeight="528"
@@ -66,7 +65,7 @@
             </ItemsControl.ItemContainerStyle>
         </ItemsControl>
 
-        <ItemsControl ItemsSource="{Binding CurrentViewModel.Trainers}" Grid.Column="0" Grid.Row="1">
+        <ItemsControl ItemsSource="{Binding CurrentViewModel.Trainers}" Grid.Column="0" Grid.Row="0">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid MinHeight="528"
@@ -116,7 +115,7 @@
                     <Setter Property="Grid.Row" Value="{Binding XCoordinate}"/>
                 </Style>
             </ItemsControl.ItemContainerStyle>
-            
+
         </ItemsControl>
     </Grid>
 </UserControl>
