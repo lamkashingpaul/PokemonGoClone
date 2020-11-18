@@ -52,33 +52,80 @@ namespace PokemonGoClone.ViewModels
             get { return _closeWindowCommand ?? (_closeWindowCommand = new RelayCommand(x => { CloseWindow(x); })); }
         }
 
-        // More ICommands for initializing the game
-        private ICommand _trainerCreationCommand;
-
-        // All properties of ICommands for initializing the game
-        public ICommand TrainerCreationCommand
-        {
-            get { return _trainerCreationCommand ?? (_trainerCreationCommand = new RelayCommand(x => { TrainerCreation(x); })); }
-        }
-
         // Default constructor
         public MainWindowViewModel()
         {
             // Create instance for all views and viewmodels
-            _startViewModel = new StartViewModel();
-            _startView = new StartView();
-            _mapView = new MapView();
+            StartView = new StartView();
+            TrainerCreationView = new TrainerCreationView();
+            MapView = new MapView();
 
-            _trainerCreationViewModel = new TrainerCreationViewModel();
-            _trainerCreationView = new TrainerCreationView();
-            _mapViewModel = new MapViewModel();
+            StartViewModel = new StartViewModel() { MainWindowViewModel = this};
+            TrainerCreationViewModel = new TrainerCreationViewModel() { MainWindowViewModel = this};
+            MapViewModel = new MapViewModel() { MainWindowViewModel = this};
 
             // Set up the startup view and viewmodels
-            CurrentViewModel = _startViewModel;
-            CurrentView = _startView;
+            CurrentViewModel = StartViewModel;
+            CurrentView = StartView;
         }
 
         // All properties of views and viewmodels
+        public object StartView
+        {
+            get { return _startView; }
+            set
+            {
+                _startView = value;
+                OnPropertyChanged(nameof(StartView));
+            }
+        }
+        public object StartViewModel
+        {
+            get { return _startViewModel; }
+            set
+            {
+                _startViewModel = value;
+                OnPropertyChanged(nameof(StartViewModel));
+            }
+        }
+        public object TrainerCreationView
+        {
+            get { return _trainerCreationView; }
+            set
+            {
+                _trainerCreationView = value;
+                OnPropertyChanged(nameof(TrainerCreationView));
+            }
+        }
+        public object TrainerCreationViewModel
+        {
+            get { return _trainerCreationViewModel; }
+            set
+            {
+                _trainerCreationViewModel = value;
+                OnPropertyChanged(nameof(TrainerCreationViewModel));
+            }
+        }
+
+        public object MapView
+        {
+            get { return _mapView; }
+            set
+            {
+                _mapView = value;
+                OnPropertyChanged(nameof(MapView));
+            }
+        }
+        public object MapViewModel
+        {
+            get { return _mapViewModel; }
+            set
+            {
+                _mapViewModel = value;
+                OnPropertyChanged(nameof(MapViewModel));
+            }
+        }
+
         public object CurrentView
         {
             get { return _currentView; }
@@ -100,44 +147,24 @@ namespace PokemonGoClone.ViewModels
         }
 
         // All RelayCommands for views and viewmodels navigation
-        private void GotoStartViewModel()
+        public void GotoStartViewModel()
         {
-            CurrentViewModel = _startViewModel;
-            CurrentView = _startView;
+            CurrentViewModel = StartViewModel;
+            CurrentView = StartView;
         }
-        private void GotoTrainerCreationViewModel()
+        public void GotoTrainerCreationViewModel()
         {
-            CurrentViewModel = _trainerCreationViewModel;
-            CurrentView = _trainerCreationView;
+            CurrentViewModel = TrainerCreationViewModel;
+            CurrentView = TrainerCreationView;
         }
-        private void GoToMapViewModel()
+        public void GoToMapViewModel()
         {
-            CurrentViewModel = _mapViewModel;
-            CurrentView = _mapView;
+            CurrentViewModel = MapViewModel;
+            CurrentView = MapView;
         }
         private void CloseWindow(object Windows)
         {
             (Windows as System.Windows.Window)?.Close();
-        }
-
-        // All RelayCommands for initializing the game
-        private void TrainerCreation(object values)
-        {
-            var list = (object[])values;
-            var textBox = list[0] as TextBox;
-            var choice = (int)list[1];
-
-            string name = textBox.Text;
-
-            if (string.IsNullOrEmpty(name))
-            {
-                // ModalDialog implementation needed
-                Console.WriteLine("You must enter your name.");
-                return;
-            }
-
-            CurrentView = _mapView;
-            CurrentViewModel = _mapViewModel;
         }
     }
 }

@@ -12,6 +12,8 @@ namespace PokemonGoClone.ViewModels
 {
     public class MapViewModel : ViewModelBase
     {
+        private MainWindowViewModel _mainWindowViewMode;
+
         private string _name;
         private int _choice;
 
@@ -33,22 +35,32 @@ namespace PokemonGoClone.ViewModels
             get { return _interactCommand ?? (_interactCommand = new RelayCommand(x => { Interact(); })); }
         }
 
+        public MainWindowViewModel MainWindowViewModel
+        {
+            get { return _mainWindowViewMode; }
+            set
+            {
+                _mainWindowViewMode = value;
+                OnPropertyChanged(nameof(MainWindowViewModel));
+            }
+        }
+
         public MapViewModel()
         {
             // Draw the boundary of map
             Map = new List<TileModel>
             {
-                new TileModel('B', 0, 0, "005"),
-                new TileModel('B', 0, COL - 1, "007"),
-                new TileModel('B', ROW - 1, 0, "009"),
-                new TileModel('B', ROW - 1, COL - 1, "010")
+                new TileModel('B', "Tile", 5, 0, 0),
+                new TileModel('B', "Tile", 7, 0, COL - 1),
+                new TileModel('B', "Tile", 9, ROW - 1, 0),
+                new TileModel('B', "Tile", 10, ROW - 1, COL - 1)
             };
 
             for (int i = 0; i < ROW; i += ROW - 1)
             {
                 for (int j = 1; j < COL - 1; j++)
                 {
-                    Map.Add(new TileModel('B', i, j, "006"));
+                    Map.Add(new TileModel('B', "Tile", 6 , i, j));
                 }
             }
 
@@ -56,7 +68,7 @@ namespace PokemonGoClone.ViewModels
             {
                 for (int j = 1; j < ROW - 1; j++)
                 {
-                    Map.Add(new TileModel('B', j, i, "008"));
+                    Map.Add(new TileModel('B', "Tile", 8, j, i));
                 }
             }
 
@@ -65,8 +77,8 @@ namespace PokemonGoClone.ViewModels
             {
                 for (int j = 1; j < COL - 1; j++)
                 {
-                    string randomGrass = $"{rng.Next(1, 4):D3}";
-                    Map.Add(new TileModel('G', i, j, randomGrass));
+                    int randomGrass = rng.Next(1, 4);
+                    Map.Add(new TileModel('G', "Tile", randomGrass, i, j));
                 }
             }
 

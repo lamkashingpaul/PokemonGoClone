@@ -16,7 +16,7 @@
     </Window.DataContext>
 
     <Grid>
-        <ContentControl x:Name="Content" Content="{Binding CurrentView}" />
+        <ContentControl Focusable="False" Content="{Binding CurrentView}" />
     </Grid>
 
     <Window.InputBindings>

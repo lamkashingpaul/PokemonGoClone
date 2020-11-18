@@ -10,6 +10,9 @@ namespace PokemonGoClone.Models
     public class TileModel : ViewModelBase
     {
         private char _texture;
+        private string _type;
+        private int _id;
+
         private int _xCoordinate;
         private int _yCoordinate;
 
@@ -22,12 +25,14 @@ namespace PokemonGoClone.Models
         }
 
         // Constructor used to draw the map
-        public TileModel(char texture, int xCoordinate, int yCoordinate, string imageSource)
+        public TileModel(char texture, string type, int id, int xCoordinate, int yCoordinate)
         {
             Texture = texture;
+            Type = type;
+            Id = id;
             XCoordinate = xCoordinate;
             YCoordinate = yCoordinate;
-            ImageSource = $"/PokemonGoClone;component/Images/Tiles/{imageSource}.png";
+            ImageSource = $"/PokemonGoClone;component/Images/{Type}s/{Id:D3}.png";
         }
 
         public char Texture
@@ -37,6 +42,24 @@ namespace PokemonGoClone.Models
             {
                 _texture = value;
                 OnPropertyChanged(nameof(Texture));
+            }
+        }
+        public string Type
+        {
+            get { return _type; }
+            set
+            {
+                _type = value;
+                OnPropertyChanged(nameof(Type));
+            }
+        }
+        public int Id
+        {
+            get { return _id; }
+            set
+            {
+                _id = value;
+                OnPropertyChanged(nameof(Id));
             }
         }
         public int XCoordinate

@@ -6,12 +6,12 @@
              xmlns:local="clr-namespace:PokemonGoClone.Views"
              mc:Ignorable="d" 
              d:DesignHeight="480" d:DesignWidth="640">
-    <Grid>
+    <Grid Focusable="False">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Button Grid.Column="0" Grid.Row="0" Margin="10" FontSize="36" Content="Start" Command="{Binding GoToTrainerCreationViewModelCommand}"/>
-        <Button Grid.Column="0" Grid.Row="1" Margin="10" FontSize="36" Content="Exit" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
+        <Button Focusable="False" Grid.Column="0" Grid.Row="0" Margin="10" FontSize="36" Content="Start" Command="{Binding GoToTrainerCreationViewModelCommand}"/>
+        <Button Focusable="False" Grid.Column="0" Grid.Row="1" Margin="10" FontSize="36" Content="Exit" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
     </Grid>
 </UserControl>

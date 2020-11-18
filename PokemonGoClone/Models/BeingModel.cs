@@ -11,8 +11,6 @@ namespace PokemonGoClone.Models
     public abstract class BeingModel : TileModel
     {
         private string _name;
-        private string _type;
-        private int _id;
         private int _level;
         private int _health;
         private int _maxHealth;
@@ -32,24 +30,6 @@ namespace PokemonGoClone.Models
             }
         }
 
-        public string Type
-        {
-            get { return _type; }
-            set
-            {
-                _type = value;
-                OnPropertyChanged(nameof(Type));
-            }
-        }
-        public int Id
-        {
-            get { return _id; }
-            set
-            {
-                _id = value;
-                OnPropertyChanged(nameof(Id));
-            }
-        }
         public int Level
         {
             get { return _level; }
@@ -107,7 +87,7 @@ namespace PokemonGoClone.Models
                     YFacing = YCoordinate + 1;
                 }
 
-                ImageSource = $"/PokemonGoClone;component/Images/{Type}s/{Type}{Facing}.png";
+                ImageSource = $"/PokemonGoClone;component/Images/{Type}s/{Id:D3}{Facing}.png";
                 OnPropertyChanged(nameof(Facing));
             }
         }
