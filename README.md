@@ -1,8 +1,8 @@
 # PokemonGoClone
 This is a program for course IERG3080
 
-# To Do List
-Dialog Box
+# Update Overlay Dialog
+![alt text](https://github.com/lamkashingpaul/PokemonGoClone/blob/master/PokemonGoClone/Assets/OverlayDialog.gif?raw=true)
 
 # Capture of Navigation
 
