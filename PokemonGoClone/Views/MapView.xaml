@@ -8,12 +8,7 @@
              d:DesignHeight="480" d:DesignWidth="640"
              Background="White">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="64"/>
-        </Grid.RowDefinitions>
-
-        <ItemsControl ItemsSource="{Binding CurrentViewModel.Map}" Grid.Column="0" Grid.Row="0">
+        <ItemsControl ItemsSource="{Binding CurrentViewModel.Map}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid MinHeight="528"
@@ -65,7 +60,7 @@
             </ItemsControl.ItemContainerStyle>
         </ItemsControl>
 
-        <ItemsControl ItemsSource="{Binding CurrentViewModel.Trainers}" Grid.Column="0" Grid.Row="0">
+        <ItemsControl ItemsSource="{Binding CurrentViewModel.Beings}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid MinHeight="528"

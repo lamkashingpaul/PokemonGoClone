@@ -7,16 +7,10 @@
         xmlns:view="clr-namespace:PokemonGoClone.Views"
         xmlns:viewmodel="clr-namespace:PokemonGoClone.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="768" Width="1024">
-    <Window.Resources>
-        <DataTemplate DataType="{x:Type viewmodel:StartViewModel}">
-            <view:StartView/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type viewmodel:TrainerCreationViewModel}">
-            <view:TrainerCreationView/>
-        </DataTemplate>
-    </Window.Resources>
-    
+        Title="MainWindow"
+        Height="576" Width="720"
+        MinHeight="576" MinWidth="720">
+
     <Window.DataContext>
         <viewmodel:MainWindowViewModel/>
     </Window.DataContext>
@@ -26,10 +20,14 @@
     </Grid>
 
     <Window.InputBindings>
-        <KeyBinding Command="{Binding CurrentViewModel.MoveWCommand}" Key="W"/>
-        <KeyBinding Command="{Binding CurrentViewModel.MoveSCommand}" Key="S"/>
-        <KeyBinding Command="{Binding CurrentViewModel.MoveACommand}" Key="A"/>
-        <KeyBinding Command="{Binding CurrentViewModel.MoveDCommand}" Key="D"/>
+        <KeyBinding Command="{Binding CurrentViewModel.MoveCommand}" CommandParameter="W" Key="W"/>
+        <KeyBinding Command="{Binding CurrentViewModel.MoveCommand}" CommandParameter="S" Key="S"/>
+        <KeyBinding Command="{Binding CurrentViewModel.MoveCommand}" CommandParameter="A" Key="A"/>
+        <KeyBinding Command="{Binding CurrentViewModel.MoveCommand}" CommandParameter="D" Key="D"/>
+
+        <KeyBinding Command="{Binding CurrentViewModel.InteractCommand}" Key="Space"/>
+        <KeyBinding Command="{Binding CurrentViewModel.CloseCommand}" Key="Esc"/>
+
+        <KeyBinding Command="{Binding CurrentViewModel.BagCommand}" Key="B"/>
     </Window.InputBindings>
-    
 </Window>

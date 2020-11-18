@@ -50,7 +50,7 @@ namespace PokemonGoClone.ViewModels
 
         //  All RelayCommands for ICommand
         private void UpdateChoice(object sender)
-        { 
+        {
             int? choice = sender as int?;
             if (choice != null)
             {

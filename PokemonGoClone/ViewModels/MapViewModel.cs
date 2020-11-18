@@ -18,29 +18,19 @@ namespace PokemonGoClone.ViewModels
         private const int _col = 11;
         private const int _row = 11;
 
-        public List<TrainerModel> Trainers { get; private set; }
+        public List<BeingModel> Beings { get; private set; }
         public List<TileModel> Map { get; private set; }
 
-        private ICommand _moveWCommand;
-        private ICommand _moveSCommand;
-        private ICommand _moveACommand;
-        private ICommand _moveDCommand;
+        private ICommand _moveCommand;
+        private ICommand _interactCommand;
 
-        public ICommand MoveWCommand
+        public ICommand MoveCommand
         {
-            get { return _moveWCommand ?? (_moveWCommand = new RelayCommand(x => { MoveW(); })); }
+            get { return _moveCommand ?? (_moveCommand = new RelayCommand(x => { Move(x); })); }
         }
-        public ICommand MoveSCommand
+        public ICommand InteractCommand
         {
-            get { return _moveSCommand ?? (_moveSCommand = new RelayCommand(x => { MoveS(); })); }
-        }
-        public ICommand MoveACommand
-        {
-            get { return _moveACommand ?? (_moveACommand = new RelayCommand(x => { MoveA(); })); }
-        }
-        public ICommand MoveDCommand
-        {
-            get { return _moveDCommand ?? (_moveDCommand = new RelayCommand(x => { MoveD(); })); }
+            get { return _interactCommand ?? (_interactCommand = new RelayCommand(x => { Interact(); })); }
         }
 
         public MapViewModel()
@@ -81,14 +71,18 @@ namespace PokemonGoClone.ViewModels
             }
 
             // Create player
-            Trainers = new List<TrainerModel>
+            Beings = new List<BeingModel>
             {
                 new TrainerModel("test", "Player")
                 {
                     XCoordinate = ROW / 2,
                     YCoordinate = COL / 2,
+                    Facing = 'S',
                 }
-            };     
+            };
+
+            // Add more NPC trainers
+            Beings.Add(new TrainerModel("NPC1", "Player") { XCoordinate = 2, YCoordinate = 2});
         }
 
         public string Name
@@ -119,45 +113,48 @@ namespace PokemonGoClone.ViewModels
             get { return _row; }
         }
 
-        private void MoveW()
+        private void Move(object sender)
         {
-            Console.WriteLine("WWW");
-            Trainers[0].Facing = 'W';
-            var frontTile = Map.Find(x => x.XCoordinate == Trainers[0].XFacing && x.YCoordinate == Trainers[0].YFacing);
-            if (frontTile.Texture == 'G')
+            string command = sender as string;
+            char direction = command[0];
+            Beings[0].Facing = direction;
+            
+            // Find if there is any object in front
+            var frontTile = Map.Find(x => x.XCoordinate == Beings[0].XFacing && x.YCoordinate == Beings[0].YFacing);
+            var frontBeing = Beings.Find(x => x.XCoordinate == Beings[0].XFacing && x.YCoordinate == Beings[0].YFacing);
+
+            if (frontTile.Texture == 'G' && frontBeing == null)
             {
-                Trainers[0].XCoordinate -= 1;
+                switch (direction)
+                {
+                    case 'W':
+                        Beings[0].XCoordinate -= 1;
+                        break;
+                    case 'S':
+                        Beings[0].XCoordinate += 1;
+                        break;
+                    case 'A':
+                        Beings[0].YCoordinate -= 1;
+                        break;
+                    case 'D':
+                        Beings[0].YCoordinate += 1;
+                        break;
+                    default:
+                        break;
+                }
+                Beings[0].Facing = direction;
             }
         }
-        private void MoveS()
-        {
-            Console.WriteLine("SSS");
-            Trainers[0].Facing = 'S';
-            var frontTile = Map.Find(x => x.XCoordinate == Trainers[0].XFacing && x.YCoordinate == Trainers[0].YFacing);
-            if (frontTile.Texture == 'G')
+
+        private void Interact()
+          {
+            var frontObject = Beings.Find(x => x.XCoordinate == Beings[0].XFacing && x.YCoordinate == Beings[0].YFacing);
+            if (frontObject == null)
             {
-                Trainers[0].XCoordinate += 1;
+                return;
             }
-        }
-        private void MoveA()
-        {
-            Console.WriteLine("AAA");
-            Trainers[0].Facing = 'A';
-            var frontTile = Map.Find(x => x.XCoordinate == Trainers[0].XFacing && x.YCoordinate == Trainers[0].YFacing);
-            if (frontTile.Texture == 'G')
-            {
-                Trainers[0].YCoordinate -= 1;
-            }
-        }
-        private void MoveD()
-        {
-            Console.WriteLine("AAA");
-            Trainers[0].Facing = 'D';
-            var frontTile = Map.Find(x => x.XCoordinate == Trainers[0].XFacing && x.YCoordinate == Trainers[0].YFacing);
-            if (frontTile.Texture == 'G')
-            {
-                Trainers[0].YCoordinate += 1;
-            }
+
+            Console.WriteLine($"{frontObject.Name} Found at ({frontObject.XCoordinate}, {frontObject.YCoordinate}).");
         }
     }
 }
