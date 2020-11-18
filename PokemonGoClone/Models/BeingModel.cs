@@ -12,6 +12,7 @@ namespace PokemonGoClone.Models
     {
         private string _name;
         private string _type;
+        private int _id;
         private int _level;
         private int _health;
         private int _maxHealth;
@@ -40,7 +41,15 @@ namespace PokemonGoClone.Models
                 OnPropertyChanged(nameof(Type));
             }
         }
-
+        public int Id
+        {
+            get { return _id; }
+            set
+            {
+                _id = value;
+                OnPropertyChanged(nameof(Id));
+            }
+        }
         public int Level
         {
             get { return _level; }
@@ -60,7 +69,7 @@ namespace PokemonGoClone.Models
                 OnPropertyChanged(nameof(Health));
             }
         }
-         public int MaxHealth
+        public int MaxHealth
         {
             get { return _maxHealth; }
             set
@@ -81,15 +90,18 @@ namespace PokemonGoClone.Models
                 {
                     XFacing = XCoordinate - 1;
                     YFacing = YCoordinate;
-                } else if (_facing == 'S')
+                }
+                else if (_facing == 'S')
                 {
                     XFacing = XCoordinate + 1;
                     YFacing = YCoordinate;
-                } else if (_facing == 'A')
+                }
+                else if (_facing == 'A')
                 {
                     XFacing = XCoordinate;
                     YFacing = YCoordinate - 1;
-                } else if (_facing == 'D')
+                }
+                else if (_facing == 'D')
                 {
                     XFacing = XCoordinate;
                     YFacing = YCoordinate + 1;

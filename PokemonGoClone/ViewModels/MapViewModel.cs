@@ -61,7 +61,7 @@ namespace PokemonGoClone.ViewModels
             }
 
             var rng = new Random();
-            for (int i = 1; i < ROW - 1; i ++)
+            for (int i = 1; i < ROW - 1; i++)
             {
                 for (int j = 1; j < COL - 1; j++)
                 {
@@ -73,16 +73,25 @@ namespace PokemonGoClone.ViewModels
             // Create player
             Beings = new List<BeingModel>
             {
-                new TrainerModel("test", "Player")
+                new TrainerModel("MyName", "Player", 1)
                 {
                     XCoordinate = ROW / 2,
                     YCoordinate = COL / 2,
-                    Facing = 'S',
                 }
             };
 
             // Add more NPC trainers
-            Beings.Add(new TrainerModel("NPC1", "Player") { XCoordinate = 2, YCoordinate = 2});
+            for (int i = 0; i < 3; i++)
+            {
+                string randomNPC = $"{i + 1:D3}";
+                int randomX, randomY;
+                do
+                {
+                    randomX = rng.Next(1, ROW - 1);
+                    randomY = rng.Next(1, ROW - 1);
+                } while (Beings.Find(x => x.XCoordinate == randomX && x.YCoordinate == randomY) != null);
+                Beings.Add(new TrainerModel(randomNPC, "NPC", i + 1) { XCoordinate = randomX, YCoordinate = randomY });
+            }
         }
 
         public string Name
@@ -118,7 +127,7 @@ namespace PokemonGoClone.ViewModels
             string command = sender as string;
             char direction = command[0];
             Beings[0].Facing = direction;
-            
+
             // Find if there is any object in front
             var frontTile = Map.Find(x => x.XCoordinate == Beings[0].XFacing && x.YCoordinate == Beings[0].YFacing);
             var frontBeing = Beings.Find(x => x.XCoordinate == Beings[0].XFacing && x.YCoordinate == Beings[0].YFacing);
@@ -147,7 +156,7 @@ namespace PokemonGoClone.ViewModels
         }
 
         private void Interact()
-          {
+        {
             var frontObject = Beings.Find(x => x.XCoordinate == Beings[0].XFacing && x.YCoordinate == Beings[0].YFacing);
             if (frontObject == null)
             {

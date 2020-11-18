@@ -11,9 +11,8 @@ namespace PokemonGoClone.Models.Pokemons
     public class PokemonModel : BeingModel
     {
         // All fields of Pokemon class
-        private int _id;
         private List<AbilityModel> _abilities;
-        private double _accurancy;
+        private double _accuracy;
 
         // Default constructor
         public PokemonModel(int id, string name, int level, int maxHealth, AbilityModel randomAbility)
@@ -24,7 +23,7 @@ namespace PokemonGoClone.Models.Pokemons
             MaxHealth = maxHealth;
             Health = maxHealth;
             Abilities.Add(randomAbility);
-            Accurancy = 1;
+            Accuracy = 1;
 
             ImageSource = $"/PokemonGoClone;component/Images/Pokemons/{Id:D3}.png";
         }
@@ -40,14 +39,6 @@ namespace PokemonGoClone.Models.Pokemons
 
 
         // All properties of Pokemon class
-        public int Id
-        {
-            get { return _id; }
-            set
-            {
-                _id = value;
-            }
-        }
 
         public List<AbilityModel> Abilities
         {
@@ -57,12 +48,12 @@ namespace PokemonGoClone.Models.Pokemons
                 _abilities = value;
             }
         }
-        public double Accurancy
+        public double Accuracy
         {
-            get { return _accurancy; }
+            get { return _accuracy; }
             set
             {
-                _accurancy = value;
+                _accuracy = value;
             }
         }
 

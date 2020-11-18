@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PokemonGoClone.Models.Abilities
 {
-    // This is an example class to showcase the 
+    // This is an example class to showcase the
     public class AbilityModel001 : AbilityModel
     {
         public AbilityModel001()
@@ -23,12 +23,12 @@ namespace PokemonGoClone.Models.Abilities
             MaxCharge = 10;
             Charge = MaxCharge;
 
-            Accurancy = 0.9;
+            Accuracy = 0.9;
         }
         public override void Use(PokemonModel caster, PokemonModel target)
         {
             double chance = Rng.NextDouble();
-            if (caster.Accurancy * this.Accurancy >= chance)
+            if (caster.Accuracy * this.Accuracy >= chance)
             {
                 if (Damage > 0)
                 {

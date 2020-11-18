@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace PokemonGoClone.Models.Abilities
 {
     public abstract class AbilityModel
-    {   
+    {
         // All fields shared by Ability class
         private string _name;
         private int _id;
@@ -22,7 +22,7 @@ namespace PokemonGoClone.Models.Abilities
         private int _charge;
         private int _maxCharge;
 
-        private double _accurancy;
+        private double _accuracy;
 
         private Random _rng;
 
@@ -98,12 +98,12 @@ namespace PokemonGoClone.Models.Abilities
             }
         }
 
-        public double Accurancy
+        public double Accuracy
         {
-            get { return _accurancy; }
+            get { return _accuracy; }
             set
             {
-                _accurancy = value;
+                _accuracy = value;
             }
         }
 

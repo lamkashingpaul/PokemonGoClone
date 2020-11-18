@@ -16,35 +16,36 @@ namespace PokemonGoClone.Models.Trainers
         private List<ItemModel> _items;
 
         // Default constructor
-        public TrainerModel(string name, string type)
+        public TrainerModel(string name, string type, int id)
         {
             Name = name;
             Type = type;
+            Id = id;
             Level = 1;
             Health = 128;
 
             Facing = 'S';
 
-            ImageSource = $"/PokemonGoClone;component/Images/{Type}s/{Type}{Facing}.png";
+            ImageSource = $"/PokemonGoClone;component/Images/{Type}s/{Id:D3}{Facing}.png";
         }
 
         // All methods of Trainer class
-        public void AddPokemon (PokemonModel pokemon)
+        public void AddPokemon(PokemonModel pokemon)
         {
 
         }
 
-        public void DropPokemon (PokemonModel pokemon)
+        public void DropPokemon(PokemonModel pokemon)
         {
 
         }
 
-        public void AddItem (ItemModel item)
+        public void AddItem(ItemModel item)
         {
 
         }
 
-        public void DropItem (ItemModel item)
+        public void DropItem(ItemModel item)
         {
 
         }
