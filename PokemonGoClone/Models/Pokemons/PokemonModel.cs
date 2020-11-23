@@ -15,19 +15,33 @@ namespace PokemonGoClone.Models.Pokemons
         private double _accuracy;
 
         // Default constructor
-        public PokemonModel(int id, string name, int level, int maxHealth, AbilityModel randomAbility)
+        public PokemonModel(string name,
+                            int id,
+                            string description,
+                            int level,
+                            int maxLevel,
+                            int maxHealth,
+                            int maxExp,
+                            int maxExpPerLevel,
+                            double accuracy,
+                            AbilityModel ability)
         {
-            Id = id;
             Name = name;
+            Id = id;
+            Description = description;
             Level = level;
+            MaxLevel = maxLevel;
             MaxHealth = maxHealth;
             Health = maxHealth;
             MaxHealthPerLevel = maxHealth;
-            if (randomAbility != null)
+            MaxExp = maxExp;
+            MaxExpPerLevel = maxExpPerLevel;
+            Accuracy = accuracy;
+
+            if (ability != null)
             {
-                Abilities.Add(randomAbility);
+                Abilities.Add(ability);
             }
-            Accuracy = 1;
 
             ImageSource = $"/PokemonGoClone;component/Images/Pokemons/{Id:D3}.png";
         }
@@ -64,6 +78,10 @@ namespace PokemonGoClone.Models.Pokemons
         public void LevelUp()
         {
             Level += 1;
+
+            Exp = 0;
+            MaxExp += MaxExpPerLevel;
+
             MaxHealth += MaxHealthPerLevel;
             Health = MaxHealth;
         }

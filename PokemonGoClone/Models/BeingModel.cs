@@ -11,10 +11,15 @@ namespace PokemonGoClone.Models
     public abstract class BeingModel : TileModel
     {
         private string _name;
+        private string _description;
         private int _level;
+        private int _maxLevel;
         private int _health;
         private int _maxHealth;
         private int _maxHealthPerLevel;
+        private int _exp;
+        private int _maxExp;
+        private int _maxExpPerLevel;
 
         private char _facing;
 
@@ -30,7 +35,15 @@ namespace PokemonGoClone.Models
                 OnPropertyChanged(nameof(Name));
             }
         }
-
+        public string Description
+        {
+            get { return _description; }
+            set
+            {
+                _description = value;
+                OnPropertyChanged(nameof(Description));
+            }
+        }
         public int Level
         {
             get { return _level; }
@@ -38,6 +51,15 @@ namespace PokemonGoClone.Models
             {
                 _level = value;
                 OnPropertyChanged(nameof(Level));
+            }
+        }
+        public int MaxLevel
+        {
+            get { return _maxLevel; }
+            set
+            {
+                _maxLevel = value;
+                OnPropertyChanged(nameof(MaxLevel));
             }
         }
 
@@ -67,6 +89,33 @@ namespace PokemonGoClone.Models
             {
                 _maxHealthPerLevel = value;
                 OnPropertyChanged(nameof(MaxHealthPerLevel));
+            }
+        }
+        public int Exp
+        {
+            get { return _exp; }
+            set
+            {
+                _exp = value;
+                OnPropertyChanged(nameof(Exp));
+            }
+        }
+        public int MaxExp
+        {
+            get { return _maxExp; }
+            set
+            {
+                _maxExp = value;
+                OnPropertyChanged(nameof(MaxExp));
+            }
+        }
+        public int MaxExpPerLevel
+        {
+            get { return _maxExpPerLevel; }
+            set
+            {
+                _maxExpPerLevel = value;
+                OnPropertyChanged(nameof(MaxExpPerLevel));
             }
         }
 

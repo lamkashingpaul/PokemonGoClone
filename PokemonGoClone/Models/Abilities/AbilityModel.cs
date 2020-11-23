@@ -23,8 +23,12 @@ namespace PokemonGoClone.Models.Abilities
         private int _damagePerLevel;
 
         private int _level;
+        private int _maxlevel;
+
+
         private int _charge;
         private int _maxCharge;
+        private int _maxChargePerLevel;
 
         private double _accuracy;
 
@@ -35,7 +39,9 @@ namespace PokemonGoClone.Models.Abilities
                             int damage,
                             int damagePerLevel,
                             int level,
+                            int maxlevel,
                             int maxCharge,
+                            int maxChargePerLevel,
                             double accuracy)
         {
             Name = name;
@@ -44,7 +50,9 @@ namespace PokemonGoClone.Models.Abilities
             Damage = damage;
             DamagePerLevel = damagePerLevel;
             Level = level;
+            MaxLevel = maxlevel;
             MaxCharge = maxCharge;
+            MaxChargePerLevel = maxChargePerLevel;
             Charge = MaxCharge;
             Accuracy = accuracy;
         }
@@ -129,6 +137,16 @@ namespace PokemonGoClone.Models.Abilities
                 OnPropertyChanged(nameof(Level));
             }
         }
+        public int MaxLevel
+        {
+            get { return _maxlevel; }
+            set
+            {
+                _maxlevel = value;
+                OnPropertyChanged(nameof(MaxLevel));
+            }
+        }
+
         public int Charge
         {
             get { return _charge; }
@@ -148,6 +166,15 @@ namespace PokemonGoClone.Models.Abilities
                 OnPropertyChanged(nameof(MaxCharge));
             }
         }
+        public int MaxChargePerLevel
+        {
+            get { return _maxChargePerLevel; }
+            set
+            {
+                _maxChargePerLevel = value;
+                OnPropertyChanged(nameof(MaxChargePerLevel));
+            }
+        }
 
         public double Accuracy
         {
@@ -161,8 +188,12 @@ namespace PokemonGoClone.Models.Abilities
 
         public void LevelUp()
         {
-            Level += 1;
-            Damage += DamagePerLevel;
+            if (Level < MaxLevel)
+            {
+                Level += 1;
+                Damage += DamagePerLevel;
+                MaxCharge += MaxChargePerLevel;
+            }
         }
     }
 }

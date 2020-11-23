@@ -128,7 +128,9 @@ namespace PokemonGoClone.ViewModels
                                                             values["Damage"].Value<int>(),
                                                             values["DamagePerLevel"].Value<int>(),
                                                             values["Level"].Value<int>(),
+                                                            values["MaxLevel"].Value<int>(),
                                                             values["MaxCharge"].Value<int>(),
+                                                            values["MaxChargePerLevel"].Value<int>(),
                                                             values["Accuracy"].Value<double>());
                     abilities.Add(ability);
                     i += 1;
@@ -145,8 +147,39 @@ namespace PokemonGoClone.ViewModels
         }
         private void LoadPokemons(List<PokemonModel> pokemons)
         {
-            //throw new NotImplementedException();
-        }
+            int i = 1;
+            while (true)
+            {
+                string json;
+                Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("PokemonGoClone.Resources.Pokemons." + $"{i:D3}.json");
+                if (stream != null)
+                {
+                    using (var reader = new StreamReader(stream, Encoding.Default))
+                    {
+                        json = reader.ReadToEnd();
+                    }
+
+                    var values = (JObject)JsonConvert.DeserializeObject(json);
+
+                    PokemonModel pokemon = new PokemonModel(values["Name"].Value<string>(),
+                                                            values["Id"].Value<int>(),
+                                                            values["Description"].Value<string>(),
+                                                            values["Damage"].Value<int>(),
+                                                            values["DamagePerLevel"].Value<int>(),
+                                                            values["Level"].Value<int>(),
+                                                            values["MaxLevel"].Value<int>(),
+                                                            values["MaxCharge"].Value<int>(),
+                                                            values["MaxChargePerLevel"].Value<int>(),
+                                                            values["Accuracy"].Value<double>());
+                    pokemons.Add(pokemon);
+                    i += 1;
+                }
+                else
+                {
+                    break;
+                }
+                //throw new NotImplementedException();
+            }
         public void StartNewGame(string name, int choice)
         {
             Name = name;

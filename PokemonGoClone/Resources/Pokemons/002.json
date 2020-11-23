@@ -1,11 +1,11 @@
 {
-    "Name": "Bulbasaur",
-    "Id": 1,
+    "Name": "Ivysaur",
+    "Id": 2,
     "Description": "",
     "Level": 1,
     "MaxLevel": 6,
-    "MaxHealth": 450,
-    "MaxHealthPerLevel": 50,
+    "MaxHealth": 600,
+    "MaxHealthPerLevel": 40,
     "MaxExp": 100,
     "MaxExpPerLevel": 100,
     "Accuracy": 1

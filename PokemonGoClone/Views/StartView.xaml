@@ -10,8 +10,10 @@
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
-        <Button Focusable="False" Grid.Column="0" Grid.Row="0" Margin="10" FontSize="36" Content="Start" Command="{Binding GoToTrainerCreationViewModelCommand}"/>
-        <Button Focusable="False" Grid.Column="0" Grid.Row="1" Margin="10" FontSize="36" Content="Exit" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
+        <Button Focusable="False" Grid.Column="0" Grid.Row="0" Margin="10" FontSize="36" Content="New" Command="{Binding GoToTrainerCreationViewModelCommand}"/>
+        <Button Focusable="False" Grid.Column="0" Grid.Row="1" Margin="10" FontSize="36" Content="Load" Command="{Binding GoToLoadViewModelCommand}"/>
+        <Button Focusable="False" Grid.Column="0" Grid.Row="2" Margin="10" FontSize="36" Content="Exit" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
     </Grid>
 </UserControl>
