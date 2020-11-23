@@ -9,12 +9,23 @@ using System.Windows.Input;
 using PokemonGoClone.Utilities;
 using System.Windows.Controls;
 using PokemonGoClone.Models;
+using PokemonGoClone.Models.Pokemons;
+using PokemonGoClone.Models.Items;
+using PokemonGoClone.Models.Abilities;
+using System.IO;
+using System.Reflection;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace PokemonGoClone.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
         // All models
+        public List<PokemonModel> Pokemons { get; private set; }
+        public List<AbilityModel> Abilities { get; private set; }
+        public List<ItemModel> Items { get; private set; }
+
         public string Name;
         public int Choice;
         public List<BeingModel> Beings { get; private set; }
@@ -42,7 +53,6 @@ namespace PokemonGoClone.ViewModels
         private ICommand _goToMapViewModelCommand;
         private ICommand _goToBagViewModelCommand;
         private ICommand _goToBattleViewModelCommand;
-
         private ICommand _closeWindowCommand;
 
         // All properties of ICommands for views and viewmodels navigation
@@ -74,12 +84,21 @@ namespace PokemonGoClone.ViewModels
         // Default constructor
         public MainWindowViewModel()
         {
-            // Create instance for all views and viewmodels
+            // Create instance for views and viewmodels
             StartView = new StartView();
             TrainerCreationView = new TrainerCreationView();
 
-            StartViewModel = new StartViewModel() { MainWindowViewModel = this};
+            StartViewModel = new StartViewModel() { MainWindowViewModel = this };
             TrainerCreationViewModel = new TrainerCreationViewModel() { MainWindowViewModel = this };
+
+            // Set up game data
+            Abilities = new List<AbilityModel>();
+            Items = new List<ItemModel>();
+            Pokemons = new List<PokemonModel>();
+
+            LoadAbilities(Abilities);
+            LoadItems(Items);
+            LoadPokemons(Pokemons);
 
             // Set up the startup view and viewmodels
             CurrentViewModel = StartViewModel;
@@ -87,7 +106,48 @@ namespace PokemonGoClone.ViewModels
         }
 
         // Methods for game control
-        public void StartNewGame (string name, int choice)
+        private void LoadAbilities(List<AbilityModel> abilities)
+        {
+            int i = 1;
+            while (true)
+            {
+                string json;
+                Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("PokemonGoClone.Resources.Abilities." + $"{i:D3}.json");
+                if (stream != null)
+                {
+                    using (var reader = new StreamReader(stream, Encoding.Default))
+                    {
+                        json = reader.ReadToEnd();
+                    }
+
+                    var values = (JObject)JsonConvert.DeserializeObject(json);
+
+                    AbilityModel ability = new AbilityModel(values["Name"].Value<string>(),
+                                                            values["Id"].Value<int>(),
+                                                            values["Description"].Value<string>(),
+                                                            values["Damage"].Value<int>(),
+                                                            values["DamagePerLevel"].Value<int>(),
+                                                            values["Level"].Value<int>(),
+                                                            values["MaxCharge"].Value<int>(),
+                                                            values["Accuracy"].Value<double>());
+                    abilities.Add(ability);
+                    i += 1;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        private void LoadItems(List<ItemModel> items)
+        {
+            //throw new NotImplementedException();
+        }
+        private void LoadPokemons(List<PokemonModel> pokemons)
+        {
+            //throw new NotImplementedException();
+        }
+        public void StartNewGame(string name, int choice)
         {
             Name = name;
             Choice = choice;
@@ -136,7 +196,6 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(TrainerCreationViewModel));
             }
         }
-
         public object MapView
         {
             get { return _mapView; }
@@ -155,7 +214,6 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(MapViewModel));
             }
         }
-
         public object BagView
         {
             get { return _bagView; }
@@ -192,7 +250,6 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(BattleViewModel));
             }
         }
-
         public object CurrentView
         {
             get { return _currentView; }
@@ -202,7 +259,6 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(CurrentView));
             }
         }
-
         public object CurrentViewModel
         {
             get { return _currentViewModel; }

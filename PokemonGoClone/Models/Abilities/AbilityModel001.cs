@@ -14,7 +14,7 @@ namespace PokemonGoClone.Models.Abilities
         public AbilityModel001()
         {
             Name = "Headbutt";
-            Id = 0;
+            Id = 1;
             Description = "Basic Ability to damage your target";
 
             Damage = 10;
@@ -27,12 +27,12 @@ namespace PokemonGoClone.Models.Abilities
         }
         public override void Use(PokemonModel caster, PokemonModel target)
         {
-            double chance = Rng.NextDouble();
-            if (caster.Accuracy * this.Accuracy >= chance)
+            double chance = Rand.NextDouble();
+            if (caster.Accuracy * Accuracy >= chance)
             {
                 if (Damage > 0)
                 {
-                    target.Health -= (int)Damage * Level;
+                    target.Health -= Damage * Level;
                 }
                 else
                 {

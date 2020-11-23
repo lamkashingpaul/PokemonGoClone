@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace PokemonGoClone.Models.Abilities
 {
-    public abstract class AbilityModel : ViewModelBase
+    public class AbilityModel : ViewModelBase
     {
         // All fields shared by Ability class
-        private Random rand = new Random();
+        private Random Rand = new Random();
 
         private string _name;
         private int _id;
@@ -28,15 +28,46 @@ namespace PokemonGoClone.Models.Abilities
 
         private double _accuracy;
 
-        private Random _rng;
-
         // Default constructor
-        public AbilityModel()
+        public AbilityModel(string name,
+                            int id,
+                            string description,
+                            int damage,
+                            int damagePerLevel,
+                            int level,
+                            int maxCharge,
+                            double accuracy)
         {
+            Name = name;
+            Id = id;
+            Description = description;
+            Damage = damage;
+            DamagePerLevel = damagePerLevel;
+            Level = level;
+            MaxCharge = maxCharge;
+            Charge = MaxCharge;
+            Accuracy = accuracy;
         }
 
         // All methods of Ability class
-        public abstract void Use(PokemonModel caster, PokemonModel target);
+        public void Use(PokemonModel caster, PokemonModel target)
+        {
+            Console.WriteLine("Ability used.");
+            double chance = Rand.NextDouble();
+            if (caster.Accuracy * Accuracy >= chance)
+            {
+                if (Damage > 0)
+                {
+                    target.Health -= Damage * Level;
+                }
+                else
+                {
+                    // This is not damage ability
+                    // Action shall be implemented here
+                }
+            }
+            Charge -= 1;
+        }
 
         // All properties of fields
         public string Name
