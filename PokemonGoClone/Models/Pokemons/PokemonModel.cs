@@ -22,7 +22,11 @@ namespace PokemonGoClone.Models.Pokemons
             Level = level;
             MaxHealth = maxHealth;
             Health = maxHealth;
-            Abilities.Add(randomAbility);
+            MaxHealthPerLevel = maxHealth;
+            if (randomAbility != null)
+            {
+                Abilities.Add(randomAbility);
+            }
             Accuracy = 1;
 
             ImageSource = $"/PokemonGoClone;component/Images/Pokemons/{Id:D3}.png";
@@ -55,6 +59,13 @@ namespace PokemonGoClone.Models.Pokemons
             {
                 _accuracy = value;
             }
+        }
+
+        public void LevelUp()
+        {
+            Level += 1;
+            MaxHealth += MaxHealthPerLevel;
+            Health = MaxHealth;
         }
 
         public void AddAbility(AbilityModel ability)

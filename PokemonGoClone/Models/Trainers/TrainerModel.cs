@@ -12,8 +12,8 @@ namespace PokemonGoClone.Models.Trainers
     public class TrainerModel : BeingModel
     {
         // All fields of Trainer class
-        private List<PokemonModel> _pokemons;
-        private List<ItemModel> _items;
+        public List<PokemonModel> Pokemons;
+        public List<ItemModel> Items;
 
         // Default constructor
         public TrainerModel(string name, string type, int id)
@@ -27,6 +27,9 @@ namespace PokemonGoClone.Models.Trainers
             Facing = 'S';
 
             ImageSource = $"/PokemonGoClone;component/Images/{Type}s/{Id:D3}{Facing}.png";
+
+            Pokemons = new List<PokemonModel>();
+            Items = new List<ItemModel>();
         }
 
         // All methods of Trainer class

@@ -1,4 +1,5 @@
 ﻿using PokemonGoClone.Models;
+using PokemonGoClone.Models.Pokemons;
 using PokemonGoClone.Models.Trainers;
 using PokemonGoClone.Utilities;
 using System;
@@ -13,9 +14,6 @@ namespace PokemonGoClone.ViewModels
     public class MapViewModel : ViewModelBase
     {
         private MainWindowViewModel _mainWindowViewMode;
-
-        private string _name;
-        private int _choice;
 
         private const int _col = 11;
         private const int _row = 11;
@@ -45,7 +43,7 @@ namespace PokemonGoClone.ViewModels
             }
         }
 
-        public MapViewModel()
+        public MapViewModel(string name, int choice)
         {
             // Draw the boundary of map
             Map = new List<TileModel>
@@ -60,7 +58,7 @@ namespace PokemonGoClone.ViewModels
             {
                 for (int j = 1; j < COL - 1; j++)
                 {
-                    Map.Add(new TileModel('B', "Tile", 6 , i, j));
+                    Map.Add(new TileModel('B', "Tile", 6, i, j));
                 }
             }
 
@@ -83,14 +81,21 @@ namespace PokemonGoClone.ViewModels
             }
 
             // Create player
+            // Note that the player is always the Beings[0]
+
             Beings = new List<BeingModel>
             {
-                new TrainerModel("MyName", "Player", 1)
+                new TrainerModel(name, "Player", 1)
                 {
                     XCoordinate = ROW / 2,
                     YCoordinate = COL / 2,
                 }
             };
+
+            // Add Pokemon to player
+            ((TrainerModel)Beings[0]).AddPokemon(new PokemonModel(choice, "MyPokemon", 1, 128, null));
+
+            // Create BagView for Player
 
             // Add more NPC trainers
             for (int i = 0; i < 3; i++)
@@ -103,24 +108,6 @@ namespace PokemonGoClone.ViewModels
                     randomY = rng.Next(1, ROW - 1);
                 } while (Beings.Find(x => x.XCoordinate == randomX && x.YCoordinate == randomY) != null);
                 Beings.Add(new TrainerModel(randomNPC, "NPC", i + 1) { XCoordinate = randomX, YCoordinate = randomY });
-            }
-        }
-
-        public string Name
-        {
-            get { return _name; }
-            set
-            {
-                _name = value;
-            }
-        }
-
-        public int Choice
-        {
-            get { return _choice; }
-            set
-            {
-                _choice = value;
             }
         }
 

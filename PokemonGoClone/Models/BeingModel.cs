@@ -14,6 +14,7 @@ namespace PokemonGoClone.Models
         private int _level;
         private int _health;
         private int _maxHealth;
+        private int _maxHealthPerLevel;
 
         private char _facing;
 
@@ -59,6 +60,15 @@ namespace PokemonGoClone.Models
             }
         }
 
+        public int MaxHealthPerLevel
+        {
+            get { return _maxHealthPerLevel; }
+            set
+            {
+                _maxHealthPerLevel = value;
+                OnPropertyChanged(nameof(MaxHealthPerLevel));
+            }
+        }
 
         public char Facing
         {

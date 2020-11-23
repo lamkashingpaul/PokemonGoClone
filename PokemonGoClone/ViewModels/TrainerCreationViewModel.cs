@@ -104,18 +104,15 @@ namespace PokemonGoClone.ViewModels
 
             if (string.IsNullOrEmpty(name))
             {
-                // ModalDialog implementation needed
                 DialogViewModel.Message = "You must enter your name.";
                 return;
             } else if (choice == null)
             {
-                // ModalDialog implementation needed
                 DialogViewModel.Message = "You must pick up your Pokemon.";
                 return;
             }
 
-            MainWindowViewModel.CurrentView = MainWindowViewModel.MapView;
-            MainWindowViewModel.CurrentViewModel = MainWindowViewModel.MapViewModel;
+            MainWindowViewModel.StartNewGame(name, (int)choice);
         }
     }
 }

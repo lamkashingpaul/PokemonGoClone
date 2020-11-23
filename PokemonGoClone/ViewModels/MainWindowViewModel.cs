@@ -8,29 +8,40 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using PokemonGoClone.Utilities;
 using System.Windows.Controls;
+using PokemonGoClone.Models;
 
 namespace PokemonGoClone.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
         // All models
+        public string Name;
+        public int Choice;
+        public List<BeingModel> Beings { get; private set; }
+        public List<TileModel> Map { get; private set; }
 
         // All available views
         private object _startView;
         private object _trainerCreationView;
         private object _mapView;
+        private object _bagView;
+        private object _battleView;
         private object _currentView;
 
         // All availabe viewmodels
         private object _startViewModel;
         private object _trainerCreationViewModel;
         private object _mapViewModel;
+        private object _bagViewModel;
+        private object _battleViewModel;
         private object _currentViewModel;
 
         // All ICommands to navigate between views and viewmodels
         private ICommand _goTtoStartViewModelCommand;
         private ICommand _goToTrainerCreationViewModelCommand;
         private ICommand _goToMapViewModelCommand;
+        private ICommand _goToBagViewModelCommand;
+        private ICommand _goToBattleViewModelCommand;
 
         private ICommand _closeWindowCommand;
 
@@ -47,6 +58,14 @@ namespace PokemonGoClone.ViewModels
         {
             get { return _goToMapViewModelCommand ?? (_goToMapViewModelCommand = new RelayCommand(x => { GoToMapViewModel(); })); }
         }
+        public ICommand GoToBagViewModelCommand
+        {
+            get { return _goToBagViewModelCommand ?? (_goToBagViewModelCommand = new RelayCommand(x => { GoToBagViewModel(); })); }
+        }
+        public ICommand GoToBattleViewModelCommand
+        {
+            get { return _goToBattleViewModelCommand ?? (_goToBattleViewModelCommand = new RelayCommand(x => { GoToBattleViewModel(); })); }
+        }
         public ICommand CloseWindowCommand
         {
             get { return _closeWindowCommand ?? (_closeWindowCommand = new RelayCommand(x => { CloseWindow(x); })); }
@@ -58,15 +77,26 @@ namespace PokemonGoClone.ViewModels
             // Create instance for all views and viewmodels
             StartView = new StartView();
             TrainerCreationView = new TrainerCreationView();
-            MapView = new MapView();
 
             StartViewModel = new StartViewModel() { MainWindowViewModel = this};
-            TrainerCreationViewModel = new TrainerCreationViewModel() { MainWindowViewModel = this};
-            MapViewModel = new MapViewModel() { MainWindowViewModel = this};
+            TrainerCreationViewModel = new TrainerCreationViewModel() { MainWindowViewModel = this };
 
             // Set up the startup view and viewmodels
             CurrentViewModel = StartViewModel;
             CurrentView = StartView;
+        }
+
+        // Methods for game control
+        public void StartNewGame (string name, int choice)
+        {
+            Name = name;
+            Choice = choice;
+
+            MapView = new MapView();
+            MapViewModel = new MapViewModel(name, choice);
+
+            CurrentView = MapView;
+            CurrentViewModel = MapViewModel;
         }
 
         // All properties of views and viewmodels
@@ -126,6 +156,43 @@ namespace PokemonGoClone.ViewModels
             }
         }
 
+        public object BagView
+        {
+            get { return _bagView; }
+            set
+            {
+                _bagView = value;
+                OnPropertyChanged(nameof(BagView));
+            }
+        }
+        public object BagViewModel
+        {
+            get { return _bagViewModel; }
+            set
+            {
+                _bagViewModel = value;
+                OnPropertyChanged(nameof(BagViewModel));
+            }
+        }
+        public object BattleView
+        {
+            get { return _battleView; }
+            set
+            {
+                _battleView = value;
+                OnPropertyChanged(nameof(BattleView));
+            }
+        }
+        public object BattleViewModel
+        {
+            get { return _battleViewModel; }
+            set
+            {
+                _battleViewModel = value;
+                OnPropertyChanged(nameof(BattleViewModel));
+            }
+        }
+
         public object CurrentView
         {
             get { return _currentView; }
@@ -161,6 +228,16 @@ namespace PokemonGoClone.ViewModels
         {
             CurrentViewModel = MapViewModel;
             CurrentView = MapView;
+        }
+        public void GoToBagViewModel()
+        {
+            CurrentViewModel = BagViewModel;
+            CurrentView = BagView;
+        }
+        public void GoToBattleViewModel()
+        {
+            CurrentViewModel = BattleViewModel;
+            CurrentView = BattleView;
         }
         private void CloseWindow(object Windows)
         {

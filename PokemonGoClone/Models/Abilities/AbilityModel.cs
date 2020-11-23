@@ -1,5 +1,6 @@
 ﻿using PokemonGoClone.Models.Pokemons;
 using PokemonGoClone.Models.Trainers;
+using PokemonGoClone.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
@@ -9,14 +10,17 @@ using System.Threading.Tasks;
 
 namespace PokemonGoClone.Models.Abilities
 {
-    public abstract class AbilityModel
+    public abstract class AbilityModel : ViewModelBase
     {
         // All fields shared by Ability class
+        private Random rand = new Random();
+
         private string _name;
         private int _id;
         private string _description;
 
         private int _damage;
+        private int _damagePerLevel;
 
         private int _level;
         private int _charge;
@@ -29,7 +33,6 @@ namespace PokemonGoClone.Models.Abilities
         // Default constructor
         public AbilityModel()
         {
-            Rng = new Random();
         }
 
         // All methods of Ability class
@@ -42,6 +45,7 @@ namespace PokemonGoClone.Models.Abilities
             set
             {
                 _name = value;
+                OnPropertyChanged(nameof(Name));
             }
         }
 
@@ -51,6 +55,7 @@ namespace PokemonGoClone.Models.Abilities
             set
             {
                 _id = value;
+                OnPropertyChanged(nameof(Id));
             }
         }
 
@@ -60,6 +65,7 @@ namespace PokemonGoClone.Models.Abilities
             set
             {
                 _description = value;
+                OnPropertyChanged(nameof(Description));
             }
         }
 
@@ -69,6 +75,17 @@ namespace PokemonGoClone.Models.Abilities
             set
             {
                 _damage = value;
+                OnPropertyChanged(nameof(Damage));
+            }
+        }
+
+        public int DamagePerLevel
+        {
+            get { return _damagePerLevel; }
+            set
+            {
+                _damagePerLevel = value;
+                OnPropertyChanged(nameof(DamagePerLevel));
             }
         }
 
@@ -78,6 +95,7 @@ namespace PokemonGoClone.Models.Abilities
             set
             {
                 _level = value;
+                OnPropertyChanged(nameof(Level));
             }
         }
         public int Charge
@@ -86,6 +104,7 @@ namespace PokemonGoClone.Models.Abilities
             set
             {
                 _charge = value;
+                OnPropertyChanged(nameof(Charge));
             }
         }
 
@@ -95,6 +114,7 @@ namespace PokemonGoClone.Models.Abilities
             set
             {
                 _maxCharge = value;
+                OnPropertyChanged(nameof(MaxCharge));
             }
         }
 
@@ -104,16 +124,14 @@ namespace PokemonGoClone.Models.Abilities
             set
             {
                 _accuracy = value;
+                OnPropertyChanged(nameof(Accuracy));
             }
         }
 
-        public Random Rng
+        public void LevelUp()
         {
-            get { return _rng; }
-            set
-            {
-                _rng = value;
-            }
+            Level += 1;
+            Damage += DamagePerLevel;
         }
     }
 }
