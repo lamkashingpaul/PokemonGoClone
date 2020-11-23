@@ -164,13 +164,14 @@ namespace PokemonGoClone.ViewModels
                     PokemonModel pokemon = new PokemonModel(values["Name"].Value<string>(),
                                                             values["Id"].Value<int>(),
                                                             values["Description"].Value<string>(),
-                                                            values["Damage"].Value<int>(),
-                                                            values["DamagePerLevel"].Value<int>(),
                                                             values["Level"].Value<int>(),
                                                             values["MaxLevel"].Value<int>(),
-                                                            values["MaxCharge"].Value<int>(),
-                                                            values["MaxChargePerLevel"].Value<int>(),
-                                                            values["Accuracy"].Value<double>());
+                                                            values["MaxHealth"].Value<int>(),
+                                                            values["MaxHealthPerLevel"].Value<int>(),
+                                                            values["MaxExp"].Value<int>(),
+                                                            values["MaxExpPerLevel"].Value<int>(),
+                                                            values["Accuracy"].Value<double>(),
+                                                            null);
                     pokemons.Add(pokemon);
                     i += 1;
                 }
@@ -180,6 +181,7 @@ namespace PokemonGoClone.ViewModels
                 }
                 //throw new NotImplementedException();
             }
+        }
         public void StartNewGame(string name, int choice)
         {
             Name = name;

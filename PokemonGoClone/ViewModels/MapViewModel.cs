@@ -93,7 +93,7 @@ namespace PokemonGoClone.ViewModels
             };
 
             // Add Pokemon to player
-            ((TrainerModel)Beings[0]).AddPokemon(new PokemonModel(choice, "MyPokemon", 1, 128, null));
+            ((TrainerModel)Beings[0]).AddPokemon(MainWindowViewModel.Pokemons.Find(x => x.Id == choice));
 
             // Create BagView for Player
 

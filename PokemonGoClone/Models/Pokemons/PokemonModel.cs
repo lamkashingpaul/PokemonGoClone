@@ -21,6 +21,7 @@ namespace PokemonGoClone.Models.Pokemons
                             int level,
                             int maxLevel,
                             int maxHealth,
+                            int maxHealthPerLevel,
                             int maxExp,
                             int maxExpPerLevel,
                             double accuracy,
@@ -33,7 +34,7 @@ namespace PokemonGoClone.Models.Pokemons
             MaxLevel = maxLevel;
             MaxHealth = maxHealth;
             Health = maxHealth;
-            MaxHealthPerLevel = maxHealth;
+            MaxHealthPerLevel = maxHealthPerLevel;
             MaxExp = maxExp;
             MaxExpPerLevel = maxExpPerLevel;
             Accuracy = accuracy;
