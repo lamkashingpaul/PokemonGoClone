@@ -54,7 +54,7 @@
 
         <DockPanel Grid.Column="0" Grid.Row="2" Margin="10" LastChildFill="True">
             <Button Focusable="False" DockPanel.Dock="Left" Content="Back to Start" Margin="10" FontSize="12" Command="{Binding CurrentViewModel.MainWindowViewModel.GoToStartViewModelCommand}"/>
-            <Button Focusable="False" DockPanel.Dock="Right" Content="Confierm" Margin="10" FontSize="12" Command="{Binding CurrentViewModel.TrainerCreationCommand}">
+            <Button Focusable="False" DockPanel.Dock="Right" Content="Confirm" Margin="10" FontSize="12" Command="{Binding CurrentViewModel.TrainerCreationCommand}">
                 <Button.CommandParameter>
                     <MultiBinding Converter="{StaticResource MultipleBindingConverter}">
                         <Binding ElementName="nameOfTrainer"/>
