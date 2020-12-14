@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PokemonGoClone.Models.Abilities
 {
-    public class AbilityModel : ViewModelBase
+    public class AbilityModel : ViewModelBase, ICloneable
     {
         // All fields shared by Ability class
         private Random Rand = new Random();
@@ -194,6 +194,11 @@ namespace PokemonGoClone.Models.Abilities
                 Damage += DamagePerLevel;
                 MaxCharge += MaxChargePerLevel;
             }
+        }
+
+        public object Clone()
+        {
+            return MemberwiseClone();
         }
     }
 }

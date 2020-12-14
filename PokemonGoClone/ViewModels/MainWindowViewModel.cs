@@ -10,6 +10,7 @@ using PokemonGoClone.Utilities;
 using System.Windows.Controls;
 using PokemonGoClone.Models;
 using PokemonGoClone.Models.Pokemons;
+using PokemonGoClone.Models.Trainers;
 using PokemonGoClone.Models.Items;
 using PokemonGoClone.Models.Abilities;
 using System.IO;
@@ -28,7 +29,9 @@ namespace PokemonGoClone.ViewModels
 
         public string Name;
         public int Choice;
-        public List<BeingModel> Beings { get; private set; }
+
+        public TrainerModel Player;
+        public List<TrainerModel> Trainers { get; private set; }
         public List<TileModel> Map { get; private set; }
 
         // All available views
@@ -171,7 +174,7 @@ namespace PokemonGoClone.ViewModels
                                                             values["MaxExp"].Value<int>(),
                                                             values["MaxExpPerLevel"].Value<int>(),
                                                             values["Accuracy"].Value<double>(),
-                                                            null);
+                                                            Abilities[0]);
                     pokemons.Add(pokemon);
                     i += 1;
                 }
@@ -179,7 +182,6 @@ namespace PokemonGoClone.ViewModels
                 {
                     break;
                 }
-                //throw new NotImplementedException();
             }
         }
         public void StartNewGame(string name, int choice)
@@ -188,7 +190,12 @@ namespace PokemonGoClone.ViewModels
             Choice = choice;
 
             MapView = new MapView();
-            MapViewModel = new MapViewModel(name, choice);
+            MapViewModel = new MapViewModel() { MainWindowViewModel = this };
+            ((MapViewModel)MapViewModel).GameInitialization(name, choice);
+
+            Trainers = ((MapViewModel)MapViewModel).Trainers;
+            Map = ((MapViewModel)MapViewModel).Map;
+            Player = Trainers[0];
 
             CurrentView = MapView;
             CurrentViewModel = MapViewModel;

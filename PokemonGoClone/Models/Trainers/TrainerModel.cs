@@ -35,7 +35,7 @@ namespace PokemonGoClone.Models.Trainers
         // All methods of Trainer class
         public void AddPokemon(PokemonModel pokemon)
         {
-
+            Pokemons.Add((PokemonModel)(pokemon.Clone()));
         }
 
         public void DropPokemon(PokemonModel pokemon)

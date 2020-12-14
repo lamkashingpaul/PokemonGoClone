@@ -19,5 +19,7 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(MainWindowViewModel));
             }
         }
+
+        public BattleViewModel() { }
     }
 }

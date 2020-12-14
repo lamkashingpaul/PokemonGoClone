@@ -186,7 +186,15 @@
     </None>
     <EmbeddedResource Include="Resources\Abilities\001.json" />
     <EmbeddedResource Include="Resources\Abilities\002.json" />
-    <None Include="Resources\Pokemons\001.json" />
+    <EmbeddedResource Include="Resources\Pokemons\001.json" />
+    <EmbeddedResource Include="Resources\Pokemons\002.json" />
+    <EmbeddedResource Include="Resources\Pokemons\003.json" />
+    <EmbeddedResource Include="Resources\Pokemons\004.json" />
+    <EmbeddedResource Include="Resources\Pokemons\005.json" />
+    <EmbeddedResource Include="Resources\Pokemons\006.json" />
+    <EmbeddedResource Include="Resources\Pokemons\007.json" />
+    <EmbeddedResource Include="Resources\Pokemons\008.json" />
+    <EmbeddedResource Include="Resources\Pokemons\009.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
