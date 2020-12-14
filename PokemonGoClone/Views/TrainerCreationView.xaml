@@ -85,14 +85,24 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
                         <TextBlock HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       TextAlignment="Center"
-                       Text="{Binding Message}"
-                       FontSize="26"/>
+                                   VerticalAlignment="Center"
+                                   TextAlignment="Center"
+                                   Text="{Binding Message}"
+                                   FontSize="26"/>
+                        
                         <Button Focusable="False"
-                        Content="OK"
-                        FontSize="26"
-                        Command="{Binding OkCommand}"/>
+                                Visibility="{Binding IsActionButtonVisible}"
+                                Content="OK"
+                                FontSize="26"
+                                Margin="10"
+                                Command="{Binding ActionCommand}"
+                                />
+                        
+                        <Button Focusable="False"
+                                Content="[Esc]"
+                                FontSize="26"
+                                Margin="10"
+                                Command="{Binding CloseCommand}"/>
                     </StackPanel>
                 </Border>
             </DockPanel>

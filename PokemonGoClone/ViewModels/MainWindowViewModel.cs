@@ -23,15 +23,19 @@ namespace PokemonGoClone.ViewModels
     public class MainWindowViewModel : ViewModelBase
     {
         // All models
-        public List<PokemonModel> Pokemons { get; private set; }
-        public List<AbilityModel> Abilities { get; private set; }
-        public List<ItemModel> Items { get; private set; }
+        public List<PokemonModel> Pokemons { get; private set; }   // Pokemon data
+        public List<AbilityModel> Abilities { get; private set; }   // Abilities data
+        public List<ItemModel> Items { get; private set; }   // Items data
 
-        public string Name;
-        public int Choice;
+        public string Name;   // Name of Player
+        public int Choice;    // Choice of starting pokemon
 
         public TrainerModel Player;
-        public List<TrainerModel> Trainers { get; private set; }
+        // All trainers inside the game, Trainers[0] is assigned to variable Player
+        // Trainers is linked with Trainers inside MapViewModel;
+        public List<TrainerModel> Trainers { get; private set; }   
+
+        // Map of the game, it is linked with Map inside MapViewModel
         public List<TileModel> Map { get; private set; }
 
         // All available views
@@ -108,7 +112,7 @@ namespace PokemonGoClone.ViewModels
             CurrentView = StartView;
         }
 
-        // Methods for game control
+        // Methods for loading game data
         private void LoadAbilities(List<AbilityModel> abilities)
         {
             int i = 1;

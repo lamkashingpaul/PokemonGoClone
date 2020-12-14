@@ -11,16 +11,31 @@ namespace PokemonGoClone.ViewModels
 {
     public class DialogViewModel : ViewModelBase
     {
+        public delegate void ActionDelegate(object x);
+
+        private ActionDelegate _actionDelegateMethod;
         private string _message;
 
         private bool _isVisible;
 
-        private ICommand _okCommand;
+        private ICommand _closeCommand;
         private ICommand _actionCommand;
 
         public DialogViewModel()
         {
+            ActionDelegateMethod = null;
             IsVisible = false;
+        }
+
+        // All properies of DialogViewModel
+        public ActionDelegate ActionDelegateMethod
+        {
+            get { return _actionDelegateMethod; }
+            set
+            {
+                _actionDelegateMethod = value;
+                OnPropertyChanged(nameof(IsActionButtonVisible));
+            }
         }
 
         public string Message
@@ -48,21 +63,26 @@ namespace PokemonGoClone.ViewModels
             get { return IsVisible ? Visibility.Visible : Visibility.Collapsed; }
         }
 
-        public virtual void Ok(object x)
+        public Visibility IsActionButtonVisible
+        {
+            get { return ActionDelegateMethod != null ? Visibility.Visible : Visibility.Collapsed; }
+        }
+
+        public virtual void Close(object x)
         {
             IsVisible = false;
         }
 
         public virtual void Action(object x) { }
 
-        public ICommand OkCommand
+        public ICommand CloseCommand
         {
-            get { return _okCommand ?? (_okCommand = new RelayCommand(x => { Ok(x); })); }
+            get { return _closeCommand ?? (_closeCommand = new RelayCommand(x => { Close(x); })); }
         }
 
-        public ICommand Action2Command
+        public ICommand ActionCommand
         {
-            get { return _actionCommand ?? (_actionCommand = new RelayCommand(x => { Action(x); })); }
+            get { return _actionCommand ?? (_actionCommand = new RelayCommand(x => { ActionDelegateMethod(x); })); }
         }
     }
 }

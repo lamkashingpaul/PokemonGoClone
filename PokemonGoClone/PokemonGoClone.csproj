@@ -105,9 +105,6 @@
     <Compile Include="Views\BattleView.xaml.cs">
       <DependentUpon>BattleView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DialogView.xaml.cs">
-      <DependentUpon>DialogView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\MapView.xaml.cs">
       <DependentUpon>MapView.xaml</DependentUpon>
     </Compile>
@@ -137,10 +134,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BattleView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\DialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -195,6 +188,9 @@
     <EmbeddedResource Include="Resources\Pokemons\007.json" />
     <EmbeddedResource Include="Resources\Pokemons\008.json" />
     <EmbeddedResource Include="Resources\Pokemons\009.json" />
+    <EmbeddedResource Include="Resources\Trainers\001.json" />
+    <EmbeddedResource Include="Resources\Trainers\002.json" />
+    <EmbeddedResource Include="Resources\Trainers\003.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

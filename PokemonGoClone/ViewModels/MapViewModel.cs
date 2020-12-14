@@ -8,16 +8,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using System.IO;
+using System.Reflection;
 
 namespace PokemonGoClone.ViewModels
 {
     public class MapViewModel : ViewModelBase
     {
+        // Delegates for DialogViewModel Action
+        public void AcceptBattle(object x)
+        {
+
+        }
+
+        //
         private MainWindowViewModel _mainWindowViewMode;
+        private DialogViewModel _dialogViewModel;
 
         private const int _col = 11;
         private const int _row = 11;
 
+        public TrainerModel Player;
         public List<TrainerModel> Trainers { get; private set; }
         public List<TileModel> Map { get; private set; }
 
@@ -33,6 +46,7 @@ namespace PokemonGoClone.ViewModels
             get { return _interactCommand ?? (_interactCommand = new RelayCommand(x => { Interact(); })); }
         }
 
+        // All properties of MapViewModel
         public MainWindowViewModel MainWindowViewModel
         {
             get { return _mainWindowViewMode; }
@@ -42,8 +56,23 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(MainWindowViewModel));
             }
         }
+        public DialogViewModel DialogViewModel
+        {
+            get { return _dialogViewModel; }
+            set
+            {
+                _dialogViewModel = value;
+                OnPropertyChanged(nameof(DialogViewModel));
+            }
+        }
 
-        public MapViewModel() { }
+        public MapViewModel()
+        {
+            DialogViewModel = new DialogViewModel
+            {
+                ActionDelegateMethod = null
+            };
+        }
 
         public void GameInitialization(string name, int choice)
         {
@@ -94,6 +123,8 @@ namespace PokemonGoClone.ViewModels
                 }
             };
 
+            Player = Trainers[0];
+
             // Add Pokemon to player
             Trainers[0].AddPokemon((PokemonModel)(MainWindowViewModel.Pokemons.Find(x => x.Id == choice).Clone()));
 
@@ -101,17 +132,7 @@ namespace PokemonGoClone.ViewModels
 
 
             // Add more NPC trainers
-            for (int i = 0; i < 3; i++)
-            {
-                string randomNPC = $"{i + 1:D3}";
-                int randomX, randomY;
-                do
-                {
-                    randomX = rng.Next(1, ROW - 1);
-                    randomY = rng.Next(1, ROW - 1);
-                } while (Trainers.Find(x => x.XCoordinate == randomX && x.YCoordinate == randomY) != null);
-                Trainers.Add(new TrainerModel(randomNPC, "NPC", i + 1) { XCoordinate = randomX, YCoordinate = randomY });
-            }
+            LoadTrainers();
         }
 
         public int COL
@@ -157,12 +178,58 @@ namespace PokemonGoClone.ViewModels
             }
         }
 
+        private void LoadTrainers()
+        {
+            int i = 1;
+            while(true)
+            {
+                string json;
+                Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("PokemonGoClone.Resources.Trainers." + $"{i:D3}.json");
+                if (stream != null)
+                {
+                    using (var reader = new StreamReader(stream, Encoding.Default))
+                    {
+                        json = reader.ReadToEnd();
+                    }
+
+                    var values = (JObject)JsonConvert.DeserializeObject(json);
+
+                    var rng = new Random();
+                    int randomX, randomY;
+                    do
+                    {
+                        randomX = rng.Next(1, ROW - 1);
+                        randomY = rng.Next(1, ROW - 1);
+                    } while (Trainers.Find(x => x.XCoordinate == randomX && x.YCoordinate == randomY) != null);
+
+                    TrainerModel trainer = new TrainerModel(values["Name"].Value<string>(), "NPC", i)
+                    { 
+                        XCoordinate = randomX,
+                        YCoordinate = randomY,
+                        Quote = values["Quote"].Value<string>()
+                    };
+                    
+                    int randomPokemon = rng.Next(MainWindowViewModel.Pokemons.Count) + 1;
+                    trainer.AddPokemon((PokemonModel)(MainWindowViewModel.Pokemons.Find(x => x.Id == randomPokemon).Clone()));
+                    Trainers.Add(trainer);
+
+                    i += 1;
+                } else
+                {
+                    break;
+                }
+            }
+        }
+
         private void Interact()
         {
             var frontObject = Trainers.Find(x => x.XCoordinate == Trainers[0].XFacing && x.YCoordinate == Trainers[0].YFacing);
             if (frontObject == null)
             {
                 return;
+            } else
+            {
+                DialogViewModel.Message = frontObject.Quote;
             }
 
             Console.WriteLine($"{frontObject.Name} Found at ({frontObject.XCoordinate}, {frontObject.YCoordinate}).");

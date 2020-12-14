@@ -26,7 +26,7 @@
         <KeyBinding Command="{Binding CurrentViewModel.MoveCommand}" CommandParameter="D" Key="D"/>
 
         <KeyBinding Command="{Binding CurrentViewModel.InteractCommand}" Key="Space"/>
-        <KeyBinding Command="{Binding CurrentViewModel.CloseCommand}" Key="Esc"/>
+        <KeyBinding Command="{Binding CurrentViewModel.DialogViewModel.CloseCommand}" Key="Esc"/>
 
         <KeyBinding Command="{Binding CurrentViewModel.BagCommand}" Key="B"/>
     </Window.InputBindings>

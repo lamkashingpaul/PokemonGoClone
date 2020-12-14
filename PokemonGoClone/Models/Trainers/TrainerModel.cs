@@ -12,6 +12,7 @@ namespace PokemonGoClone.Models.Trainers
     public class TrainerModel : BeingModel
     {
         // All fields of Trainer class
+        private string _quote;
         public List<PokemonModel> Pokemons;
         public List<ItemModel> Items;
 
@@ -30,6 +31,17 @@ namespace PokemonGoClone.Models.Trainers
 
             Pokemons = new List<PokemonModel>();
             Items = new List<ItemModel>();
+        }
+
+        // All properties of Trainer class
+        public string Quote
+        {
+            get { return _quote; }
+            set
+            {
+                _quote = value;
+                OnPropertyChanged(nameof(Quote));
+            }
         }
 
         // All methods of Trainer class
