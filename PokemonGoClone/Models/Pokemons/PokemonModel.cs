@@ -8,8 +8,11 @@ using System.Windows.Media.Imaging;
 
 namespace PokemonGoClone.Models.Pokemons
 {
-    public class PokemonModel : BeingModel
+    public class PokemonModel : BeingModel, ICloneable
     {
+        // All fields for TrainerCreation
+        private bool _isChecked;
+
         // All fields of Pokemon class
         private List<AbilityModel> _abilities;
         private double _accuracy;
@@ -39,25 +42,37 @@ namespace PokemonGoClone.Models.Pokemons
             MaxExpPerLevel = maxExpPerLevel;
             Accuracy = accuracy;
 
+            Abilities = new List<AbilityModel>();
+
             if (ability != null)
             {
-                Abilities.Add(ability);
+                Abilities.Add((AbilityModel)ability.Clone());
             }
 
             ImageSource = $"/PokemonGoClone;component/Images/Pokemons/{Id:D3}.png";
         }
 
         // Constructor for Starting Pokemon
-        public PokemonModel(int id, string name)
+        public PokemonModel(int id, string name, bool isChecked)
         {
             Id = id;
             Name = name;
+            IsChecked = isChecked;
 
             ImageSource = $"/PokemonGoClone;component/Images/Pokemons/{Id:D3}.png";
         }
 
 
         // All properties of Pokemon class
+        public bool IsChecked
+        {
+            get { return _isChecked; }
+            set
+            {
+                _isChecked = value;
+                OnPropertyChanged(nameof(IsChecked));
+            }
+        }
 
         public List<AbilityModel> Abilities
         {
@@ -98,6 +113,20 @@ namespace PokemonGoClone.Models.Pokemons
         public void DropAbility(AbilityModel ability)
         {
             Abilities.Remove(ability);
+        }
+
+        public object Clone()
+        {
+            var pokemonModel = (PokemonModel)MemberwiseClone();
+            pokemonModel.Abilities = new List<AbilityModel>();
+            if (Abilities.Count > 0)
+            {
+                foreach (var ability in Abilities)
+                {
+                    pokemonModel.AddAbility((AbilityModel)ability.Clone());
+                }
+            }
+            return pokemonModel;
         }
     }
 }

@@ -93,6 +93,7 @@
     <Compile Include="ViewModels\BagViewModel.cs" />
     <Compile Include="ViewModels\BattleViewModel.cs" />
     <Compile Include="ViewModels\DialogViewModel.cs" />
+    <Compile Include="ViewModels\ItemViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\MapViewModel.cs" />
     <Compile Include="ViewModels\ShopViewModel.cs" />
@@ -104,9 +105,6 @@
     </Compile>
     <Compile Include="Views\BattleView.xaml.cs">
       <DependentUpon>BattleView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DialogView.xaml.cs">
-      <DependentUpon>DialogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MapView.xaml.cs">
       <DependentUpon>MapView.xaml</DependentUpon>
@@ -141,6 +139,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ItemView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -186,7 +188,18 @@
     </None>
     <EmbeddedResource Include="Resources\Abilities\001.json" />
     <EmbeddedResource Include="Resources\Abilities\002.json" />
-    <None Include="Resources\Pokemons\001.json" />
+    <EmbeddedResource Include="Resources\Pokemons\001.json" />
+    <EmbeddedResource Include="Resources\Pokemons\002.json" />
+    <EmbeddedResource Include="Resources\Pokemons\003.json" />
+    <EmbeddedResource Include="Resources\Pokemons\004.json" />
+    <EmbeddedResource Include="Resources\Pokemons\005.json" />
+    <EmbeddedResource Include="Resources\Pokemons\006.json" />
+    <EmbeddedResource Include="Resources\Pokemons\007.json" />
+    <EmbeddedResource Include="Resources\Pokemons\008.json" />
+    <EmbeddedResource Include="Resources\Pokemons\009.json" />
+    <EmbeddedResource Include="Resources\Trainers\001.json" />
+    <EmbeddedResource Include="Resources\Trainers\002.json" />
+    <EmbeddedResource Include="Resources\Trainers\003.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

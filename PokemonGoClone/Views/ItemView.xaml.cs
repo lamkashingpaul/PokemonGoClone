@@ -13,15 +13,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PokemonGoClone.Views
-{
+namespace PokemonGoClone.Views {
     /// <summary>
-    /// Interaction logic for DialogView.xaml
+    /// ItemView.xaml 的互動邏輯
     /// </summary>
-    public partial class DialogView : UserControl
-    {
-        public DialogView()
-        {
+    public partial class ItemView : UserControl {
+        public ItemView() {
             InitializeComponent();
         }
     }

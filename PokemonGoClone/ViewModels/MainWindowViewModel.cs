@@ -10,6 +10,7 @@ using PokemonGoClone.Utilities;
 using System.Windows.Controls;
 using PokemonGoClone.Models;
 using PokemonGoClone.Models.Pokemons;
+using PokemonGoClone.Models.Trainers;
 using PokemonGoClone.Models.Items;
 using PokemonGoClone.Models.Abilities;
 using System.IO;
@@ -22,13 +23,19 @@ namespace PokemonGoClone.ViewModels
     public class MainWindowViewModel : ViewModelBase
     {
         // All models
-        public List<PokemonModel> Pokemons { get; private set; }
-        public List<AbilityModel> Abilities { get; private set; }
-        public List<ItemModel> Items { get; private set; }
+        public List<PokemonModel> Pokemons { get; private set; }   // Pokemon data
+        public List<AbilityModel> Abilities { get; private set; }   // Abilities data
+        public List<ItemModel> Items { get; private set; }   // Items data
 
-        public string Name;
-        public int Choice;
-        public List<BeingModel> Beings { get; private set; }
+        public string Name;   // Name of Player
+        public int Choice;    // Choice of starting pokemon
+
+        public TrainerModel Player;
+        // All trainers inside the game, Trainers[0] is assigned to variable Player
+        // Trainers is linked with Trainers inside MapViewModel;
+        public List<TrainerModel> Trainers { get; private set; }   
+
+        // Map of the game, it is linked with Map inside MapViewModel
         public List<TileModel> Map { get; private set; }
 
         // All available views
@@ -36,6 +43,7 @@ namespace PokemonGoClone.ViewModels
         private object _trainerCreationView;
         private object _mapView;
         private object _bagView;
+        private object _itemView;
         private object _battleView;
         private object _currentView;
 
@@ -44,6 +52,7 @@ namespace PokemonGoClone.ViewModels
         private object _trainerCreationViewModel;
         private object _mapViewModel;
         private object _bagViewModel;
+        private object _itemViewModel;
         private object _battleViewModel;
         private object _currentViewModel;
 
@@ -105,7 +114,7 @@ namespace PokemonGoClone.ViewModels
             CurrentView = StartView;
         }
 
-        // Methods for game control
+        // Methods for loading game data
         private void LoadAbilities(List<AbilityModel> abilities)
         {
             int i = 1;
@@ -171,7 +180,7 @@ namespace PokemonGoClone.ViewModels
                                                             values["MaxExp"].Value<int>(),
                                                             values["MaxExpPerLevel"].Value<int>(),
                                                             values["Accuracy"].Value<double>(),
-                                                            null);
+                                                            Abilities[0]);
                     pokemons.Add(pokemon);
                     i += 1;
                 }
@@ -179,7 +188,6 @@ namespace PokemonGoClone.ViewModels
                 {
                     break;
                 }
-                //throw new NotImplementedException();
             }
         }
         public void StartNewGame(string name, int choice)
@@ -188,7 +196,15 @@ namespace PokemonGoClone.ViewModels
             Choice = choice;
 
             MapView = new MapView();
-            MapViewModel = new MapViewModel(name, choice);
+            MapViewModel = new MapViewModel() { MainWindowViewModel = this };
+            ((MapViewModel)MapViewModel).GameInitialization(name, choice);
+
+            BattleView = new BattleView();
+            BattleViewModel = new BattleViewModel();
+
+            Trainers = ((MapViewModel)MapViewModel).Trainers;
+            Map = ((MapViewModel)MapViewModel).Map;
+            Player = Trainers[0];
 
             CurrentView = MapView;
             CurrentViewModel = MapViewModel;
@@ -258,6 +274,14 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(BagView));
             }
         }
+
+        public object ItemView {
+            get { return _itemView; }
+            set {
+                _itemView = value;
+                OnPropertyChanged(nameof(ItemView));
+            }
+        }
         public object BagViewModel
         {
             get { return _bagViewModel; }
@@ -266,6 +290,14 @@ namespace PokemonGoClone.ViewModels
                 _bagViewModel = value;
                 OnPropertyChanged(nameof(BagViewModel));
             }
+        }
+        public object ItemViewModel {
+            get { return _itemViewModel; }
+            set {
+                _itemViewModel = value;
+                OnPropertyChanged(nameof(ItemViewModel));
+            }
+        
         }
         public object BattleView
         {

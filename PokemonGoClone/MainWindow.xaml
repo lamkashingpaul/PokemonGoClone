@@ -20,14 +20,6 @@
     </Grid>
 
     <Window.InputBindings>
-        <KeyBinding Command="{Binding CurrentViewModel.MoveCommand}" CommandParameter="W" Key="W"/>
-        <KeyBinding Command="{Binding CurrentViewModel.MoveCommand}" CommandParameter="S" Key="S"/>
-        <KeyBinding Command="{Binding CurrentViewModel.MoveCommand}" CommandParameter="A" Key="A"/>
-        <KeyBinding Command="{Binding CurrentViewModel.MoveCommand}" CommandParameter="D" Key="D"/>
 
-        <KeyBinding Command="{Binding CurrentViewModel.InteractCommand}" Key="Space"/>
-        <KeyBinding Command="{Binding CurrentViewModel.CloseCommand}" Key="Esc"/>
-
-        <KeyBinding Command="{Binding CurrentViewModel.BagCommand}" Key="B"/>
     </Window.InputBindings>
 </Window>
