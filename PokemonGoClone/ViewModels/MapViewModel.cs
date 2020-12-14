@@ -38,11 +38,15 @@ namespace PokemonGoClone.ViewModels
         public List<TileModel> Map { get; private set; }
 
         private ICommand _moveCommand;
+        private ICommand _bagCommand;
         private ICommand _interactCommand;
 
         public ICommand MoveCommand
         {
             get { return _moveCommand ?? (_moveCommand = new RelayCommand(x => { Move(x); })); }
+        }
+        public ICommand BagCommand {
+            get { return _bagCommand ?? (_bagCommand = new RelayCommand(x => { Bag(); })); }
         }
         public ICommand InteractCommand
         {
@@ -237,6 +241,11 @@ namespace PokemonGoClone.ViewModels
             }
 
             Console.WriteLine($"{Target.Name} Found at ({Target.XCoordinate}, {Target.YCoordinate}).");
+        }
+
+        private void Bag() {
+            MainWindowViewModel.CurrentView = MainWindowViewModel.BagView;
+            MainWindowViewModel.CurrentViewModel = MainWindowViewModel.BagViewModel;
         }
     }
 }
