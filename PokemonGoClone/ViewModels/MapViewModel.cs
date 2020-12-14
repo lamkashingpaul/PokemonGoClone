@@ -20,7 +20,9 @@ namespace PokemonGoClone.ViewModels
         // Delegates for DialogViewModel Action
         public void AcceptBattle(object x)
         {
-
+            ((BattleViewModel)MainWindowViewModel.BattleViewModel).NewBattle(Player, Target);
+            MainWindowViewModel.CurrentView = MainWindowViewModel.BattleView;
+            MainWindowViewModel.CurrentViewModel = MainWindowViewModel.BattleViewModel;
         }
 
         //
@@ -31,6 +33,7 @@ namespace PokemonGoClone.ViewModels
         private const int _row = 11;
 
         public TrainerModel Player;
+        public TrainerModel Target;
         public List<TrainerModel> Trainers { get; private set; }
         public List<TileModel> Map { get; private set; }
 
@@ -223,16 +226,17 @@ namespace PokemonGoClone.ViewModels
 
         private void Interact()
         {
-            var frontObject = Trainers.Find(x => x.XCoordinate == Trainers[0].XFacing && x.YCoordinate == Trainers[0].YFacing);
-            if (frontObject == null)
+            Target = Trainers.Find(x => x.XCoordinate == Player.XFacing && x.YCoordinate == Player.YFacing);
+            if (Target == null)
             {
                 return;
             } else
             {
-                DialogViewModel.Message = frontObject.Quote;
+                DialogViewModel.ActionDelegateMethod = AcceptBattle;
+                DialogViewModel.Message = Target.Quote;
             }
 
-            Console.WriteLine($"{frontObject.Name} Found at ({frontObject.XCoordinate}, {frontObject.YCoordinate}).");
+            Console.WriteLine($"{Target.Name} Found at ({Target.XCoordinate}, {Target.YCoordinate}).");
         }
     }
 }

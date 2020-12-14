@@ -31,7 +31,8 @@
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <RadioButton Focusable="False" 
+                    <RadioButton Focusable="False"
+                                 IsChecked="{Binding IsChecked}"
                                  GroupName="Id"
                                  VerticalAlignment="Center"
                                  VerticalContentAlignment="Center"
@@ -64,7 +65,7 @@
             </Button>
             <DockPanel LastChildFill="True">
                 <TextBlock DockPanel.Dock="Left" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12">Enter Your Name:</TextBlock>
-                <TextBox x:Name="nameOfTrainer" DockPanel.Dock="Right" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
+                <TextBox x:Name="nameOfTrainer" Text="Default" DockPanel.Dock="Right" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
             </DockPanel>
         </DockPanel>
 

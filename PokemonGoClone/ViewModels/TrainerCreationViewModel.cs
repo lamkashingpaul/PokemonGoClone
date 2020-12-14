@@ -49,12 +49,12 @@ namespace PokemonGoClone.ViewModels
         {
             StartPokemon = new List<PokemonModel>
             {
-                new PokemonModel(001, "Bulbasaur"),
-                new PokemonModel(004, "Charmander"),
-                new PokemonModel(007, "Squirtle"),
+                new PokemonModel(001, "Bulbasaur", false),
+                new PokemonModel(004, "Charmander", true),
+                new PokemonModel(007, "Squirtle", false),
             };
 
-            Choice = null;
+            Choice = 004;
 
             DialogViewModel = new DialogViewModel
             {

@@ -197,6 +197,9 @@ namespace PokemonGoClone.ViewModels
             MapViewModel = new MapViewModel() { MainWindowViewModel = this };
             ((MapViewModel)MapViewModel).GameInitialization(name, choice);
 
+            BattleView = new BattleView();
+            BattleViewModel = new BattleViewModel();
+
             Trainers = ((MapViewModel)MapViewModel).Trainers;
             Map = ((MapViewModel)MapViewModel).Map;
             Player = Trainers[0];
