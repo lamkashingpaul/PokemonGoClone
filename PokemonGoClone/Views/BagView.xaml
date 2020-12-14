@@ -7,6 +7,25 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <ItemsControl Focusable="False" ItemsSource="{Binding CurrentViewModel.Pokemons}">
             
+            <ItemsControl.Template>
+                <ControlTemplate>
+                    <ScrollViewer HorizontalScrollBarVisibility="Hidden">
+                        <ItemsPresenter>
+                        </ItemsPresenter>
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ItemsControl.Template>
+            
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <Image Source="{Binding ImageSource}"/>
+                        <TextBlock Text="{Binding Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </UserControl>

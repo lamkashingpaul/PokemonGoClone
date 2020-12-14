@@ -9,12 +9,11 @@ namespace PokemonGoClone.ViewModels
     {
         private MainWindowViewModel _mainWindowViewMode;
 
-        private List<PokemonModel> _pokemens;
-        private List<ItemModel> _items;
+        private List<PokemonModel> _pokemons;
+
         public BagViewModel(TrainerModel trainer)
         {
-            _pokemens = trainer.Pokemons;
-            _items = trainer.Items;
+            _pokemons = trainer.Pokemons;
         }
 
         public MainWindowViewModel MainWindowViewModel
@@ -27,14 +26,13 @@ namespace PokemonGoClone.ViewModels
             }
         }
 
-        public List<PokemonModel> Pokemon
+        public List<PokemonModel> Pokemons
         {
-            get { return _pokemens; }
+            get { return _pokemons; }
         }
 
-        public List<ItemModel> Items
-        {
-            get { return _items; }
-        }
+
+
+        
     }
 }
