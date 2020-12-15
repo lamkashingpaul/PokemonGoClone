@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 
 namespace PokemonGoClone.Views {
     /// <summary>
-    /// ItemView.xaml 的互動邏輯
+    /// Interaction logic for ItemView.xaml
     /// </summary>
     public partial class ItemView : UserControl {
         public ItemView() {

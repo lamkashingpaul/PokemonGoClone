@@ -154,6 +154,11 @@ namespace PokemonGoClone.ViewModels
 
         private void Move(object sender)
         {
+            if (DialogViewModel.IsVisible == true)
+            {
+                return;
+            }
+
             string command = sender as string;
             char direction = command[0];
             Trainers[0].Facing = direction;
@@ -230,17 +235,23 @@ namespace PokemonGoClone.ViewModels
 
         private void Interact()
         {
-            Target = Trainers.Find(x => x.XCoordinate == Player.XFacing && x.YCoordinate == Player.YFacing);
-            if (Target == null)
+            if (DialogViewModel.IsVisible == true)
             {
-                return;
+                DialogViewModel.ActionDelegateMethod?.Invoke(null);
             } else
             {
-                DialogViewModel.ActionDelegateMethod = AcceptBattle;
-                DialogViewModel.Message = Target.Quote;
+                Target = Trainers.Find(x => x.XCoordinate == Player.XFacing && x.YCoordinate == Player.YFacing);
+                if (Target == null)
+                {
+                    return;
+                }
+                else
+                {
+                    DialogViewModel.ActionDelegateMethod = AcceptBattle;
+                    DialogViewModel.Message = Target.Quote;
+                }
             }
 
-            Console.WriteLine($"{Target.Name} Found at ({Target.XCoordinate}, {Target.YCoordinate}).");
         }
 
         private void Bag() {

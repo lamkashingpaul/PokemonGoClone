@@ -6,7 +6,9 @@
              xmlns:local="clr-namespace:PokemonGoClone.Views"
              mc:Ignorable="d" 
              d:DesignHeight="480" d:DesignWidth="640"
-             Background="White">
+             Background="White"
+             FocusVisualStyle="{x:Null}">
+    
     <Grid>
         <ItemsControl ItemsSource="{Binding CurrentViewModel.Map}">
             <ItemsControl.ItemsPanel>
@@ -162,7 +164,6 @@
         <KeyBinding Command="{Binding CurrentViewModel.MoveCommand}" CommandParameter="D" Key="D"/>
 
         <KeyBinding Command="{Binding CurrentViewModel.InteractCommand}" Key="Space"/>
-        <!--<KeyBinding Command="{Binding CurrentViewModel.DialogViewModel.ActionCommand}" Key="Space"/>-->
         <KeyBinding Command="{Binding CurrentViewModel.DialogViewModel.CloseCommand}" Key="Esc"/>
         
         <KeyBinding Command="{Binding CurrentViewModel.BagCommand}" Key="B"/>

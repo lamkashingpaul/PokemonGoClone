@@ -16,10 +16,6 @@
     </Window.DataContext>
 
     <Grid>
-        <ContentControl Focusable="False" Content="{Binding CurrentView}" />
+        <ContentControl Focusable="False" Content="{Binding CurrentView}"/>
     </Grid>
-
-    <Window.InputBindings>
-
-    </Window.InputBindings>
 </Window>

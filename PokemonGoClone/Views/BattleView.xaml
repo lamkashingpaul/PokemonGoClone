@@ -9,11 +9,16 @@
     <Grid>
         <UniformGrid Rows="2" Columns="2" Margin="32">
             <Image Source="{Binding CurrentViewModel.PlayerPokemon.ImageSource}"
-                   Height="128"
-                   Width="128"/>
+                   Height="64"
+                   Width="64"/>
             <Image Source="{Binding CurrentViewModel.OpponentPokemon.ImageSource}"
-                   Height="128"
-                   Width="128"/>
+                   Height="64"
+                   Width="64"
+                   RenderTransformOrigin="0.5,0.5">
+                <Image.RenderTransform>
+                    <ScaleTransform ScaleX="-1"/>
+                </Image.RenderTransform>
+            </Image>
         </UniformGrid>
     </Grid>
 </UserControl>

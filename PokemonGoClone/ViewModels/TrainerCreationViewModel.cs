@@ -31,6 +31,7 @@ namespace PokemonGoClone.ViewModels
         // All ICommands for the viewmodel
         private ICommand _updateChoiceCommand;
         private ICommand _trainerCreationCommand;
+        private ICommand _wCommand;
 
         // All properties for ICommands
         public ICommand UpdateChoiceCommand
@@ -41,6 +42,11 @@ namespace PokemonGoClone.ViewModels
         public ICommand TrainerCreationCommand
         {
             get { return _trainerCreationCommand ?? (_trainerCreationCommand = new RelayCommand(x => { TrainerCreation(x); })); }
+        }
+
+        public ICommand WCommand
+        {
+            get { return _wCommand ?? (_wCommand = new RelayCommand(x => { W(x); })); }
         }
 
 
@@ -123,6 +129,11 @@ namespace PokemonGoClone.ViewModels
             }
 
             MainWindowViewModel.StartNewGame(name, (int)choice);
+        }
+
+        private void W(object x)
+        {
+            Console.WriteLine("I am TrainerCreationViewModel");
         }
     }
 }

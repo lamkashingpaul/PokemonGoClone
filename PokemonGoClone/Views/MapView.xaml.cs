@@ -23,6 +23,8 @@ namespace PokemonGoClone.Views
         public MapView()
         {
             InitializeComponent();
+            Focusable = true;
+            Loaded += (s, e) => Keyboard.Focus(this);
         }
     }
 }
