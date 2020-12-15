@@ -1,16 +1,15 @@
-﻿using PokemonGoClone.Models.Items;
-using PokemonGoClone.Models.Pokemons;
+﻿using PokemonGoClone.Models.Pokemons;
 using PokemonGoClone.Models.Trainers;
+using PokemonGoClone.Utilities;
 using System.Collections.Generic;
+using System.Windows.Input;
 
 namespace PokemonGoClone.ViewModels
 {
     public class BagViewModel : ViewModelBase
     {
-        private MainWindowViewModel _mainWindowViewMode;
-
+        private MainWindowViewModel _mainWindowViewModel;
         private List<PokemonModel> _pokemons;
-
         public BagViewModel(TrainerModel trainer)
         {
             _pokemons = trainer.Pokemons;
@@ -18,10 +17,10 @@ namespace PokemonGoClone.ViewModels
 
         public MainWindowViewModel MainWindowViewModel
         {
-            get { return _mainWindowViewMode; }
+            get { return _mainWindowViewModel; }
             set
             {
-                _mainWindowViewMode = value;
+                _mainWindowViewModel = value;
                 OnPropertyChanged(nameof(MainWindowViewModel));
             }
         }
