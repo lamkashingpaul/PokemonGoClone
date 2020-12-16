@@ -43,6 +43,7 @@ namespace PokemonGoClone.ViewModels
         private object _trainerCreationView;
         private object _mapView;
         private object _bagView;
+        private object _pokemonStatusView;
         private object _itemView;
         private object _battleView;
         private object _currentView;
@@ -52,6 +53,7 @@ namespace PokemonGoClone.ViewModels
         private object _trainerCreationViewModel;
         private object _mapViewModel;
         private object _bagViewModel;
+        private object _pokemonStatusViewModel;
         private object _itemViewModel;
         private object _battleViewModel;
         private object _currentViewModel;
@@ -101,6 +103,12 @@ namespace PokemonGoClone.ViewModels
 
             StartViewModel = new StartViewModel() { MainWindowViewModel = this };
             TrainerCreationViewModel = new TrainerCreationViewModel() { MainWindowViewModel = this };
+
+            BagView = new BagView();
+            BagViewModel = new BagViewModel(this);
+
+            PokemonStatusView = new PokemonStatusView();
+            PokemonStatusViewModel = new PokemonStatusViewModel(this);            
 
             // Set up game data
             Abilities = new List<AbilityModel>();
@@ -277,6 +285,22 @@ namespace PokemonGoClone.ViewModels
             }
         }
 
+        public object PokemonStatusViewModel {
+            get { return _pokemonStatusViewModel; }
+            set {
+                _pokemonStatusViewModel = value;
+                OnPropertyChanged(nameof(PokemonStatusViewModel));
+            }
+        }
+        public object PokemonStatusView {
+            get { return _pokemonStatusView; }
+            set {
+                _pokemonStatusView = value;
+                OnPropertyChanged(nameof(PokemonStatusView));
+            }
+        }
+
+
         public object ItemView {
             get { return _itemView; }
             set {
@@ -360,6 +384,12 @@ namespace PokemonGoClone.ViewModels
             CurrentViewModel = BagViewModel;
             CurrentView = BagView;
         }
+
+        public void GotoPokemonStatusViewModel() {
+            CurrentViewModel = PokemonStatusViewModel;
+            CurrentView = PokemonStatusView;
+        }
+
         public void GoToBattleViewModel()
         {
             CurrentViewModel = BattleViewModel;

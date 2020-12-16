@@ -11,19 +11,18 @@ namespace PokemonGoClone.ViewModels
     {
         private MainWindowViewModel _mainWindowViewModel;
         private List<PokemonModel> _pokemons;
-        private object _pokemonStatusView;
-        private object _pokemonStatusViewModel;
-        private ICommand _goToPokemonStatusViewModelCommand;
+        private ICommand _selectedPokemonCommand;
 
-        public ICommand GoToPokemonStatusViewModelCommand {
-            get { return _goToPokemonStatusViewModelCommand ?? (_goToPokemonStatusViewModelCommand = new RelayCommand(x => { GoToPokemonStatusViewModel(x); })); }
+        public ICommand SelectedPokemonCommand {
+            get { return _selectedPokemonCommand ?? (_selectedPokemonCommand = new RelayCommand(x => { SelectedPokemon(x); })); }
         }
-        public BagViewModel(TrainerModel trainer, MainWindowViewModel mainWindowViewModel)
+        public BagViewModel(MainWindowViewModel mainWindowViewModel)
         {
-            Pokemons = trainer.Pokemons;
             MainWindowViewModel = mainWindowViewModel;
-            PokemonStatusView = new PokemonStatusView();
-            PokemonStatusViewModel = new PokemonStatusViewModel();
+        }
+
+        public void UpdatePlayer(TrainerModel trainer) {
+            Pokemons = trainer.Pokemons;
         }
 
         public MainWindowViewModel MainWindowViewModel
@@ -36,25 +35,10 @@ namespace PokemonGoClone.ViewModels
             }
         }
 
-        public object PokemonStatusViewModel {
-            get { return _pokemonStatusViewModel; }
-            set {
-                _pokemonStatusViewModel = value;
-                OnPropertyChanged(nameof(PokemonStatusViewModel));
-            }
-        }
-        public object PokemonStatusView {
-            get { return _pokemonStatusView; }
-            set {
-                _pokemonStatusView = value;
-                OnPropertyChanged(nameof(PokemonStatusView));
-            }
-        }
-        public void GoToPokemonStatusViewModel(object sender) {
+        public void SelectedPokemon(object sender) {
             var pokemon = sender as PokemonModel;
-            ((PokemonStatusViewModel)PokemonStatusViewModel).UpdateView(pokemon);
-            MainWindowViewModel.CurrentViewModel = PokemonStatusViewModel;
-            MainWindowViewModel.CurrentView = PokemonStatusView;
+            ((PokemonStatusViewModel)MainWindowViewModel.PokemonStatusViewModel).UpdateView(pokemon);
+            MainWindowViewModel.GotoPokemonStatusViewModel();
         }
 
         public List<PokemonModel> Pokemons

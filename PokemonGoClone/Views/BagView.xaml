@@ -19,7 +19,7 @@
             </ItemsControl.Template>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Button Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.CurrentViewModel.GoToPokemonStatusViewModelCommand}" CommandParameter="{Binding}">
+                    <Button Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.CurrentViewModel.SelectedPokemonCommand}" CommandParameter="{Binding}">
                         <StackPanel>
                             <Image Source="{Binding ImageSource}" HorizontalAlignment="Left"/>
                             <TextBlock Text="{Binding Name}"/>
@@ -30,9 +30,9 @@
         </ItemsControl>
 
         <Canvas Margin="0,0,0,400">
-            <Button Content="Item" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" Height="51" FontSize="24" Canvas.Left="200" Canvas.Top="0"/>
-            <Button Content="Exit" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" Height="51" FontSize="24" Command="{Binding CurrentViewModel.MainWindowViewModel.GoToMapViewModelCommand}" Canvas.Left="310" Canvas.Top="-1"/>
-            <TextBlock TextWrapping="Wrap" Text="Bag" Height="51" Width="200" Background="White" FontSize="35" TextAlignment="Center" Canvas.Top="-1"/>
+            <Button Content="Item" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" Height="50" FontSize="24" Canvas.Left="200" Canvas.Top="0"/>
+            <Button Content="Exit" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" Height="50" FontSize="24" Command="{Binding CurrentViewModel.MainWindowViewModel.GoToMapViewModelCommand}" Canvas.Left="310"/>
+            <TextBlock TextWrapping="Wrap" Text="Bag" Height="50" Width="200" Background="White" FontSize="35" TextAlignment="Center"/>
         </Canvas>
     </Grid>
 </UserControl>

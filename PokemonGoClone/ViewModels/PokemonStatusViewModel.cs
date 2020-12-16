@@ -11,6 +11,11 @@ namespace PokemonGoClone.ViewModels {
 
         private MainWindowViewModel _mainWindowViewModel;
         private PokemonModel _pokemon;
+
+        public PokemonStatusViewModel(MainWindowViewModel mainWindowViewModel) {
+            MainWindowViewModel = mainWindowViewModel;
+        }
+
         public void UpdateView(PokemonModel pokemon) {
             Pokemon = pokemon;
         }
