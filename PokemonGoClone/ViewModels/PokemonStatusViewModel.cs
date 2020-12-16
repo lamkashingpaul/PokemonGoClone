@@ -3,6 +3,7 @@ using PokemonGoClone.Models.Pokemons;
 using PokemonGoClone.Models.Trainers;
 using PokemonGoClone.Utilities;
 using System.Collections.Generic;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 
@@ -11,6 +12,12 @@ namespace PokemonGoClone.ViewModels {
 
         private MainWindowViewModel _mainWindowViewModel;
         private PokemonModel _pokemon;
+        private string _pokemonName;
+
+        private ICommand _changeNameCommand;
+        public ICommand ChangeNameCommand {
+            get { return _changeNameCommand ?? (_changeNameCommand = new RelayCommand(x => { ChangeName(x); })); }
+        }
 
         public PokemonStatusViewModel(MainWindowViewModel mainWindowViewModel) {
             MainWindowViewModel = mainWindowViewModel;
@@ -33,5 +40,24 @@ namespace PokemonGoClone.ViewModels {
                 OnPropertyChanged(nameof(Pokemon));
             }
         }
+        public string getName {
+            get { return Pokemon.Name; }
+            set {
+                _pokemonName = value;
+                OnPropertyChanged(nameof(PokemonName));
+            }
+        }
+
+        public void ChangeName(object value) {
+            string originalname = Pokemon.Name;
+            var text = value as TextBox;
+            string newname = text.Text;
+            if (string.IsNullOrEmpty(newname)) {
+                text.Text = originalname;
+                Pokemon.Name = originalname;
+            }      
+        
+        }
+
     }
 }
