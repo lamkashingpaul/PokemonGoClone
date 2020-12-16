@@ -142,7 +142,7 @@ namespace PokemonGoClone.ViewModels
 
             // Create BagView for Player
             MainWindowViewModel.BagView = new BagView();
-            MainWindowViewModel.BagViewModel = new BagViewModel(Player);
+            MainWindowViewModel.BagViewModel = new BagViewModel(Player, MainWindowViewModel);
             ((BagViewModel)MainWindowViewModel.BagViewModel).MainWindowViewModel = MainWindowViewModel;
 
 

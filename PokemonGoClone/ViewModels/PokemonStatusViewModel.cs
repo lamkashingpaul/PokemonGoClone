@@ -12,7 +12,7 @@ namespace PokemonGoClone.ViewModels {
         private MainWindowViewModel _mainWindowViewModel;
         private PokemonModel _pokemon;
         public void UpdateView(PokemonModel pokemon) {
-            _pokemon = pokemon;
+            Pokemon = pokemon;
         }
         public MainWindowViewModel MainWindowViewModel {
             get { return _mainWindowViewModel; }
@@ -23,6 +23,10 @@ namespace PokemonGoClone.ViewModels {
         }
         public PokemonModel Pokemon {
             get { return _pokemon; }
+            set {
+                _pokemon = value;
+                OnPropertyChanged(nameof(Pokemon));
+            }
         }
     }
 }

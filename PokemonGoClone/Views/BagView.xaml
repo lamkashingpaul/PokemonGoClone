@@ -19,7 +19,7 @@
             </ItemsControl.Template>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Button Command="{Binding CurrentViewModel.MainWindowViewModel.GotoPokemonStatusViewModelCommand}" CommandParameter="{Binding}">
+                    <Button Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.CurrentViewModel.GoToPokemonStatusViewModelCommand}" CommandParameter="{Binding}">
                         <StackPanel>
                             <Image Source="{Binding ImageSource}" HorizontalAlignment="Left"/>
                             <TextBlock Text="{Binding Name}"/>

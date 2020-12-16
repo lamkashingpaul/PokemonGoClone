@@ -7,25 +7,33 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ItemsControl Focusable="False" ItemsSource="{Binding CurrentViewModel.Pokemon}" Margin="0,50,0,0">
-
-            <ItemsControl.Template>
-                <ControlTemplate>
-                    <ItemsPresenter>
-                    </ItemsPresenter>
-                </ControlTemplate>
-            </ItemsControl.Template>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Button Command="{Binding CurrentViewModel.MainWindowViewModel.GotoPokemonStatusViewModelCommand}" CommandParameter="{Binding}">
-                        <StackPanel>
-                            <Image Source="{Binding ImageSource}" HorizontalAlignment="Left"/>
-                            <TextBlock Text="{Binding Name}"/>
-                        </StackPanel>
-                    </Button>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <StackPanel Canvas.Left="167">
+            <Image Source="{Binding CurrentViewModel.Pokemon.ImageSource}" Width="100" Height="100"/>
+            <StackPanel Orientation="Horizontal" Margin = "274,0,0,0">
+                <TextBlock Text="Name: " FontSize="24"/>
+                <TextBlock Text="{Binding CurrentViewModel.Pokemon.Name}" FontSize="24"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin = "274,0,0,0">
+                <TextBlock Text="       ID: " FontSize="24"/>
+                <TextBlock Text="{Binding CurrentViewModel.Pokemon.Id}" FontSize="24"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin = "259,0,0,0">
+                <TextBlock Text="    Level: " FontSize="24" Width="89"/>
+                <TextBlock Text="{Binding CurrentViewModel.Pokemon.Level}" FontSize="24"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin = "234,0,0,0">
+                <TextBlock Text="MaxLevel: " FontSize="24" Width="114"/>
+                <TextBlock Text="{Binding CurrentViewModel.Pokemon.MaxLevel}" FontSize="24"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin = "217,0,0,0">
+                <TextBlock Text="MaxHealth: " FontSize="24" Width="129"/>
+                <TextBlock Text="{Binding CurrentViewModel.Pokemon.MaxHealth}" FontSize="24"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin = "211,0,0,0">
+                <TextBlock Text="Description: " FontSize="24"/>
+                <TextBlock Text="{Binding CurrentViewModel.Pokemon.Description}" FontSize="24"/>
+            </StackPanel>
+        </StackPanel>
 
     </Grid>
 </UserControl>
