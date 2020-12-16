@@ -2,6 +2,7 @@
 using PokemonGoClone.Models.Pokemons;
 using PokemonGoClone.Models.Trainers;
 using PokemonGoClone.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -12,7 +13,8 @@ namespace PokemonGoClone.ViewModels {
 
         private MainWindowViewModel _mainWindowViewModel;
         private PokemonModel _pokemon;
-        private string _pokemonName;
+        private string _originalName;
+        private string _defaultName;
 
         private ICommand _changeNameCommand;
         public ICommand ChangeNameCommand {
@@ -25,6 +27,25 @@ namespace PokemonGoClone.ViewModels {
 
         public void UpdateView(PokemonModel pokemon) {
             Pokemon = pokemon;
+            OriginalName = Pokemon.Name;
+            DefaultName = Pokemon.Name;
+        }
+        public string OriginalName
+        {
+            get { return _originalName; }
+            set
+            {
+                _originalName = value;
+            }
+        }
+        public string DefaultName
+        {
+            get { return _defaultName; }
+            set
+            {
+                _defaultName = value;
+                OnPropertyChanged(nameof(DefaultName));
+            }
         }
         public MainWindowViewModel MainWindowViewModel {
             get { return _mainWindowViewModel; }
@@ -40,23 +61,16 @@ namespace PokemonGoClone.ViewModels {
                 OnPropertyChanged(nameof(Pokemon));
             }
         }
-        public string getName {
-            get { return Pokemon.Name; }
-            set {
-                _pokemonName = value;
-                OnPropertyChanged(nameof(PokemonName));
-            }
-        }
 
         public void ChangeName(object value) {
-            string originalname = Pokemon.Name;
             var text = value as TextBox;
-            string newname = text.Text;
-            if (string.IsNullOrEmpty(newname)) {
-                text.Text = originalname;
-                Pokemon.Name = originalname;
-            }      
-        
+            string newName = text.Text;
+            if (!string.IsNullOrEmpty(newName))
+            {
+                Pokemon.Name = newName;
+                OriginalName = newName;
+            }
+            DefaultName = OriginalName;
         }
 
     }

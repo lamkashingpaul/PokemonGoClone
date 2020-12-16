@@ -35,7 +35,7 @@
             </StackPanel>
         </StackPanel>
         <Canvas Height="100" Margin="0,350,0,0">
-            <TextBox x:Name="Name" Height="50" TextWrapping="Wrap" Text="{Binding CurrentViewModel.getName}" Width="180" FontSize="24" TextAlignment="Center"/>
+            <TextBox x:Name="Name" Height="50" TextWrapping="Wrap" Text="{Binding CurrentViewModel.DefaultName}" Width="180" FontSize="24" TextAlignment="Center"/>
             <Button Content="Change Name" Width="180" Height="50" FontSize="24" Canvas.Top="50" Command="{Binding CurrentViewModel.ChangeNameCommand}" CommandParameter="{Binding ElementName=Name}"/>
             <Button Content="Power Up" Width="180" Height="100" FontSize="24" Canvas.Left="180"/>
             <Button Content="Evolve" Width="180" Height="100" FontSize="24" Canvas.Left="360"/>
