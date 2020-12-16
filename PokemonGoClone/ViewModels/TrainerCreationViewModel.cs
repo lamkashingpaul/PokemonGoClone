@@ -15,7 +15,7 @@ namespace PokemonGoClone.ViewModels
     public class TrainerCreationViewModel : ViewModelBase
     {
         // Delegates for DialogViewModel Action
-        public void DefaultName(object x)
+        private void DefaultName(object x)
         {
             Console.WriteLine("This is called");
             DialogViewModel.IsVisible = false;
@@ -44,28 +44,22 @@ namespace PokemonGoClone.ViewModels
             get { return _trainerCreationCommand ?? (_trainerCreationCommand = new RelayCommand(x => { TrainerCreation(x); })); }
         }
 
-        public ICommand WCommand
-        {
-            get { return _wCommand ?? (_wCommand = new RelayCommand(x => { W(x); })); }
-        }
-
-
         // Default constructor
-        public TrainerCreationViewModel()
+        public TrainerCreationViewModel(MainWindowViewModel mainWindowViewModel)
         {
+            MainWindowViewModel = mainWindowViewModel;
+
+            // Set up pokemon choices
             StartPokemon = new List<PokemonModel>
             {
                 new PokemonModel(001, "Bulbasaur", false),
                 new PokemonModel(004, "Charmander", true),
                 new PokemonModel(007, "Squirtle", false),
             };
+            Choice = 004;   // Default choice
 
-            Choice = 004;
-
-            DialogViewModel = new DialogViewModel
-            {
-                ActionDelegateMethod = null
-            };
+            // Subscrible to the DialogViewModel
+            DialogViewModel = new DialogViewModel(this);
         }
 
         public MainWindowViewModel MainWindowViewModel
@@ -128,12 +122,8 @@ namespace PokemonGoClone.ViewModels
                 return;
             }
 
-            MainWindowViewModel.StartNewGame(name, (int)choice);
-        }
-
-        private void W(object x)
-        {
-            Console.WriteLine("I am TrainerCreationViewModel");
+            // After all checkings, create the game and map
+            ((MapViewModel)MainWindowViewModel.MapViewModel).GameInitialization(name, (int)choice);
         }
     }
 }

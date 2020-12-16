@@ -21,8 +21,7 @@ namespace PokemonGoClone.ViewModels
         public void AcceptBattle(object x)
         {
             ((BattleViewModel)MainWindowViewModel.BattleViewModel).NewBattle(Player, Target);
-            MainWindowViewModel.CurrentView = MainWindowViewModel.BattleView;
-            MainWindowViewModel.CurrentViewModel = MainWindowViewModel.BattleViewModel;
+            MainWindowViewModel.GoToBattleViewModel();
         }
 
         //
@@ -73,12 +72,12 @@ namespace PokemonGoClone.ViewModels
             }
         }
 
-        public MapViewModel()
+        public MapViewModel(MainWindowViewModel mainWindowViewModel)
         {
-            DialogViewModel = new DialogViewModel
-            {
-                ActionDelegateMethod = null
-            };
+            MainWindowViewModel = mainWindowViewModel;
+
+            // Subscrible to the DialogViewModel
+            DialogViewModel = new DialogViewModel(this);
         }
 
         public void GameInitialization(string name, int choice)
@@ -139,7 +138,14 @@ namespace PokemonGoClone.ViewModels
 
 
             // Add more NPC trainers
-            LoadTrainers();
+            LoadOtherTrainers();
+
+            // Create backlink to MainWindow
+            MainWindowViewModel.Trainers = Trainers;
+            MainWindowViewModel.Player = Player;
+
+            // Navigate to MapView
+            MainWindowViewModel.GoToMapViewModel();
         }
 
         public int COL
@@ -152,45 +158,7 @@ namespace PokemonGoClone.ViewModels
             get { return _row; }
         }
 
-        private void Move(object sender)
-        {
-            if (DialogViewModel.IsVisible == true)
-            {
-                return;
-            }
-
-            string command = sender as string;
-            char direction = command[0];
-            Trainers[0].Facing = direction;
-
-            // Find if there is any object in front
-            var frontTile = Map.Find(x => x.XCoordinate == Trainers[0].XFacing && x.YCoordinate == Trainers[0].YFacing);
-            var frontBeing = Trainers.Find(x => x.XCoordinate == Trainers[0].XFacing && x.YCoordinate == Trainers[0].YFacing);
-
-            if (frontTile.Texture == 'G' && frontBeing == null)
-            {
-                switch (direction)
-                {
-                    case 'W':
-                        Trainers[0].XCoordinate -= 1;
-                        break;
-                    case 'S':
-                        Trainers[0].XCoordinate += 1;
-                        break;
-                    case 'A':
-                        Trainers[0].YCoordinate -= 1;
-                        break;
-                    case 'D':
-                        Trainers[0].YCoordinate += 1;
-                        break;
-                    default:
-                        break;
-                }
-                Trainers[0].Facing = direction;
-            }
-        }
-
-        private void LoadTrainers()
+        private void LoadOtherTrainers()
         {
             int i = 1;
             while(true)
@@ -233,8 +201,48 @@ namespace PokemonGoClone.ViewModels
             }
         }
 
+        private void Move(object sender)
+        {
+            // Move() is not allowed if there is dialog overlay
+            if (DialogViewModel.IsVisible == true)
+            {
+                return;
+            }
+
+            string command = sender as string;
+            char direction = command[0];
+            Trainers[0].Facing = direction;
+
+            // Find if there is any object in front
+            var frontTile = Map.Find(x => x.XCoordinate == Trainers[0].XFacing && x.YCoordinate == Trainers[0].YFacing);
+            var frontBeing = Trainers.Find(x => x.XCoordinate == Trainers[0].XFacing && x.YCoordinate == Trainers[0].YFacing);
+
+            if (frontTile.Texture == 'G' && frontBeing == null)
+            {
+                switch (direction)
+                {
+                    case 'W':
+                        Trainers[0].XCoordinate -= 1;
+                        break;
+                    case 'S':
+                        Trainers[0].XCoordinate += 1;
+                        break;
+                    case 'A':
+                        Trainers[0].YCoordinate -= 1;
+                        break;
+                    case 'D':
+                        Trainers[0].YCoordinate += 1;
+                        break;
+                    default:
+                        break;
+                }
+                Trainers[0].Facing = direction;
+            }
+        }
+
         private void Interact()
         {
+            // If there is dialog overlay, Interact() is not allowed
             if (DialogViewModel.IsVisible == true)
             {
                 DialogViewModel.ActionDelegateMethod?.Invoke(null);
@@ -255,8 +263,12 @@ namespace PokemonGoClone.ViewModels
         }
 
         private void Bag() {
-            MainWindowViewModel.CurrentView = MainWindowViewModel.BagView;
-            MainWindowViewModel.CurrentViewModel = MainWindowViewModel.BagViewModel;
+            // Bag() is not allowed if there is dialog overlay
+            if (DialogViewModel.IsVisible == true)
+            {
+                return;
+            }
+            MainWindowViewModel.GoToBagViewModel();
         }
     }
 }

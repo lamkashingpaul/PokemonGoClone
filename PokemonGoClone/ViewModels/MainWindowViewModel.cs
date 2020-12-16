@@ -33,10 +33,10 @@ namespace PokemonGoClone.ViewModels
         public TrainerModel Player;
         // All trainers inside the game, Trainers[0] is assigned to variable Player
         // Trainers is linked with Trainers inside MapViewModel;
-        public List<TrainerModel> Trainers { get; private set; }   
+        public List<TrainerModel> Trainers;
 
         // Map of the game, it is linked with Map inside MapViewModel
-        public List<TileModel> Map { get; private set; }
+        public List<TileModel> Map;
 
         // All available views
         private object _startView;
@@ -57,7 +57,7 @@ namespace PokemonGoClone.ViewModels
         private object _currentViewModel;
 
         // All ICommands to navigate between views and viewmodels
-        private ICommand _goTtoStartViewModelCommand;
+        private ICommand _goToStartViewModelCommand;
         private ICommand _goToTrainerCreationViewModelCommand;
         private ICommand _goToMapViewModelCommand;
         private ICommand _goToBagViewModelCommand;
@@ -67,11 +67,11 @@ namespace PokemonGoClone.ViewModels
         // All properties of ICommands for views and viewmodels navigation
         public ICommand GoToStartViewModelCommand
         {
-            get { return _goTtoStartViewModelCommand ?? (_goTtoStartViewModelCommand = new RelayCommand(x => { GotoStartViewModel(); })); }
+            get { return _goToStartViewModelCommand ?? (_goToStartViewModelCommand = new RelayCommand(x => { GoToStartViewModel(); })); }
         }
         public ICommand GoToTrainerCreationViewModelCommand
         {
-            get { return _goToTrainerCreationViewModelCommand ?? (_goToTrainerCreationViewModelCommand = new RelayCommand(x => { GotoTrainerCreationViewModel(); })); }
+            get { return _goToTrainerCreationViewModelCommand ?? (_goToTrainerCreationViewModelCommand = new RelayCommand(x => { GoToTrainerCreationViewModel(); })); }
         }
         public ICommand GoToMapViewModelCommand
         {
@@ -96,9 +96,13 @@ namespace PokemonGoClone.ViewModels
             // Create instance for views and viewmodels
             StartView = new StartView();
             TrainerCreationView = new TrainerCreationView();
+            MapView = new MapView();
+            BattleView = new BattleView();
 
-            StartViewModel = new StartViewModel() { MainWindowViewModel = this };
-            TrainerCreationViewModel = new TrainerCreationViewModel() { MainWindowViewModel = this };
+            StartViewModel = new StartViewModel(this);
+            TrainerCreationViewModel = new TrainerCreationViewModel(this);
+            MapViewModel = new MapViewModel(this);
+            BattleViewModel = new BattleViewModel(this);
 
             // Set up game data
             Abilities = new List<AbilityModel>();
@@ -189,25 +193,6 @@ namespace PokemonGoClone.ViewModels
                     break;
                 }
             }
-        }
-        public void StartNewGame(string name, int choice)
-        {
-            Name = name;
-            Choice = choice;
-
-            MapView = new MapView();
-            MapViewModel = new MapViewModel() { MainWindowViewModel = this };
-            ((MapViewModel)MapViewModel).GameInitialization(name, choice);
-
-            BattleView = new BattleView();
-            BattleViewModel = new BattleViewModel();
-
-            Trainers = ((MapViewModel)MapViewModel).Trainers;
-            Map = ((MapViewModel)MapViewModel).Map;
-            Player = Trainers[0];
-
-            CurrentView = MapView;
-            CurrentViewModel = MapViewModel;
         }
 
         // All properties of views and viewmodels
@@ -337,12 +322,12 @@ namespace PokemonGoClone.ViewModels
         }
 
         // All RelayCommands for views and viewmodels navigation
-        public void GotoStartViewModel()
+        public void GoToStartViewModel()
         {
             CurrentViewModel = StartViewModel;
             CurrentView = StartView;
         }
-        public void GotoTrainerCreationViewModel()
+        public void GoToTrainerCreationViewModel()
         {
             CurrentViewModel = TrainerCreationViewModel;
             CurrentView = TrainerCreationView;

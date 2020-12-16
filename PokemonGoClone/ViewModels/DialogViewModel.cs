@@ -13,6 +13,7 @@ namespace PokemonGoClone.ViewModels
     {
         public delegate void ActionDelegate(object x);
 
+        private ViewModelBase _parent;
         private ActionDelegate _actionDelegateMethod;
         private string _message;
 
@@ -21,8 +22,9 @@ namespace PokemonGoClone.ViewModels
         private ICommand _closeCommand;
         private ICommand _actionCommand;
 
-        public DialogViewModel()
+        public DialogViewModel(ViewModelBase parent)
         {
+            Parent = parent;
             ActionDelegateMethod = null;
             IsVisible = false;
         }
@@ -35,6 +37,16 @@ namespace PokemonGoClone.ViewModels
             {
                 _actionDelegateMethod = value;
                 OnPropertyChanged(nameof(IsActionButtonVisible));
+            }
+        }
+
+        public ViewModelBase Parent
+        {
+            get { return _parent; }
+            set
+            {
+                _parent = value;
+                OnPropertyChanged(nameof(Parent));
             }
         }
 

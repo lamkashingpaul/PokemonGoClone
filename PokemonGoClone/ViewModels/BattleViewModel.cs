@@ -1,10 +1,12 @@
 ﻿using PokemonGoClone.Models.Pokemons;
 using PokemonGoClone.Models.Trainers;
+using PokemonGoClone.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace PokemonGoClone.ViewModels
 {
@@ -17,6 +19,13 @@ namespace PokemonGoClone.ViewModels
         private PokemonModel _playerPokemon;
         private PokemonModel _opponentPokemon;
 
+        private ICommand _esacapeCommand;
+        
+        public ICommand EsacapeCommand
+        {
+            get { return _esacapeCommand ?? (_esacapeCommand = new RelayCommand(x => { Esacape(x); })); }
+        }
+
         public MainWindowViewModel MainWindowViewModel
         {
             get { return _mainWindowViewMode; }
@@ -24,6 +33,15 @@ namespace PokemonGoClone.ViewModels
             {
                 _mainWindowViewMode = value;
                 OnPropertyChanged(nameof(MainWindowViewModel));
+            }
+        }
+        public TrainerModel Player
+        {
+            get { return _player; }
+            set
+            {
+                _player = value;
+                OnPropertyChanged(nameof(Player));
             }
         }
 
@@ -55,17 +73,11 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(OpponentPokemon));
             }
         }
-        public TrainerModel Player
-        {
-            get { return _player; }
-            set
-            {
-                _player = value;
-                OnPropertyChanged(nameof(Player));
-            }
-        }
 
-        public BattleViewModel() { }
+        public BattleViewModel(MainWindowViewModel mainWindowViewModel)
+        {
+            MainWindowViewModel = mainWindowViewModel;
+        }
 
         public void NewBattle(TrainerModel player, TrainerModel opponent)
         {
@@ -73,6 +85,11 @@ namespace PokemonGoClone.ViewModels
             Opponent = opponent;
             PlayerPokemon = Player.Pokemons[0];
             OpponentPokemon = Opponent.Pokemons[0];
+        }
+
+        private void Esacape(object x)
+        {
+            throw new NotImplementedException();
         }
     }
 }
