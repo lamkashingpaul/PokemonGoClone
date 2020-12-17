@@ -12,6 +12,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.IO;
 using System.Reflection;
+using PokemonGoClone.Views;
 
 namespace PokemonGoClone.ViewModels
 {
@@ -136,8 +137,14 @@ namespace PokemonGoClone.ViewModels
 
             // Add Pokemon to player
             Trainers[0].AddPokemon((PokemonModel)(MainWindowViewModel.Pokemons.Find(x => x.Id == choice).Clone()));
+            for (int i = 0; i < MainWindowViewModel.Pokemons.Count; i++) {
+                Player.AddPokemon((PokemonModel)MainWindowViewModel.Pokemons[i].Clone());
+                Player.AddPokemon((PokemonModel)MainWindowViewModel.Pokemons[i].Clone());
+            }
 
-            // Create BagView for Player
+            // Update the Bag View
+            ((BagViewModel)MainWindowViewModel.BagViewModel).UpdatePlayer(Player);
+            ((BagViewModel)MainWindowViewModel.BagViewModel).MainWindowViewModel = MainWindowViewModel;
 
 
             // Add more NPC trainers
@@ -202,6 +209,7 @@ namespace PokemonGoClone.ViewModels
                     break;
                 }
             }
+
         }
 
         private void Move(object sender)
