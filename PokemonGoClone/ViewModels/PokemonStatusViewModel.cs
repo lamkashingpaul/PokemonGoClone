@@ -16,6 +16,8 @@ namespace PokemonGoClone.ViewModels {
         private string _originalName;
         private string _defaultName;
         private int _index;
+        //private bool _isEnabled;
+        //private bool _evolveButtonIsEnabled;
 
         private ICommand _changeNameCommand;
         private ICommand _becomeFirstPokemonCommand;
@@ -25,9 +27,26 @@ namespace PokemonGoClone.ViewModels {
         public ICommand BecomeFirstPokemonCommand {
             get { return _becomeFirstPokemonCommand ?? (_becomeFirstPokemonCommand = new RelayCommand(x => { BecomeFirstPokemon(); })); }
         }
+        /*
+        public bool IsEnabled {
+            get { return _isEnabled; }
+            set {
+                _isEnabled = value;
+                OnPropertyChanged(nameof(EvolveButtonIsEnabled));
+            }
+        }
+        public bool EvolveButtonIsEnabled {
+            get { return Pokemon.Id == 4; }
+            set {
+                _evolveButtonIsEnabled = value;
+                OnPropertyChanged(nameof(EvolveButtonIsEnabled));
+            }
+        }
+        */
 
         public PokemonStatusViewModel(MainWindowViewModel mainWindowViewModel) {
             MainWindowViewModel = mainWindowViewModel;
+            //EvolveButtonIsEnabled = false;
         }
 
         public void UpdateView(PokemonModel pokemon, int index) {
@@ -35,6 +54,7 @@ namespace PokemonGoClone.ViewModels {
             OriginalName = Pokemon.Name;
             DefaultName = Pokemon.Name;
             Index = index;
+            //OnPropertyChanged(nameof(EvolveButtonIsEnabled));
         }
         public string OriginalName
         {

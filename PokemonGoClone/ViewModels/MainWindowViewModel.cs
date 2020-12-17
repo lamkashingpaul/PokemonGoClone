@@ -199,6 +199,7 @@ namespace PokemonGoClone.ViewModels
                                                             values["MaxExp"].Value<int>(),
                                                             values["MaxExpPerLevel"].Value<int>(),
                                                             values["Accuracy"].Value<double>(),
+                                                            values["evolveId"].Value<int>(),
                                                             Abilities[0]);
                     pokemons.Add(pokemon);
                     i += 1;

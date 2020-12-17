@@ -20,6 +20,7 @@ namespace PokemonGoClone.Models
         private int _exp;
         private int _maxExp;
         private int _maxExpPerLevel;
+        private int _evolveId;
 
         private char _facing;
 
@@ -116,6 +117,14 @@ namespace PokemonGoClone.Models
             {
                 _maxExpPerLevel = value;
                 OnPropertyChanged(nameof(MaxExpPerLevel));
+            }
+        }
+
+        public int EvolveId {
+            get { return _evolveId;  }
+            set {
+                _evolveId = value;
+                OnPropertyChanged(nameof(EvolveId));
             }
         }
 
