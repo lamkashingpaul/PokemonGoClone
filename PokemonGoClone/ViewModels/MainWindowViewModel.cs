@@ -46,6 +46,8 @@ namespace PokemonGoClone.ViewModels
         private object _pokemonStatusView;
         private object _itemView;
         private object _battleView;
+        private object _saveView;
+        private object _loadView;
         private object _currentView;
 
         // All availabe viewmodels
@@ -56,41 +58,48 @@ namespace PokemonGoClone.ViewModels
         private object _pokemonStatusViewModel;
         private object _itemViewModel;
         private object _battleViewModel;
+        private object _saveViewModel;
+        private object _loadViewModel;
         private object _currentViewModel;
 
         // All ICommands to navigate between views and viewmodels
         private ICommand _goToStartViewModelCommand;
         private ICommand _goToTrainerCreationViewModelCommand;
-        private ICommand _goToLoadViewModelCommand;
         private ICommand _goToMapViewModelCommand;
         private ICommand _goToBagViewModelCommand;
         private ICommand _goToBattleViewModelCommand;
+        private ICommand _goToSaveViewModelCommand;
+        private ICommand _goToLoadViewModelCommand;
         private ICommand _closeWindowCommand;
 
         // All properties of ICommands for views and viewmodels navigation
         public ICommand GoToStartViewModelCommand
         {
-            get { return _goToStartViewModelCommand ?? (_goToStartViewModelCommand = new RelayCommand(x => { GoToStartViewModel(); })); }
+            get { return _goToStartViewModelCommand ?? (_goToStartViewModelCommand = new RelayCommand(x => { GoToStartViewModel(x); })); }
         }
         public ICommand GoToTrainerCreationViewModelCommand
         {
-            get { return _goToTrainerCreationViewModelCommand ?? (_goToTrainerCreationViewModelCommand = new RelayCommand(x => { GoToTrainerCreationViewModel(); })); }
+            get { return _goToTrainerCreationViewModelCommand ?? (_goToTrainerCreationViewModelCommand = new RelayCommand(x => { GoToTrainerCreationViewModel(x); })); }
         }
         public ICommand GoToLoadViewModelCommand
         {
-            get { return _goToLoadViewModelCommand ?? (_goToLoadViewModelCommand = new RelayCommand(x => { GoToLoadViewModel(); })); }
+            get { return _goToLoadViewModelCommand ?? (_goToLoadViewModelCommand = new RelayCommand(x => { GoToLoadViewModel(x); })); }
+        }
+        public ICommand GoToSaveViewModelCommand
+        {
+            get { return _goToSaveViewModelCommand ?? (_goToSaveViewModelCommand = new RelayCommand(x => { GoToSaveViewModel(x); })); }
         }
         public ICommand GoToMapViewModelCommand
         {
-            get { return _goToMapViewModelCommand ?? (_goToMapViewModelCommand = new RelayCommand(x => { GoToMapViewModel(); })); }
+            get { return _goToMapViewModelCommand ?? (_goToMapViewModelCommand = new RelayCommand(x => { GoToMapViewModel(x); })); }
         }
         public ICommand GoToBagViewModelCommand
         {
-            get { return _goToBagViewModelCommand ?? (_goToBagViewModelCommand = new RelayCommand(x => { GoToBagViewModel(); })); }
+            get { return _goToBagViewModelCommand ?? (_goToBagViewModelCommand = new RelayCommand(x => { GoToBagViewModel(x); })); }
         }
         public ICommand GoToBattleViewModelCommand
         {
-            get { return _goToBattleViewModelCommand ?? (_goToBattleViewModelCommand = new RelayCommand(x => { GoToBattleViewModel(); })); }
+            get { return _goToBattleViewModelCommand ?? (_goToBattleViewModelCommand = new RelayCommand(x => { GoToBattleViewModel(x); })); }
         }
         public ICommand CloseWindowCommand
         {
@@ -103,21 +112,23 @@ namespace PokemonGoClone.ViewModels
         public MainWindowViewModel()
         {
             // Create instance for views and viewmodels
-            StartView = new StartView();
+            StartView           = new StartView();
             TrainerCreationView = new TrainerCreationView();
-            MapView = new MapView();
-            BattleView = new BattleView();
+            MapView             = new MapView();
+            BattleView          = new BattleView();
+            BagView             = new BagView();
+            PokemonStatusView   = new PokemonStatusView();
+            LoadView            = new LoadView();
+            SaveView            = new SaveView();
 
-            StartViewModel = new StartViewModel(this);
+            StartViewModel           = new StartViewModel(this);
             TrainerCreationViewModel = new TrainerCreationViewModel(this);
-            MapViewModel = new MapViewModel(this);
-            BattleViewModel = new BattleViewModel(this);
-
-            BagView = new BagView();
-            BagViewModel = new BagViewModel(this);
-
-            PokemonStatusView = new PokemonStatusView();
-            PokemonStatusViewModel = new PokemonStatusViewModel(this);            
+            MapViewModel             = new MapViewModel(this);
+            BattleViewModel          = new BattleViewModel(this);
+            BagViewModel             = new BagViewModel(this);
+            PokemonStatusViewModel   = new PokemonStatusViewModel(this);   
+            LoadViewModel            = new LoadViewModel(this);
+            SaveViewModel            = new SaveViewModel(this);
 
             // Set up game data
             Abilities = new List<AbilityModel>();
@@ -274,7 +285,6 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(BagView));
             }
         }
-
         public object PokemonStatusViewModel {
             get { return _pokemonStatusViewModel; }
             set {
@@ -289,8 +299,6 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(PokemonStatusView));
             }
         }
-
-
         public object ItemView {
             get { return _itemView; }
             set {
@@ -333,7 +341,42 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(BattleViewModel));
             }
         }
-
+        public object SaveView
+        {
+            get { return _saveView; }
+            set
+            {
+                _saveView = value;
+                OnPropertyChanged(nameof(SaveView));
+            }
+        }
+        public object SaveViewModel
+        {
+            get { return _saveViewModel; }
+            set
+            {
+                _saveViewModel = value;
+                OnPropertyChanged(nameof(SaveViewModel));
+            }
+        }
+        public object LoadView
+        {
+            get { return _loadView; }
+            set
+            {
+                _loadView = value;
+                OnPropertyChanged(nameof(LoadView));
+            }
+        }
+        public object LoadViewModel
+        {
+            get { return _loadViewModel; }
+            set
+            {
+                _loadViewModel = value;
+                OnPropertyChanged(nameof(LoadViewModel));
+            }
+        }
         public object CurrentView
         {
             get { return _currentView; }
@@ -354,42 +397,46 @@ namespace PokemonGoClone.ViewModels
         }
 
         // All RelayCommands for views and viewmodels navigation
-        public void GoToStartViewModel()
+        public void GoToStartViewModel(object x)
         {
             CurrentViewModel = StartViewModel;
             CurrentView = StartView;
         }
-        public void GoToLoadViewModel()
-        {
-            // throw new NotImplementedException();
-        }
-        public void GoToTrainerCreationViewModel()
+        public void GoToTrainerCreationViewModel(object x)
         {
             CurrentViewModel = TrainerCreationViewModel;
             CurrentView = TrainerCreationView;
         }
-        public void GoToMapViewModel()
+        public void GoToMapViewModel(object x)
         {
             CurrentViewModel = MapViewModel;
             CurrentView = MapView;
         }
-        public void GoToBagViewModel()
+        public void GoToBagViewModel(object x)
         {
             CurrentViewModel = BagViewModel;
             CurrentView = BagView;
         }
-
-        public void GotoPokemonStatusViewModel() {
+        public void GotoPokemonStatusViewModel(object x)
+        {
             CurrentViewModel = PokemonStatusViewModel;
             CurrentView = PokemonStatusView;
         }
-
-        public void GoToBattleViewModel()
+        public void GoToBattleViewModel(object x)
         {
             CurrentViewModel = BattleViewModel;
             CurrentView = BattleView;
         }
-
+        public void GoToLoadViewModel(object x)
+        {
+            CurrentViewModel = LoadViewModel;
+            CurrentView = LoadView;
+        }
+        public void GoToSaveViewModel(object x)
+        {
+            CurrentViewModel = SaveViewModel;
+            CurrentView = SaveView;
+        }
         private void CloseWindow(object Windows)
         {
             (Windows as System.Windows.Window)?.Close();

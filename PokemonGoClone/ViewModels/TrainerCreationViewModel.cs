@@ -14,13 +14,6 @@ namespace PokemonGoClone.ViewModels
 {
     public class TrainerCreationViewModel : ViewModelBase
     {
-        // Delegates for DialogViewModel Action
-        private void DefaultName(object x)
-        {
-            Console.WriteLine("This is called");
-            DialogViewModel.IsVisible = false;
-        }
-
         private MainWindowViewModel _mainWindowsViewModel;
         private DialogViewModel _dialogViewModel;
 
@@ -55,7 +48,7 @@ namespace PokemonGoClone.ViewModels
                 new PokemonModel(004, "Charmander", true),
                 new PokemonModel(007, "Squirtle", false),
             };
-            Choice = 004;   // Default choice
+            Choice = null;   // Default choice
 
             // Subscrible to the DialogViewModel
             DialogViewModel = new DialogViewModel(this);
@@ -99,7 +92,6 @@ namespace PokemonGoClone.ViewModels
             if (choice != null)
             {
                 Choice = (int)choice;
-                Console.WriteLine(Choice);
             }
         }
 

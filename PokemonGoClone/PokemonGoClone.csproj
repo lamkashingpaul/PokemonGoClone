@@ -92,13 +92,16 @@
     <Compile Include="Utilities\MultipleBindingConverter.cs" />
     <Compile Include="Utilities\RelayCommand.cs" />
     <Compile Include="Utilities\ScrollingListBox.cs" />
+    <Compile Include="Utilities\Serializator.cs" />
     <Compile Include="ViewModels\BagViewModel.cs" />
     <Compile Include="ViewModels\BattleViewModel.cs" />
     <Compile Include="ViewModels\DialogViewModel.cs" />
     <Compile Include="ViewModels\ItemViewModel.cs" />
+    <Compile Include="ViewModels\LoadViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\MapViewModel.cs" />
     <Compile Include="ViewModels\PokemonStatusViewModel.cs" />
+    <Compile Include="ViewModels\SaveViewModel.cs" />
     <Compile Include="ViewModels\ShopViewModel.cs" />
     <Compile Include="ViewModels\StartViewModel.cs" />
     <Compile Include="ViewModels\TrainerCreationViewModel.cs" />
@@ -112,11 +115,17 @@
     <Compile Include="Views\ItemView.xaml.cs">
       <DependentUpon>ItemView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\LoadView.xaml.cs">
+      <DependentUpon>LoadView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MapView.xaml.cs">
       <DependentUpon>MapView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PokemonStatusView.xaml.cs">
       <DependentUpon>PokemonStatusView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SaveView.xaml.cs">
+      <DependentUpon>SaveView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShopView.xaml.cs">
       <DependentUpon>ShopView.xaml</DependentUpon>
@@ -151,11 +160,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\LoadView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MapView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PokemonStatusView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SaveView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

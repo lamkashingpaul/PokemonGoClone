@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace PokemonGoClone.Models.Items
 {
+    [Serializable]
     public abstract class ItemModel
     {
         // All fields shared by Item class

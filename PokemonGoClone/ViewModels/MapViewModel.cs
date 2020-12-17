@@ -13,6 +13,8 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Reflection;
 using PokemonGoClone.Views;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace PokemonGoClone.ViewModels
 {
@@ -21,12 +23,19 @@ namespace PokemonGoClone.ViewModels
         // Delegates for DialogViewModel Action
         public void AcceptBattle(object x)
         {
-            ((BattleViewModel)MainWindowViewModel.BattleViewModel).NewBattle(Player, Target);
-            DialogViewModel.IsVisible = false;
-            MainWindowViewModel.GoToBattleViewModel();
+            // If player's first pokemon has 0 health, it's not allowed to fight
+            if (Player.Pokemons[0].Health == 0)
+            {
+                DialogViewModel.Message = "Your lending pokemon cannot fight, please select other pokemon.";
+            }  else
+            {
+                ((BattleViewModel)MainWindowViewModel.BattleViewModel).NewBattle(Player, Target);
+                DialogViewModel.IsVisible = false;
+                MainWindowViewModel.GoToBattleViewModel(null);
+            }
         }
 
-        //
+        
         private MainWindowViewModel _mainWindowViewMode;
         private DialogViewModel _dialogViewModel;
 
@@ -40,6 +49,7 @@ namespace PokemonGoClone.ViewModels
 
         private ICommand _moveCommand;
         private ICommand _bagCommand;
+        private ICommand _saveCommand;
         private ICommand _interactCommand;
 
         public ICommand MoveCommand
@@ -48,6 +58,10 @@ namespace PokemonGoClone.ViewModels
         }
         public ICommand BagCommand {
             get { return _bagCommand ?? (_bagCommand = new RelayCommand(x => { Bag(); })); }
+        }
+        public ICommand SaveCommand
+        {
+            get { return _saveCommand ?? (_saveCommand = new RelayCommand(x => { Save(x); })); }
         }
         public ICommand InteractCommand
         {
@@ -84,40 +98,7 @@ namespace PokemonGoClone.ViewModels
 
         public void GameInitialization(string name, int choice)
         {
-            // Draw the boundary of map
-            Map = new List<TileModel>
-            {
-                new TileModel('B', "Tile", 5, 0, 0),
-                new TileModel('B', "Tile", 7, 0, COL - 1),
-                new TileModel('B', "Tile", 9, ROW - 1, 0),
-                new TileModel('B', "Tile", 10, ROW - 1, COL - 1)
-            };
-
-            for (int i = 0; i < ROW; i += ROW - 1)
-            {
-                for (int j = 1; j < COL - 1; j++)
-                {
-                    Map.Add(new TileModel('B', "Tile", 6, i, j));
-                }
-            }
-
-            for (int i = 0; i < COL; i += COL - 1)
-            {
-                for (int j = 1; j < ROW - 1; j++)
-                {
-                    Map.Add(new TileModel('B', "Tile", 8, j, i));
-                }
-            }
-
-            var rng = new Random();
-            for (int i = 1; i < ROW - 1; i++)
-            {
-                for (int j = 1; j < COL - 1; j++)
-                {
-                    int randomGrass = rng.Next(1, 4);
-                    Map.Add(new TileModel('G', "Tile", randomGrass, i, j));
-                }
-            }
+            LoadMap();
 
             // Create player
             // Note that the player is always the Trainers[0]
@@ -155,8 +136,21 @@ namespace PokemonGoClone.ViewModels
             MainWindowViewModel.Player = Player;
 
             // Navigate to MapView
-            MainWindowViewModel.GoToMapViewModel();
+            MainWindowViewModel.GoToMapViewModel(null);
         }
+        public void GameLoad(List<TrainerModel> trainers)
+        {
+            LoadMap();
+            Trainers = trainers;
+            Player = Trainers[0];
+            // Update the Bag View
+            ((BagViewModel)MainWindowViewModel.BagViewModel).UpdatePlayer(Player);
+            ((BagViewModel)MainWindowViewModel.BagViewModel).MainWindowViewModel = MainWindowViewModel;
+            // Create backlink to MainWindow
+            MainWindowViewModel.Trainers = Trainers;
+            MainWindowViewModel.Player = Player;
+        }
+
 
         public int COL
         {
@@ -166,6 +160,43 @@ namespace PokemonGoClone.ViewModels
         public int ROW
         {
             get { return _row; }
+        }
+        private void LoadMap()
+        {
+            // Draw the boundary of map
+            Map = new List<TileModel>
+            {
+                new TileModel('B', "Tile", 5, 0, 0),
+                new TileModel('B', "Tile", 7, 0, COL - 1),
+                new TileModel('B', "Tile", 9, ROW - 1, 0),
+                new TileModel('B', "Tile", 10, ROW - 1, COL - 1)
+            };
+
+            for (int i = 0; i < ROW; i += ROW - 1)
+            {
+                for (int j = 1; j < COL - 1; j++)
+                {
+                    Map.Add(new TileModel('B', "Tile", 6, i, j));
+                }
+            }
+
+            for (int i = 0; i < COL; i += COL - 1)
+            {
+                for (int j = 1; j < ROW - 1; j++)
+                {
+                    Map.Add(new TileModel('B', "Tile", 8, j, i));
+                }
+            }
+
+            var rng = new Random();
+            for (int i = 1; i < ROW - 1; i++)
+            {
+                for (int j = 1; j < COL - 1; j++)
+                {
+                    int randomGrass = rng.Next(1, 4);
+                    Map.Add(new TileModel('G', "Tile", randomGrass, i, j));
+                }
+            }
         }
 
         private void LoadOtherTrainers()
@@ -279,7 +310,20 @@ namespace PokemonGoClone.ViewModels
             {
                 return;
             }
-            MainWindowViewModel.GoToBagViewModel();
+            MainWindowViewModel.GoToBagViewModel(null);
+        }
+
+        private void Save(object x)
+        {
+            // Save() is not allowed if there is dialog overlay
+            if (DialogViewModel.IsVisible == true)
+            {
+                return;
+            }
+
+            bool success = Serializator.Serialize("data.dat", Trainers);
+            string result = success ? "Game saved." : "Save failed.";
+            DialogViewModel.Message = result;
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace PokemonGoClone.Models
 {
+    [Serializable]
     public class TileModel : ViewModelBase
     {
         private char _texture;
