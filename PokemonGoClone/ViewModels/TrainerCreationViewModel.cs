@@ -31,7 +31,6 @@ namespace PokemonGoClone.ViewModels
         // All ICommands for the viewmodel
         private ICommand _updateChoiceCommand;
         private ICommand _trainerCreationCommand;
-        private ICommand _wCommand;
 
         // All properties for ICommands
         public ICommand UpdateChoiceCommand

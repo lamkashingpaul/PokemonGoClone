@@ -21,6 +21,7 @@ namespace PokemonGoClone.ViewModels
         public void AcceptBattle(object x)
         {
             ((BattleViewModel)MainWindowViewModel.BattleViewModel).NewBattle(Player, Target);
+            DialogViewModel.IsVisible = false;
             MainWindowViewModel.GoToBattleViewModel();
         }
 
@@ -126,6 +127,8 @@ namespace PokemonGoClone.ViewModels
                 {
                     XCoordinate = ROW / 2,
                     YCoordinate = COL / 2,
+                    XFacing = ROW / 2 + 1,
+                    YFacing = COL / 2,
                 }
             };
 

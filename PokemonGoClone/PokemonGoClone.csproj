@@ -82,6 +82,7 @@
     <Compile Include="Models\Items\PotionModel.cs" />
     <Compile Include="Models\Items\ItemModel.cs" />
     <Compile Include="Models\Items\PokeballModel.cs" />
+    <Compile Include="Models\LogModel.cs" />
     <Compile Include="Models\Pokemons\PokemonModel.cs" />
     <Compile Include="Models\Abilities\AbilityModel.cs" />
     <Compile Include="Models\TileModel.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Utilities\EventRaiser.cs" />
     <Compile Include="Utilities\MultipleBindingConverter.cs" />
     <Compile Include="Utilities\RelayCommand.cs" />
+    <Compile Include="Utilities\ScrollingListBox.cs" />
     <Compile Include="ViewModels\BagViewModel.cs" />
     <Compile Include="ViewModels\BattleViewModel.cs" />
     <Compile Include="ViewModels\DialogViewModel.cs" />

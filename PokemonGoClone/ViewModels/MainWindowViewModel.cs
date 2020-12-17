@@ -59,6 +59,7 @@ namespace PokemonGoClone.ViewModels
         // All ICommands to navigate between views and viewmodels
         private ICommand _goToStartViewModelCommand;
         private ICommand _goToTrainerCreationViewModelCommand;
+        private ICommand _goToLoadViewModelCommand;
         private ICommand _goToMapViewModelCommand;
         private ICommand _goToBagViewModelCommand;
         private ICommand _goToBattleViewModelCommand;
@@ -72,6 +73,10 @@ namespace PokemonGoClone.ViewModels
         public ICommand GoToTrainerCreationViewModelCommand
         {
             get { return _goToTrainerCreationViewModelCommand ?? (_goToTrainerCreationViewModelCommand = new RelayCommand(x => { GoToTrainerCreationViewModel(); })); }
+        }
+        public ICommand GoToLoadViewModelCommand
+        {
+            get { return _goToLoadViewModelCommand ?? (_goToLoadViewModelCommand = new RelayCommand(x => { GoToLoadViewModel(); })); }
         }
         public ICommand GoToMapViewModelCommand
         {
@@ -326,6 +331,10 @@ namespace PokemonGoClone.ViewModels
         {
             CurrentViewModel = StartViewModel;
             CurrentView = StartView;
+        }
+        public void GoToLoadViewModel()
+        {
+            // throw new NotImplementedException();
         }
         public void GoToTrainerCreationViewModel()
         {
