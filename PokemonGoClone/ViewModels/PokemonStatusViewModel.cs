@@ -92,8 +92,6 @@ namespace PokemonGoClone.ViewModels {
                 MainWindowViewModel.Player.Pokemons[Index-i] = MainWindowViewModel.Player.Pokemons[Index-i-1];
             }
             MainWindowViewModel.Player.Pokemons[0] = tmp;
-
-
         }
 
     }
