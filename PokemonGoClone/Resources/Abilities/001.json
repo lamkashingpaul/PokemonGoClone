@@ -8,5 +8,5 @@
     "MaxLevel": 10,
     "MaxCharge": 35,
     "MaxChargePerLevel": 1,
-    "Accuracy": 1
+    "Accuracy": 0.9
 }

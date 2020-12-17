@@ -4,16 +4,145 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PokemonGoClone.Views"
+             xmlns:ulti="clr-namespace:PokemonGoClone.Utilities"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="480" d:DesignWidth="640"
+             Background="White"
+             FocusVisualStyle="{x:Null}">
+    
     <Grid>
-        <UniformGrid Rows="2" Columns="2" Margin="32">
-            <Image Source="{Binding CurrentViewModel.PlayerPokemon.ImageSource}"
-                   Height="128"
-                   Width="128"/>
-            <Image Source="{Binding CurrentViewModel.OpponentPokemon.ImageSource}"
-                   Height="128"
-                   Width="128"/>
-        </UniformGrid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="128"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Column="3" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel DataContext="{Binding CurrentViewModel.PlayerPokemon}" Grid.Column="0" VerticalAlignment="Center">
+                <Image Source="{Binding ImageSource}"
+                   Height="64"
+                   Width="64"
+                   />
+                <TextBlock HorizontalAlignment="Center">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0} / {1}">
+                            <Binding Path="Health"/>
+                            <Binding Path="MaxHealth"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </StackPanel>
+
+            <ulti:ScrollingListBox Grid.Column="1" ItemsSource="{Binding CurrentViewModel.BattleLogs}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Log}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ulti:ScrollingListBox>
+
+            <StackPanel DataContext="{Binding CurrentViewModel.OpponentPokemon}" Grid.Column="2" VerticalAlignment="Center">
+                <Image Source="{Binding ImageSource}"
+                       Height="64"
+                       Width="64"
+                       RenderTransformOrigin="0.5,0.5">
+                    <Image.RenderTransform>
+                        <ScaleTransform ScaleX="-1"/>
+                    </Image.RenderTransform>
+                </Image>
+                <TextBlock HorizontalAlignment="Center">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0} / {1}">
+                            <Binding Path="Health"/>
+                            <Binding Path="MaxHealth"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </StackPanel>
+        </Grid>
+
+        <DockPanel Grid.Column="0" Grid.Row="1" LastChildFill="True">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="64"/>
+                    <ColumnDefinition Width="64"/>
+                </Grid.ColumnDefinitions>
+
+                <DockPanel Grid.Column="0" LastChildFill="True">
+                    <Button DockPanel.Dock="Right" Content="Use Ability" Command="{Binding CurrentViewModel.UseAbilityCommand}" CommandParameter="{Binding ElementName=PlayerPokemonAbilities, Path=SelectedItem}"/>
+                    <ListBox DockPanel.Dock="Right" x:Name="PlayerPokemonAbilities" ItemsSource="{Binding CurrentViewModel.PlayerPokemonAbilities}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <Run Text="("/>
+                                    <Run Text="{Binding Charge}"/>
+                                    <Run Text=" / "/>
+                                    <Run Text="{Binding MaxCharge}"/>
+                                    <Run Text=") "/>
+                                    <Run Text="{Binding Name}"/>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+                <StackPanel Grid.Column="1">
+                </StackPanel>
+                <Button Grid.Column="2" Content="AFK" Command="{Binding CurrentViewModel.AFKCommand}"/>
+                <Button Grid.Column="3" Content="Escape" Command="{Binding CurrentViewModel.EsacapeCommand}"/>
+            </Grid>
+        </DockPanel>
+
+        <Grid DataContext="{Binding CurrentViewModel.DialogViewModel}"
+              Grid.ColumnSpan="1"
+              Grid.RowSpan="3"
+              Visibility="{Binding IsDialogVisible}"
+              >
+
+            <Rectangle Opacity="0.25" Fill="Black"></Rectangle>
+
+            <DockPanel LastChildFill="True">
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Height="150" />
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Height="150" />
+                <Border CornerRadius="6" BorderBrush="Gray" Background="White" BorderThickness="2" DockPanel.Dock="Top">
+                    <StackPanel Orientation="Horizontal"
+                        Margin="10"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                        <TextBlock HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   TextAlignment="Center"
+                                   Text="{Binding Message}"
+                                   FontSize="26"/>
+
+                        <Button Focusable="False"
+                                Visibility="{Binding IsActionButtonVisible}"
+                                Content="OK"
+                                FontSize="26"
+                                Margin="10"
+                                Command="{Binding ActionCommand}"
+                                />
+
+                        <Button Focusable="False"
+                                Content="[Esc]"
+                                FontSize="26"
+                                Margin="10"
+                                Command="{Binding CloseCommand}"/>
+                    </StackPanel>
+                </Border>
+            </DockPanel>
+        </Grid>
+
     </Grid>
+
+    <UserControl.InputBindings>
+        <KeyBinding Command="{Binding CurrentViewModel.DialogViewModel.CloseCommand}" Key="Esc"/>
+    </UserControl.InputBindings>
+
 </UserControl>

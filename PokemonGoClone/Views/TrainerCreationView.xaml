@@ -7,7 +7,8 @@
              xmlns:util="clr-namespace:PokemonGoClone.Utilities"
              mc:Ignorable="d" 
              d:DesignHeight="480" d:DesignWidth="640"
-             Background="White">
+             Background="White"
+             FocusVisualStyle="{x:Null}">
     
     <UserControl.Resources>
         <util:MultipleBindingConverter x:Key="MultipleBindingConverter"></util:MultipleBindingConverter>
@@ -32,7 +33,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <RadioButton Focusable="False"
-                                 IsChecked="{Binding IsChecked}"
+                                 
                                  GroupName="Id"
                                  VerticalAlignment="Center"
                                  VerticalContentAlignment="Center"
@@ -65,7 +66,7 @@
             </Button>
             <DockPanel LastChildFill="True">
                 <TextBlock DockPanel.Dock="Left" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12">Enter Your Name:</TextBlock>
-                <TextBox x:Name="nameOfTrainer" Text="Default" DockPanel.Dock="Right" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
+                <TextBox x:Name="nameOfTrainer" DockPanel.Dock="Right" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
             </DockPanel>
         </DockPanel>
 
@@ -90,7 +91,7 @@
                                    TextAlignment="Center"
                                    Text="{Binding Message}"
                                    FontSize="26"/>
-                        
+
                         <Button Focusable="False"
                                 Visibility="{Binding IsActionButtonVisible}"
                                 Content="OK"
@@ -98,7 +99,7 @@
                                 Margin="10"
                                 Command="{Binding ActionCommand}"
                                 />
-                        
+
                         <Button Focusable="False"
                                 Content="[Esc]"
                                 FontSize="26"
@@ -108,6 +109,10 @@
                 </Border>
             </DockPanel>
         </Grid>
-        
     </Grid>
+
+    <UserControl.InputBindings>
+        <KeyBinding Command="{Binding CurrentViewModel.DialogViewModel.CloseCommand}" Key="Esc"/>
+    </UserControl.InputBindings>
+
 </UserControl>

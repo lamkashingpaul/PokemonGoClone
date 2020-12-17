@@ -58,23 +58,29 @@ namespace PokemonGoClone.Models.Abilities
         }
 
         // All methods of Ability class
-        public void Use(PokemonModel caster, PokemonModel target)
+        public string Use(PokemonModel caster, PokemonModel target)
         {
             Console.WriteLine("Ability used.");
+            Charge -= 1;
             double chance = Rand.NextDouble();
             if (caster.Accuracy * Accuracy >= chance)
             {
                 if (Damage > 0)
                 {
                     target.Health -= Damage * Level;
+                    return $"{caster.Name} dealt {Damage} damage to {target.Name}";
                 }
                 else
                 {
                     // This is not damage ability
                     // Action shall be implemented here
+                    return "This is not damage ability";
+
                 }
+            } else {
+                // You ability missed
+                return "Your ability missed";
             }
-            Charge -= 1;
         }
 
         // All properties of fields

@@ -19,5 +19,9 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(MainWindowViewModel));
             }
         }
+        public StartViewModel(MainWindowViewModel mainWindowViewModel)
+        {
+            MainWindowViewModel = mainWindowViewModel;
+        }
     }
 }

@@ -12,8 +12,11 @@ namespace PokemonGoClone.ViewModels
     public class DialogViewModel : ViewModelBase
     {
         public delegate void ActionDelegate(object x);
+        public delegate void CloseDelegate(object x);
 
+        private ViewModelBase _parent;
         private ActionDelegate _actionDelegateMethod;
+        private ActionDelegate _closeDelegateMethod;
         private string _message;
 
         private bool _isVisible;
@@ -21,10 +24,17 @@ namespace PokemonGoClone.ViewModels
         private ICommand _closeCommand;
         private ICommand _actionCommand;
 
-        public DialogViewModel()
+        public DialogViewModel(ViewModelBase parent)
+        {
+            Parent = parent;
+            DefaultDelegates();
+            IsVisible = false;
+        }
+
+        public void DefaultDelegates()
         {
             ActionDelegateMethod = null;
-            IsVisible = false;
+            CloseDelegateMethod = Close;
         }
 
         // All properies of DialogViewModel
@@ -35,6 +45,25 @@ namespace PokemonGoClone.ViewModels
             {
                 _actionDelegateMethod = value;
                 OnPropertyChanged(nameof(IsActionButtonVisible));
+            }
+        }
+        public ActionDelegate CloseDelegateMethod
+        {
+            get { return _closeDelegateMethod; }
+            set
+            {
+                _closeDelegateMethod = value;
+                OnPropertyChanged(nameof(CloseDelegateMethod));
+            }
+        }
+
+        public ViewModelBase Parent
+        {
+            get { return _parent; }
+            set
+            {
+                _parent = value;
+                OnPropertyChanged(nameof(Parent));
             }
         }
 
@@ -77,7 +106,7 @@ namespace PokemonGoClone.ViewModels
 
         public ICommand CloseCommand
         {
-            get { return _closeCommand ?? (_closeCommand = new RelayCommand(x => { Close(x); })); }
+            get { return _closeCommand ?? (_closeCommand = new RelayCommand(x => { CloseDelegateMethod(x); })); }
         }
 
         public ICommand ActionCommand

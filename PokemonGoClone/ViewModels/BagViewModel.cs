@@ -1,38 +1,53 @@
-﻿using PokemonGoClone.Models.Items;
-using PokemonGoClone.Models.Pokemons;
+﻿using PokemonGoClone.Models.Pokemons;
 using PokemonGoClone.Models.Trainers;
+using PokemonGoClone.Utilities;
+using PokemonGoClone.Views;
 using System.Collections.Generic;
+using System.Windows.Input;
 
 namespace PokemonGoClone.ViewModels
 {
     public class BagViewModel : ViewModelBase
     {
-        private MainWindowViewModel _mainWindowViewMode;
-
+        private MainWindowViewModel _mainWindowViewModel;
         private List<PokemonModel> _pokemons;
+        private ICommand _selectedPokemonCommand;
 
-        public BagViewModel(TrainerModel trainer)
+        public ICommand SelectedPokemonCommand {
+            get { return _selectedPokemonCommand ?? (_selectedPokemonCommand = new RelayCommand(x => { SelectedPokemon(x); })); }
+        }
+        public BagViewModel(MainWindowViewModel mainWindowViewModel)
         {
-            _pokemons = trainer.Pokemons;
+            MainWindowViewModel = mainWindowViewModel;
+        }
+
+        public void UpdatePlayer(TrainerModel trainer) {
+            Pokemons = trainer.Pokemons;
         }
 
         public MainWindowViewModel MainWindowViewModel
         {
-            get { return _mainWindowViewMode; }
+            get { return _mainWindowViewModel; }
             set
             {
-                _mainWindowViewMode = value;
+                _mainWindowViewModel = value;
                 OnPropertyChanged(nameof(MainWindowViewModel));
             }
+        }
+
+        public void SelectedPokemon(object sender) {
+            var pokemon = sender as PokemonModel;
+            ((PokemonStatusViewModel)MainWindowViewModel.PokemonStatusViewModel).UpdateView(pokemon);
+            MainWindowViewModel.GotoPokemonStatusViewModel();
         }
 
         public List<PokemonModel> Pokemons
         {
             get { return _pokemons; }
-        }
-
-
-
-        
+            set {
+                _pokemons = value;
+                OnPropertyChanged(nameof(Pokemons));
+            }
+        }        
     }
 }

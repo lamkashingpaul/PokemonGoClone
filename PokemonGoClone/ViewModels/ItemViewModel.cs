@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace PokemonGoClone.ViewModels {
     public class ItemViewModel : ViewModelBase {
-        private MainWindowViewModel _mainWindowViewMode;
+        private MainWindowViewModel _mainWindowViewModel;
 
         private List<ItemModel> _items;
 
@@ -14,9 +14,9 @@ namespace PokemonGoClone.ViewModels {
         }
 
         public MainWindowViewModel MainWindowViewModel {
-            get { return _mainWindowViewMode; }
+            get { return _mainWindowViewModel; }
             set {
-                _mainWindowViewMode = value;
+                _mainWindowViewModel = value;
                 OnPropertyChanged(nameof(MainWindowViewModel));
             }
         }

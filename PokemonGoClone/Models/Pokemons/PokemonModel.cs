@@ -95,9 +95,6 @@ namespace PokemonGoClone.Models.Pokemons
         {
             Level += 1;
 
-            Exp = 0;
-            MaxExp += MaxExpPerLevel;
-
             MaxHealth += MaxHealthPerLevel;
             Health = MaxHealth;
         }

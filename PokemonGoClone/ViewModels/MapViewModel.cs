@@ -12,6 +12,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.IO;
 using System.Reflection;
+using PokemonGoClone.Views;
 
 namespace PokemonGoClone.ViewModels
 {
@@ -21,8 +22,8 @@ namespace PokemonGoClone.ViewModels
         public void AcceptBattle(object x)
         {
             ((BattleViewModel)MainWindowViewModel.BattleViewModel).NewBattle(Player, Target);
-            MainWindowViewModel.CurrentView = MainWindowViewModel.BattleView;
-            MainWindowViewModel.CurrentViewModel = MainWindowViewModel.BattleViewModel;
+            DialogViewModel.IsVisible = false;
+            MainWindowViewModel.GoToBattleViewModel();
         }
 
         //
@@ -73,12 +74,12 @@ namespace PokemonGoClone.ViewModels
             }
         }
 
-        public MapViewModel()
+        public MapViewModel(MainWindowViewModel mainWindowViewModel)
         {
-            DialogViewModel = new DialogViewModel
-            {
-                ActionDelegateMethod = null
-            };
+            MainWindowViewModel = mainWindowViewModel;
+
+            // Subscrible to the DialogViewModel
+            DialogViewModel = new DialogViewModel(this);
         }
 
         public void GameInitialization(string name, int choice)
@@ -127,6 +128,8 @@ namespace PokemonGoClone.ViewModels
                 {
                     XCoordinate = ROW / 2,
                     YCoordinate = COL / 2,
+                    XFacing = ROW / 2 + 1,
+                    YFacing = COL / 2,
                 }
             };
 
@@ -134,12 +137,25 @@ namespace PokemonGoClone.ViewModels
 
             // Add Pokemon to player
             Trainers[0].AddPokemon((PokemonModel)(MainWindowViewModel.Pokemons.Find(x => x.Id == choice).Clone()));
+            for (int i = 0; i < MainWindowViewModel.Pokemons.Count; i++) {
+                Player.AddPokemon((PokemonModel)MainWindowViewModel.Pokemons[i].Clone());
+                Player.AddPokemon((PokemonModel)MainWindowViewModel.Pokemons[i].Clone());
+            }
 
-            // Create BagView for Player
+            // Update the Bag View
+            ((BagViewModel)MainWindowViewModel.BagViewModel).UpdatePlayer(Player);
+            ((BagViewModel)MainWindowViewModel.BagViewModel).MainWindowViewModel = MainWindowViewModel;
 
 
             // Add more NPC trainers
-            LoadTrainers();
+            LoadOtherTrainers();
+
+            // Create backlink to MainWindow
+            MainWindowViewModel.Trainers = Trainers;
+            MainWindowViewModel.Player = Player;
+
+            // Navigate to MapView
+            MainWindowViewModel.GoToMapViewModel();
         }
 
         public int COL
@@ -152,40 +168,7 @@ namespace PokemonGoClone.ViewModels
             get { return _row; }
         }
 
-        private void Move(object sender)
-        {
-            string command = sender as string;
-            char direction = command[0];
-            Trainers[0].Facing = direction;
-
-            // Find if there is any object in front
-            var frontTile = Map.Find(x => x.XCoordinate == Trainers[0].XFacing && x.YCoordinate == Trainers[0].YFacing);
-            var frontBeing = Trainers.Find(x => x.XCoordinate == Trainers[0].XFacing && x.YCoordinate == Trainers[0].YFacing);
-
-            if (frontTile.Texture == 'G' && frontBeing == null)
-            {
-                switch (direction)
-                {
-                    case 'W':
-                        Trainers[0].XCoordinate -= 1;
-                        break;
-                    case 'S':
-                        Trainers[0].XCoordinate += 1;
-                        break;
-                    case 'A':
-                        Trainers[0].YCoordinate -= 1;
-                        break;
-                    case 'D':
-                        Trainers[0].YCoordinate += 1;
-                        break;
-                    default:
-                        break;
-                }
-                Trainers[0].Facing = direction;
-            }
-        }
-
-        private void LoadTrainers()
+        private void LoadOtherTrainers()
         {
             int i = 1;
             while(true)
@@ -226,26 +209,77 @@ namespace PokemonGoClone.ViewModels
                     break;
                 }
             }
+
+        }
+
+        private void Move(object sender)
+        {
+            // Move() is not allowed if there is dialog overlay
+            if (DialogViewModel.IsVisible == true)
+            {
+                return;
+            }
+
+            string command = sender as string;
+            char direction = command[0];
+            Trainers[0].Facing = direction;
+
+            // Find if there is any object in front
+            var frontTile = Map.Find(x => x.XCoordinate == Trainers[0].XFacing && x.YCoordinate == Trainers[0].YFacing);
+            var frontBeing = Trainers.Find(x => x.XCoordinate == Trainers[0].XFacing && x.YCoordinate == Trainers[0].YFacing);
+
+            if (frontTile.Texture == 'G' && frontBeing == null)
+            {
+                switch (direction)
+                {
+                    case 'W':
+                        Trainers[0].XCoordinate -= 1;
+                        break;
+                    case 'S':
+                        Trainers[0].XCoordinate += 1;
+                        break;
+                    case 'A':
+                        Trainers[0].YCoordinate -= 1;
+                        break;
+                    case 'D':
+                        Trainers[0].YCoordinate += 1;
+                        break;
+                    default:
+                        break;
+                }
+                Trainers[0].Facing = direction;
+            }
         }
 
         private void Interact()
         {
-            Target = Trainers.Find(x => x.XCoordinate == Player.XFacing && x.YCoordinate == Player.YFacing);
-            if (Target == null)
+            // If there is dialog overlay, Interact() is not allowed
+            if (DialogViewModel.IsVisible == true)
             {
-                return;
+                DialogViewModel.ActionDelegateMethod?.Invoke(null);
             } else
             {
-                DialogViewModel.ActionDelegateMethod = AcceptBattle;
-                DialogViewModel.Message = Target.Quote;
+                Target = Trainers.Find(x => x.XCoordinate == Player.XFacing && x.YCoordinate == Player.YFacing);
+                if (Target == null)
+                {
+                    return;
+                }
+                else
+                {
+                    DialogViewModel.ActionDelegateMethod = AcceptBattle;
+                    DialogViewModel.Message = Target.Quote;
+                }
             }
 
-            Console.WriteLine($"{Target.Name} Found at ({Target.XCoordinate}, {Target.YCoordinate}).");
         }
 
         private void Bag() {
-            MainWindowViewModel.CurrentView = MainWindowViewModel.BagView;
-            MainWindowViewModel.CurrentViewModel = MainWindowViewModel.BagViewModel;
+            // Bag() is not allowed if there is dialog overlay
+            if (DialogViewModel.IsVisible == true)
+            {
+                return;
+            }
+            MainWindowViewModel.GoToBagViewModel();
         }
     }
 }
