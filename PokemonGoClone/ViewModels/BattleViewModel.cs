@@ -18,7 +18,7 @@ namespace PokemonGoClone.ViewModels
         private void EndBattle(object x)
         {
             DialogViewModel.IsVisible = false;
-            MainWindowViewModel.GoToMapViewModel();
+            MainWindowViewModel.GoToMapViewModel(null);
         }
 
         private MainWindowViewModel _mainWindowViewMode;

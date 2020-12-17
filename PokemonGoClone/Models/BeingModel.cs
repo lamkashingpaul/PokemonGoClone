@@ -8,6 +8,7 @@ namespace PokemonGoClone.Models
 {
     // This is an abstract class for all beings in the game.
     // All beings are expected to share all following fields.
+    [Serializable]
     public abstract class BeingModel : TileModel
     {
         private string _name;

@@ -8,6 +8,7 @@ using System.Windows.Media.Imaging;
 
 namespace PokemonGoClone.Models.Pokemons
 {
+    [Serializable]
     public class PokemonModel : BeingModel, ICloneable
     {
         // All fields for TrainerCreation

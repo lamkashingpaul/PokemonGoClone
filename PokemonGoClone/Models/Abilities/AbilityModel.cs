@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace PokemonGoClone.Models.Abilities
 {
+    [Serializable]
     public class AbilityModel : ViewModelBase, ICloneable
     {
         // All fields shared by Ability class

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace PokemonGoClone.Models.Trainers
 {
+    [Serializable]
     public class TrainerModel : BeingModel
     {
         // All fields of Trainer class
