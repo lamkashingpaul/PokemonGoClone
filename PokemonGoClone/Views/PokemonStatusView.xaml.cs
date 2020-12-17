@@ -15,11 +15,13 @@ using System.Windows.Shapes;
 
 namespace PokemonGoClone.Views {
     /// <summary>
-    /// PokemonStatusView.xaml 的互動邏輯
+    /// Interaction logic for PokemonStatusView.xaml
     /// </summary>
     public partial class PokemonStatusView : UserControl {
         public PokemonStatusView() {
             InitializeComponent();
+            Focusable = true;
+            Loaded += (s, e) => Keyboard.Focus(this);
         }
     }
 }

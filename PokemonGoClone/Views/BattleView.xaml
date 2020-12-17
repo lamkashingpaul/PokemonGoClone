@@ -11,7 +11,6 @@
              FocusVisualStyle="{x:Null}">
     
     <Grid>
-        
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="128"/>
@@ -68,7 +67,36 @@
         </Grid>
 
         <DockPanel Grid.Column="0" Grid.Row="1" LastChildFill="True">
-            <Button Content="Escape" Command="{Binding CurrentViewModel.EsacapeCommand}"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="64"/>
+                    <ColumnDefinition Width="64"/>
+                </Grid.ColumnDefinitions>
+
+                <DockPanel Grid.Column="0" LastChildFill="True">
+                    <Button DockPanel.Dock="Right" Content="Use Ability" Command="{Binding CurrentViewModel.UseAbilityCommand}" CommandParameter="{Binding ElementName=PlayerPokemonAbilities, Path=SelectedItem}"/>
+                    <ListBox DockPanel.Dock="Right" x:Name="PlayerPokemonAbilities" ItemsSource="{Binding CurrentViewModel.PlayerPokemonAbilities}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <Run Text="("/>
+                                    <Run Text="{Binding Charge}"/>
+                                    <Run Text=" / "/>
+                                    <Run Text="{Binding MaxCharge}"/>
+                                    <Run Text=") "/>
+                                    <Run Text="{Binding Name}"/>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+                <StackPanel Grid.Column="1">
+                </StackPanel>
+                <Button Grid.Column="2" Content="AFK" Command="{Binding CurrentViewModel.AFKCommand}"/>
+                <Button Grid.Column="3" Content="Escape" Command="{Binding CurrentViewModel.EsacapeCommand}"/>
+            </Grid>
         </DockPanel>
 
         <Grid DataContext="{Binding CurrentViewModel.DialogViewModel}"

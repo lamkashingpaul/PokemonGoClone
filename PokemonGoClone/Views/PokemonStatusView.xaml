@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PokemonGoClone.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="720">
+             d:DesignHeight="480" d:DesignWidth="640"
+             FocusVisualStyle="{x:Null}">
     <Grid>
         <StackPanel Canvas.Left="167">
             <Image Source="{Binding CurrentViewModel.Pokemon.ImageSource}" Width="100" Height="100"/>

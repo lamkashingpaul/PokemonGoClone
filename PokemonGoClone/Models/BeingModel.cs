@@ -68,7 +68,7 @@ namespace PokemonGoClone.Models
             get { return _health; }
             set
             {
-                _health = value;
+                _health = Math.Max(0, value);
                 OnPropertyChanged(nameof(Health));
             }
         }
