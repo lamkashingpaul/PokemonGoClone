@@ -15,20 +15,26 @@ namespace PokemonGoClone.ViewModels {
         private PokemonModel _pokemon;
         private string _originalName;
         private string _defaultName;
+        private int _index;
 
         private ICommand _changeNameCommand;
+        private ICommand _becomeFirstPokemonCommand;
         public ICommand ChangeNameCommand {
             get { return _changeNameCommand ?? (_changeNameCommand = new RelayCommand(x => { ChangeName(x); })); }
+        }
+        public ICommand BecomeFirstPokemonCommand {
+            get { return _becomeFirstPokemonCommand ?? (_becomeFirstPokemonCommand = new RelayCommand(x => { BecomeFirstPokemon(); })); }
         }
 
         public PokemonStatusViewModel(MainWindowViewModel mainWindowViewModel) {
             MainWindowViewModel = mainWindowViewModel;
         }
 
-        public void UpdateView(PokemonModel pokemon) {
+        public void UpdateView(PokemonModel pokemon, int index) {
             Pokemon = pokemon;
             OriginalName = Pokemon.Name;
             DefaultName = Pokemon.Name;
+            Index = index;
         }
         public string OriginalName
         {
@@ -61,6 +67,13 @@ namespace PokemonGoClone.ViewModels {
                 OnPropertyChanged(nameof(Pokemon));
             }
         }
+        public int Index {
+            get { return _index; }
+            set {
+                _index = value;
+                OnPropertyChanged(nameof(Index));
+            }
+        }
 
         public void ChangeName(object value) {
             var text = value as TextBox;
@@ -71,6 +84,16 @@ namespace PokemonGoClone.ViewModels {
                 OriginalName = newName;
             }
             DefaultName = OriginalName;
+        }
+
+        public void BecomeFirstPokemon() {
+            PokemonModel tmp = MainWindowViewModel.Player.Pokemons[Index];
+            for (int i = 0; i < Index; i++) {
+                MainWindowViewModel.Player.Pokemons[Index-i] = MainWindowViewModel.Player.Pokemons[Index-i-1];
+            }
+            MainWindowViewModel.Player.Pokemons[0] = tmp;
+
+
         }
 
     }

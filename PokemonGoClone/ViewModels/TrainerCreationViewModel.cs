@@ -55,7 +55,7 @@ namespace PokemonGoClone.ViewModels
                 new PokemonModel(004, "Charmander", true),
                 new PokemonModel(007, "Squirtle", false),
             };
-            Choice = 004;   // Default choice
+            Choice = null;   // Default choice
 
             // Subscrible to the DialogViewModel
             DialogViewModel = new DialogViewModel(this);

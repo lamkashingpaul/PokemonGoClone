@@ -3,9 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:PokemonGoClone.Views"
+             xmlns:local="clr-namespace:PokemonGoClone.Views" xmlns:viewmodels="clr-namespace:PokemonGoClone.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
              mc:Ignorable="d" 
-             d:DesignHeight="480" d:DesignWidth="640"
+             d:DesignHeight="480" d:DesignWidth="720"
              FocusVisualStyle="{x:Null}">
     <Grid>
         <StackPanel Canvas.Left="167">
@@ -36,11 +36,14 @@
             </StackPanel>
         </StackPanel>
         <Canvas Height="100" Margin="0,350,0,0">
-            <TextBox x:Name="Name" Height="50" TextWrapping="Wrap" Text="{Binding CurrentViewModel.DefaultName}" Width="180" FontSize="24" TextAlignment="Center"/>
-            <Button Content="Change Name" Width="180" Height="50" FontSize="24" Canvas.Top="50" Command="{Binding CurrentViewModel.ChangeNameCommand}" CommandParameter="{Binding ElementName=Name}"/>
-            <Button Content="Power Up" Width="180" Height="100" FontSize="24" Canvas.Left="180"/>
-            <Button Content="Evolve" Width="180" Height="100" FontSize="24" Canvas.Left="360"/>
+            <TextBox x:Name="ChangingName" Height="50" TextWrapping="Wrap" Text="{Binding CurrentViewModel.DefaultName}" Width="180" FontSize="24" TextAlignment="Center"/>
+            <Button Content="Change Name" Width="180" Height="50" FontSize="24" Canvas.Top="50" Command="{Binding CurrentViewModel.ChangeNameCommand}" CommandParameter="{Binding ElementName=ChangingName}"/>
+            <Button Content="Power Up" Width="180" Height="50" FontSize="24" Canvas.Left="360" Canvas.Top="50"/>
+            <Button Content="Evolve" Width="180" Height="50" FontSize="24" Canvas.Left="360"/>
             <Button Content="Exit" Width="180" Height="100" FontSize="24" Canvas.Left="540" Command="{Binding GoToBagViewModelCommand}"/>
+            <Button Canvas.Left="180" Width="180" Height="100" FontSize="24" Command="{Binding CurrentViewModel.BecomeFirstPokemonCommand}">
+                <TextBlock TextAlignment="Center"> Become <LineBreak/> First Pokemon </TextBlock>
+            </Button>
         </Canvas>
 
     </Grid>

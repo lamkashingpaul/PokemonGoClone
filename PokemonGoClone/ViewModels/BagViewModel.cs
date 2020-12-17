@@ -37,7 +37,8 @@ namespace PokemonGoClone.ViewModels
 
         public void SelectedPokemon(object sender) {
             var pokemon = sender as PokemonModel;
-            ((PokemonStatusViewModel)MainWindowViewModel.PokemonStatusViewModel).UpdateView(pokemon);
+            int index = MainWindowViewModel.Player.Pokemons.IndexOf(pokemon);
+            ((PokemonStatusViewModel)MainWindowViewModel.PokemonStatusViewModel).UpdateView(pokemon, index);
             MainWindowViewModel.GotoPokemonStatusViewModel();
         }
 
