@@ -17,6 +17,7 @@ namespace PokemonGoClone.Models.Pokemons
         // All fields of Pokemon class
         private List<AbilityModel> _abilities;
         private double _accuracy;
+        private int _powerUpCost;
 
         // Default constructor
         public PokemonModel(string name,
@@ -29,6 +30,7 @@ namespace PokemonGoClone.Models.Pokemons
                             int maxExp,
                             int maxExpPerLevel,
                             double accuracy,
+                            int evolveId,
                             AbilityModel ability)
         {
             Name = name;
@@ -41,6 +43,7 @@ namespace PokemonGoClone.Models.Pokemons
             MaxHealthPerLevel = maxHealthPerLevel;
             MaxExp = maxExp;
             MaxExpPerLevel = maxExpPerLevel;
+            EvolveId = evolveId;
             Accuracy = accuracy;
 
             Abilities = new List<AbilityModel>();
@@ -91,13 +94,29 @@ namespace PokemonGoClone.Models.Pokemons
                 _accuracy = value;
             }
         }
+     
+        public int EvolveCost() {
+            if (EvolveId != -1) {
+                return Level * 100;
+            } else {
+                return 0;
+            }        
+        }
 
-        public void LevelUp()
-        {
+        public void LevelUp() {
             Level += 1;
-
-            MaxHealth += MaxHealthPerLevel;
+            Random rnd = new Random();
+            MaxHealth += rnd.Next(MaxHealthPerLevel - 20, MaxHealthPerLevel + 1);
             Health = MaxHealth;
+            LevelUpCost = Level * 100;
+        }
+
+        public int LevelUpCost {
+            get { return _powerUpCost; }
+            set {
+                _powerUpCost = value;
+                OnPropertyChanged(nameof(LevelUpCost));
+            }
         }
 
         public void AddAbility(AbilityModel ability)
