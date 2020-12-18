@@ -239,6 +239,7 @@ namespace PokemonGoClone.ViewModels
         }
         private void AFK(object x)
         {
+            BattleLogs.Add(new LogModel("You chose to AFK", Id++));
             OpponentTurn();
         }
 
@@ -262,6 +263,7 @@ namespace PokemonGoClone.ViewModels
                 DialogViewModel.Message = "Escape Failed.";
                 BattleLogs.Add(new LogModel("You failed to escape", Id++));
             }
+            OpponentTurn();
         }
     }
 }

@@ -64,7 +64,7 @@ namespace PokemonGoClone.Models.Abilities
             Console.WriteLine("Ability used.");
             Charge -= 1;
             double chance = Rand.NextDouble();
-            if (caster.Accuracy * Accuracy >= chance)
+            if (chance < caster.Accuracy * Accuracy)
             {
                 if (Damage > 0)
                 {
