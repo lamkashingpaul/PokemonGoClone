@@ -1,16 +1,14 @@
-﻿using PokemonGoClone.Models.Items;
-using PokemonGoClone.Models.Pokemons;
-using PokemonGoClone.Models.Trainers;
+﻿using PokemonGoClone.Models.Pokemons;
 using PokemonGoClone.Utilities;
-using System;
-using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Input;
 
 
-namespace PokemonGoClone.ViewModels {
-    class PokemonStatusViewModel : ViewModelBase {
-        
+namespace PokemonGoClone.ViewModels
+{
+    class PokemonStatusViewModel : ViewModelBase
+    {
+
         //field of PokemonStatusViewModel
         private MainWindowViewModel _mainWindowViewModel;
         private DialogViewModel _dialogViewModel;
@@ -25,13 +23,16 @@ namespace PokemonGoClone.ViewModels {
         private ICommand _changeNameCommand;
         private ICommand _becomeFirstPokemonCommand;
         private ICommand _dropPokemonCommand;
-        public ICommand ChangeNameCommand {
+        public ICommand ChangeNameCommand
+        {
             get { return _changeNameCommand ?? (_changeNameCommand = new RelayCommand(x => { ChangeName(x); })); }
         }
-        public ICommand BecomeFirstPokemonCommand {
+        public ICommand BecomeFirstPokemonCommand
+        {
             get { return _becomeFirstPokemonCommand ?? (_becomeFirstPokemonCommand = new RelayCommand(x => { BecomeFirstPokemon(); })); }
         }
-        public ICommand DropPokemonCommand {
+        public ICommand DropPokemonCommand
+        {
             get { return _dropPokemonCommand ?? (_dropPokemonCommand = new RelayCommand(x => { DropPokemon(); })); }
         }
         /*
@@ -52,7 +53,8 @@ namespace PokemonGoClone.ViewModels {
         */
 
         //Constructor of PokemonStatusViewModel
-        public PokemonStatusViewModel(MainWindowViewModel mainWindowViewModel) {
+        public PokemonStatusViewModel(MainWindowViewModel mainWindowViewModel)
+        {
             MainWindowViewModel = mainWindowViewModel;
             DialogViewModel = (DialogViewModel)MainWindowViewModel.DialogViewModel;
             //EvolveButtonIsEnabled = false;
@@ -76,9 +78,11 @@ namespace PokemonGoClone.ViewModels {
                 OnPropertyChanged(nameof(DefaultName));
             }
         }
-        public MainWindowViewModel MainWindowViewModel {
+        public MainWindowViewModel MainWindowViewModel
+        {
             get { return _mainWindowViewModel; }
-            set {
+            set
+            {
                 _mainWindowViewModel = value;
                 OnPropertyChanged(nameof(MainWindowViewModel));
             }
@@ -92,23 +96,28 @@ namespace PokemonGoClone.ViewModels {
                 OnPropertyChanged(nameof(DialogViewModel));
             }
         }
-        public PokemonModel Pokemon {
+        public PokemonModel Pokemon
+        {
             get { return _pokemon; }
-            set {
+            set
+            {
                 _pokemon = value;
                 OnPropertyChanged(nameof(Pokemon));
             }
         }
-        public int Index {
+        public int Index
+        {
             get { return _index; }
-            set {
+            set
+            {
                 _index = value;
                 OnPropertyChanged(nameof(Index));
             }
         }
 
         //Method of PokemonStatusViewModel
-        public void ChangeName(object value) {
+        public void ChangeName(object value)
+        {
             var text = value as TextBox;
             string newName = text.Text;
             if (!string.IsNullOrEmpty(newName))
@@ -119,23 +128,27 @@ namespace PokemonGoClone.ViewModels {
             DefaultName = OriginalName;
         }
 
-        public void BecomeFirstPokemon() {
+        public void BecomeFirstPokemon()
+        {
             PokemonModel tmp = MainWindowViewModel.Player.Pokemons[Index];
-            for (int i = 0; i < Index; i++) {
-                MainWindowViewModel.Player.Pokemons[Index-i] = MainWindowViewModel.Player.Pokemons[Index-i-1];
+            for (int i = 0; i < Index; i++)
+            {
+                MainWindowViewModel.Player.Pokemons[Index - i] = MainWindowViewModel.Player.Pokemons[Index - i - 1];
             }
             MainWindowViewModel.Player.Pokemons[0] = tmp;
         }
-        public void UpdateView(PokemonModel pokemon, int index) {
+        public void UpdateView(PokemonModel pokemon, int index)
+        {
             Pokemon = pokemon;
             OriginalName = Pokemon.Name;
             DefaultName = Pokemon.Name;
             Index = index;
             //OnPropertyChanged(nameof(EvolveButtonIsEnabled));
         }
-        public void DropPokemon() {
+        public void DropPokemon()
+        {
             MainWindowViewModel.Player.DropPokemon(Pokemon);
-            MainWindowViewModel.GoToBagViewModel();
+            MainWindowViewModel.GoToBagViewModel(null);
         }
 
     }

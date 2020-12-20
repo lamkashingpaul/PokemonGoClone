@@ -1,7 +1,6 @@
 ﻿using PokemonGoClone.Models.Pokemons;
 using PokemonGoClone.Models.Trainers;
 using PokemonGoClone.Utilities;
-using PokemonGoClone.Views;
 using System.Collections.Generic;
 using System.Windows.Input;
 
@@ -50,7 +49,8 @@ namespace PokemonGoClone.ViewModels
         public List<PokemonModel> Pokemons
         {
             get { return _pokemons; }
-            set {
+            set
+            {
                 _pokemons = value;
                 OnPropertyChanged(nameof(Pokemons));
             }

@@ -1,12 +1,8 @@
-﻿using PokemonGoClone.Models.Trainers;
-using PokemonGoClone.Utilities;
+﻿using PokemonGoClone.Utilities;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -116,7 +112,8 @@ namespace PokemonGoClone.ViewModels
             if (Saves.Where(x => String.Equals(x, FileName) == true).Count() > 0)
             {
                 DialogViewModel.PopUp("Filename always exists. Do you want to overwrite?", null, ConfirmOverwrite);
-            } else
+            }
+            else
             {
                 WriteToFile(FileName);
             }

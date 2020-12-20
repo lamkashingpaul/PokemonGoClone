@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PokemonGoClone.ViewModels
+﻿namespace PokemonGoClone.ViewModels
 {
     // This is a template for new ViewModel, not used by the program actually
     // Each viewmodel should be a child of MainWindowViewModel

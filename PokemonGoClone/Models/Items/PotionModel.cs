@@ -1,10 +1,5 @@
 ﻿using PokemonGoClone.Models.Pokemons;
 using PokemonGoClone.Models.Trainers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PokemonGoClone.Models.Items
 {
@@ -13,7 +8,8 @@ namespace PokemonGoClone.Models.Items
         //field of Potion
         private string _itemType;
         private int _healHP;
-        public PotionModel(string name, int id, int charge, int healHP) : base(name, id, charge) {
+        public PotionModel(string name, int id, int charge, int healHP) : base(name, id, charge)
+        {
             HealHP = healHP;
             ItemType = "Pokeball";
             ImageSource = $"/PokemonGoClone;component/Images/Items/Potion/{Id:D3}.png";
@@ -25,16 +21,20 @@ namespace PokemonGoClone.Models.Items
         }
 
         //Properties of PokeballModel
-        public int HealHP {
+        public int HealHP
+        {
             get { return _healHP; }
-            set {
+            set
+            {
                 _healHP = value;
             }
         }
 
-        public string ItemType {
+        public string ItemType
+        {
             get { return _itemType; }
-            private set {
+            private set
+            {
                 _itemType = value;
             }
         }

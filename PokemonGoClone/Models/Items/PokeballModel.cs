@@ -1,10 +1,5 @@
 ﻿using PokemonGoClone.Models.Pokemons;
 using PokemonGoClone.Models.Trainers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PokemonGoClone.Models.Items
 {
@@ -15,7 +10,8 @@ namespace PokemonGoClone.Models.Items
         private string _itemType;
 
         //derived class constructor
-        public PokeballModel(string name, int id, int charge, double catchProbability) : base(name, id, charge) {
+        public PokeballModel(string name, int id, int charge, double catchProbability) : base(name, id, charge)
+        {
             CatchProbability = catchProbability;
             ItemType = "Pokeball";
             ImageSource = $"/PokemonGoClone;component/Images/Items/Pokeball/{Id:D3}.png";
@@ -26,16 +22,20 @@ namespace PokemonGoClone.Models.Items
         }
 
         //Properties of PokeballModel
-        public double CatchProbability {
+        public double CatchProbability
+        {
             get { return _catchProbability; }
-            set {
+            set
+            {
                 _catchProbability = value;
             }
         }
 
-        public string ItemType {
+        public string ItemType
+        {
             get { return _itemType; }
-            private set {
+            private set
+            {
                 _itemType = value;
             }
         }

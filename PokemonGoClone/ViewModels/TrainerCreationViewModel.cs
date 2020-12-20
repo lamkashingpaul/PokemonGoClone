@@ -1,14 +1,8 @@
 ﻿using PokemonGoClone.Models.Pokemons;
 using PokemonGoClone.Utilities;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
 
 namespace PokemonGoClone.ViewModels
 {
@@ -105,7 +99,8 @@ namespace PokemonGoClone.ViewModels
             {
                 DialogViewModel.PopUp("You must enter your name.");
                 return;
-            } else if (choice == null)
+            }
+            else if (choice == null)
             {
                 DialogViewModel.PopUp("You must pick up your Pokemon.");
                 return;

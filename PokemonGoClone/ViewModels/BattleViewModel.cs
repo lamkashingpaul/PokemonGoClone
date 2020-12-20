@@ -4,11 +4,7 @@ using PokemonGoClone.Models.Pokemons;
 using PokemonGoClone.Models.Trainers;
 using PokemonGoClone.Utilities;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace PokemonGoClone.ViewModels
@@ -176,7 +172,8 @@ namespace PokemonGoClone.ViewModels
             if (ability.Charge == 0)
             {
                 DialogViewModel.PopUp("Ability has no charge.");
-            } else
+            }
+            else
             {
                 string result = ability.Use(PlayerPokemon, OpponentPokemon);
                 BattleLogs.Add(new LogModel(result, Id++));
@@ -191,7 +188,7 @@ namespace PokemonGoClone.ViewModels
 
         private void OpponentTurn()
         {
-            if (StateOfBattle() == null) 
+            if (StateOfBattle() == null)
             {
                 int i = Rng.Next(OpponentPokemon.Abilities.Count);
                 var ability = OpponentPokemon.Abilities[i];
@@ -220,7 +217,8 @@ namespace PokemonGoClone.ViewModels
                 }
                 // AI cheat ends
                 return true;
-            } else if (PlayerPokemon.Health == 0)
+            }
+            else if (PlayerPokemon.Health == 0)
             {
                 DialogViewModel.PopUp("You Lose", EndBattle);
                 /*
@@ -235,7 +233,8 @@ namespace PokemonGoClone.ViewModels
                 }
                 // Cheat ends*/
                 return false;
-            } else
+            }
+            else
             {
                 return null;
             }

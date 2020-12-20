@@ -1,21 +1,16 @@
-﻿using PokemonGoClone.Models;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using PokemonGoClone.Models;
+using PokemonGoClone.Models.Items;
 using PokemonGoClone.Models.Pokemons;
 using PokemonGoClone.Models.Trainers;
 using PokemonGoClone.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 using System.IO;
 using System.Reflection;
-using PokemonGoClone.Views;
-using PokemonGoClone.Models.Items;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
+using System.Windows.Input;
 
 namespace PokemonGoClone.ViewModels
 {
@@ -28,7 +23,8 @@ namespace PokemonGoClone.ViewModels
             if (Player.Pokemons[0].Health == 0)
             {
                 DialogViewModel.PopUp("Your lending pokemon cannot fight, please select other pokemon.");
-            }  else
+            }
+            else
             {
                 ((BattleViewModel)MainWindowViewModel.BattleViewModel).NewBattle(Player, Target);
                 DialogViewModel.IsVisible = false;
@@ -65,14 +61,16 @@ namespace PokemonGoClone.ViewModels
         {
             get { return _moveCommand ?? (_moveCommand = new RelayCommand(x => { Move(x); }, x => !DialogViewModel.IsVisible)); }
         }
-        public ICommand BagCommand {
+        public ICommand BagCommand
+        {
             get { return _bagCommand ?? (_bagCommand = new RelayCommand(x => { Bag(); }, x => !DialogViewModel.IsVisible)); }
         }
         public ICommand MenuCommand
         {
             get { return _menuCommand ?? (_menuCommand = new RelayCommand(x => { Menu(x); }, x => !DialogViewModel.IsVisible)); }
         }
-        public ICommand ShopCommand {
+        public ICommand ShopCommand
+        {
             get { return _shopCommand ?? (_shopCommand = new RelayCommand(x => { Shop(); }, x => !DialogViewModel.IsVisible)); }
         }
         public ICommand InteractCommand
@@ -138,16 +136,19 @@ namespace PokemonGoClone.ViewModels
 
             // Add Pokemon to player
             Trainers[0].AddPokemon((PokemonModel)(MainWindowViewModel.Pokemons.Find(x => x.Id == choice).Clone()));
-            for (int i = 0; i < MainWindowViewModel.Pokemons.Count; i++) {
+            for (int i = 0; i < MainWindowViewModel.Pokemons.Count; i++)
+            {
                 Player.AddPokemon((PokemonModel)MainWindowViewModel.Pokemons[i].Clone());
                 Player.AddPokemon((PokemonModel)MainWindowViewModel.Pokemons[i].Clone());
             }
 
             // Add Items to player
-            for (int i = 0; i < MainWindowViewModel.Items.Count; i++) {
+            for (int i = 0; i < MainWindowViewModel.Items.Count; i++)
+            {
                 Player.AddItem((ItemModel)MainWindowViewModel.Items[i].Clone());
             }
-            for (int i = 0; i < MainWindowViewModel.Items.Count; i++) {
+            for (int i = 0; i < MainWindowViewModel.Items.Count; i++)
+            {
                 Player.AddItem((ItemModel)MainWindowViewModel.Items[i].Clone());
             }
 
@@ -228,7 +229,7 @@ namespace PokemonGoClone.ViewModels
         private void LoadOtherTrainers()
         {
             int i = 1;
-            while(true)
+            while (true)
             {
                 string json;
                 Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("PokemonGoClone.Resources.Trainers." + $"{i:D3}.json");
@@ -250,18 +251,19 @@ namespace PokemonGoClone.ViewModels
                     } while (Trainers.Find(x => x.XCoordinate == randomX && x.YCoordinate == randomY) != null);
 
                     TrainerModel trainer = new TrainerModel(values["Name"].Value<string>(), "NPC", i)
-                    { 
+                    {
                         XCoordinate = randomX,
                         YCoordinate = randomY,
                         Quote = values["Quote"].Value<string>()
                     };
-                    
+
                     int randomPokemon = rng.Next(MainWindowViewModel.Pokemons.Count) + 1;
                     trainer.AddPokemon((PokemonModel)(MainWindowViewModel.Pokemons.Find(x => x.Id == randomPokemon).Clone()));
                     Trainers.Add(trainer);
 
                     i += 1;
-                } else
+                }
+                else
                 {
                     break;
                 }
@@ -334,7 +336,7 @@ namespace PokemonGoClone.ViewModels
         }
         private void Shop()
         {
-            MainWindowViewModel.GoToShopViewModel();
+            MainWindowViewModel.GoToShopViewModel(null);
         }
 
     }

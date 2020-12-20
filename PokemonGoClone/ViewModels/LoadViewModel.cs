@@ -1,13 +1,10 @@
 ﻿using PokemonGoClone.Models.Trainers;
 using PokemonGoClone.Utilities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using System.IO;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using System.Windows.Input;
 
 namespace PokemonGoClone.ViewModels
 {
@@ -45,7 +42,7 @@ namespace PokemonGoClone.ViewModels
         public void Update()
         {
             Saves.Clear();
-            foreach(var save in Directory.EnumerateFiles(@".\", "*.pkmgc", SearchOption.TopDirectoryOnly).Select(Path.GetFileName).ToList())
+            foreach (var save in Directory.EnumerateFiles(@".\", "*.pkmgc", SearchOption.TopDirectoryOnly).Select(Path.GetFileName).ToList())
             {
                 Saves.Add(save);
             }
@@ -72,7 +69,8 @@ namespace PokemonGoClone.ViewModels
             if (trainers == null)
             {
                 DialogViewModel.PopUp("Loading failed. Please choose another save.");
-            } else
+            }
+            else
             {
                 ((MapViewModel)MainWindowViewModel.MapViewModel).GameLoad(trainers);
             }

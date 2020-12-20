@@ -4,10 +4,6 @@ using PokemonGoClone.Models.Trainers;
 using PokemonGoClone.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace PokemonGoClone.ViewModels
@@ -23,79 +19,97 @@ namespace PokemonGoClone.ViewModels
         private ICommand _selectedItemCommand;
         private ICommand _buyCommand;
         private ICommand _randomCommand;
-        public ICommand SelectedItemCommand {
+        public ICommand SelectedItemCommand
+        {
             get { return _selectedItemCommand ?? (_selectedItemCommand = new RelayCommand(x => { SelectedItem(x); })); }
         }
-        public ICommand BuyCommand {
+        public ICommand BuyCommand
+        {
             get { return _buyCommand ?? (_buyCommand = new RelayCommand(x => { Buy(); })); }
         }
 
-        public ICommand RandomCommand {
+        public ICommand RandomCommand
+        {
             get { return _randomCommand ?? (_randomCommand = new RelayCommand(x => { RandomPokemon(); })); }
         }
 
         //constructor
-        public ShopViewModel(MainWindowViewModel mainWindowViewModel) {
+        public ShopViewModel(MainWindowViewModel mainWindowViewModel)
+        {
             MainWindowViewModel = mainWindowViewModel;
         }
 
         //properties of ShopViewModel
-        public MainWindowViewModel MainWindowViewModel {
+        public MainWindowViewModel MainWindowViewModel
+        {
             get { return _mainWindowViewModel; }
-            set {
+            set
+            {
                 _mainWindowViewModel = value;
                 OnPropertyChanged(nameof(MainWindowViewModel));
             }
         }
 
-        public TrainerModel Trainer {
+        public TrainerModel Trainer
+        {
             get { return _trainer; }
-            set {
+            set
+            {
                 _trainer = value;
                 OnPropertyChanged(nameof(Trainer));
             }
         }
 
-        public List<ItemModel> DefaultItem {
+        public List<ItemModel> DefaultItem
+        {
             get { return _defaultItem; }
-            set {
+            set
+            {
                 _defaultItem = value;
                 OnPropertyChanged(nameof(DefaultItem));
             }
         }
-        public ItemModel Choose {
+        public ItemModel Choose
+        {
             get { return _choose; }
-            set {
+            set
+            {
                 _choose = value;
                 OnPropertyChanged(nameof(Choose));
             }
         }
 
-        public PokemonModel Random {
+        public PokemonModel Random
+        {
             get { return _random; }
-            set {
+            set
+            {
                 _random = value;
                 OnPropertyChanged(nameof(Random));
             }
         }
 
         //Method of ShopViewModel
-        public void Update(TrainerModel trainer, List<ItemModel> defaultItem) {
+        public void Update(TrainerModel trainer, List<ItemModel> defaultItem)
+        {
             DefaultItem = defaultItem;
             Trainer = trainer;
             Choose = MainWindowViewModel.Items[0];
         }
 
-        public void SelectedItem(object item) {
+        public void SelectedItem(object item)
+        {
             Choose = item as ItemModel;
         }
 
-        public void Buy() {
+        public void Buy()
+        {
             Trainer.Money -= Choose.Charge;
             Trainer.AddItem(Choose);
         }
 
-        public void RandomPokemon() {
+        public void RandomPokemon()
+        {
             Trainer.Money -= 500;
             PokemonModel pokemon = RandomPokemonMethod();
             Random = pokemon;
@@ -103,19 +117,27 @@ namespace PokemonGoClone.ViewModels
         }
 
         //factory Method
-        public PokemonModel RandomPokemonMethod() {
+        public PokemonModel RandomPokemonMethod()
+        {
             Random rnd = new Random();
             int x = rnd.Next(0, MainWindowViewModel.Pokemons.Count);
             PokemonModel pokemon = MainWindowViewModel.Pokemons[x];
             int originalHealth = pokemon.MaxHealth;
             pokemon.MaxHealth = rnd.Next(originalHealth - 200, originalHealth + 101);
-            if (pokemon.MaxHealth <= originalHealth) {
+            if (pokemon.MaxHealth <= originalHealth)
+            {
                 pokemon.Description = "It is Normal (N) Pokemon!";
-            } else if (pokemon.MaxHealth <= originalHealth + 90) {
+            }
+            else if (pokemon.MaxHealth <= originalHealth + 90)
+            {
                 pokemon.Description = "It is Rare (R) Pokemon!";
-            } else if (pokemon.MaxHealth < originalHealth + 100) {
+            }
+            else if (pokemon.MaxHealth < originalHealth + 100)
+            {
                 pokemon.Description = "It is Super Rare (SR) Pokemon!";
-            } else {
+            }
+            else
+            {
                 pokemon.Description = "It is Ultra Rare (UR) Pokemon!";
             }
 

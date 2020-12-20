@@ -1,12 +1,6 @@
 ﻿using PokemonGoClone.Models.Pokemons;
-using PokemonGoClone.Models.Trainers;
 using PokemonGoClone.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Data.SqlTypes;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PokemonGoClone.Models.Abilities
 {
@@ -70,7 +64,9 @@ namespace PokemonGoClone.Models.Abilities
                     return "This is not damage ability.";
 
                 }
-            } else {
+            }
+            else
+            {
                 // You ability missed
                 return $"{caster.Name}'s ability missed.";
             }

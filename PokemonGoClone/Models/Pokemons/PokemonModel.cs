@@ -2,9 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
 
 namespace PokemonGoClone.Models.Pokemons
 {
@@ -110,7 +107,8 @@ namespace PokemonGoClone.Models.Pokemons
             }
         }
 
-        public int EvolveCost {
+        public int EvolveCost
+        {
             get { return _evolveCost; }
             set
             {
@@ -143,7 +141,8 @@ namespace PokemonGoClone.Models.Pokemons
             get { return PowerUpCostBase + Level * PowerUpCostPerLevel; }
         }
 
-        public void LevelUp() {
+        public void LevelUp()
+        {
             Level += 1;
             MaxHealth += Rng.Next(MaxHealthPerLevel - 20, MaxHealthPerLevel + 1);
             Health = MaxHealth;
@@ -159,9 +158,9 @@ namespace PokemonGoClone.Models.Pokemons
             }
         }
 
-        public void AddRandomNewAbility(List<AbilityModel>abilities)
+        public void AddRandomNewAbility(List<AbilityModel> abilities)
         {
-            var availableAbilities = abilities.Where(x => Abilities.All(x2 =>x2.Id != x.Id)).ToList();
+            var availableAbilities = abilities.Where(x => Abilities.All(x2 => x2.Id != x.Id)).ToList();
             if (availableAbilities.Count > 0)
             {
                 int randomAbilityIndex = Rng.Next(availableAbilities.Count);

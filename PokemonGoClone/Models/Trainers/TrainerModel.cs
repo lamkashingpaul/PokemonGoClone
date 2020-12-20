@@ -2,10 +2,6 @@
 using PokemonGoClone.Models.Pokemons;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PokemonGoClone.Models.Trainers
 {
@@ -78,9 +74,11 @@ namespace PokemonGoClone.Models.Trainers
                 OnPropertyChanged(nameof(TurnsUntilAction));
             }
         }
-        public int Money {
+        public int Money
+        {
             get { return _money; }
-            set {
+            set
+            {
                 _money = value;
                 OnPropertyChanged(nameof(Money));
             }
@@ -100,9 +98,12 @@ namespace PokemonGoClone.Models.Trainers
 
         public void AddItem(ItemModel item)
         {
-            if (item is PokeballModel) {
+            if (item is PokeballModel)
+            {
                 Items.Add((PokeballModel)(item.Clone()));
-            } else {
+            }
+            else
+            {
                 Items.Add((PotionModel)(item.Clone()));
             }
         }
