@@ -153,7 +153,7 @@ namespace PokemonGoClone.ViewModels
 
             // Update the Bag View
             ((BagViewModel)MainWindowViewModel.BagViewModel).UpdatePlayer(Player);
-            ((BagViewModel)MainWindowViewModel.BagViewModel).MainWindowViewModel = MainWindowViewModel;
+            //((BagViewModel)MainWindowViewModel.BagViewModel).MainWindowViewModel = MainWindowViewModel;
             ((ItemViewModel)MainWindowViewModel.ItemViewModel).UpdatePlayer(Player);
 
 
