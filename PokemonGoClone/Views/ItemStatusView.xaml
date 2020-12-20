@@ -22,6 +22,6 @@
             <Button Content="Drop" Width="180" Height="100" FontSize="24" Canvas.Left="360"/>
             <Button Content="Exit" Width="180" Height="100" FontSize="24" Canvas.Left="540" Command="{Binding CurrentViewModel.MainWindowViewModel.GoToItemViewModelCommand}" />
 
-        </Canvas>
+        </Canvas>            
     </Grid>
 </UserControl>

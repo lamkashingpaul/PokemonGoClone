@@ -45,6 +45,7 @@ namespace PokemonGoClone.ViewModels
         private object _bagView;
         private object _pokemonStatusView;
         private object _itemView;
+        private object _itemStatusView;
         private object _battleView;
         private object _currentView;
 
@@ -55,6 +56,7 @@ namespace PokemonGoClone.ViewModels
         private object _bagViewModel;
         private object _pokemonStatusViewModel;
         private object _itemViewModel;
+        private object _itemStatusViewModel;
         private object _battleViewModel;
         private object _currentViewModel;
 
@@ -64,6 +66,7 @@ namespace PokemonGoClone.ViewModels
         private ICommand _goToLoadViewModelCommand;
         private ICommand _goToMapViewModelCommand;
         private ICommand _goToBagViewModelCommand;
+        private ICommand _goToItemViewModelCommand;
         private ICommand _goToBattleViewModelCommand;
         private ICommand _closeWindowCommand;
 
@@ -87,6 +90,9 @@ namespace PokemonGoClone.ViewModels
         public ICommand GoToBagViewModelCommand
         {
             get { return _goToBagViewModelCommand ?? (_goToBagViewModelCommand = new RelayCommand(x => { GoToBagViewModel(); })); }
+        }
+        public ICommand GoToItemViewModelCommand {
+            get { return _goToItemViewModelCommand ?? (_goToItemViewModelCommand = new RelayCommand(x => { GoToItemViewModel(); })); }
         }
         public ICommand GoToBattleViewModelCommand
         {
@@ -116,8 +122,15 @@ namespace PokemonGoClone.ViewModels
             BagView = new BagView();
             BagViewModel = new BagViewModel(this);
 
+            ItemView = new ItemView();
+            ItemViewModel = new ItemViewModel(this);
+
+
             PokemonStatusView = new PokemonStatusView();
-            PokemonStatusViewModel = new PokemonStatusViewModel(this);            
+            PokemonStatusViewModel = new PokemonStatusViewModel(this);
+
+            ItemStatusView = new ItemStatusView();
+            ItemStatusViewModel = new ItemStatusViewModel(this);
 
             // Set up game data
             Abilities = new List<AbilityModel>();
@@ -171,7 +184,51 @@ namespace PokemonGoClone.ViewModels
         }
         private void LoadItems(List<ItemModel> items)
         {
-            //throw new NotImplementedException();
+            int i = 1;
+            while (true) {
+                string json;
+                Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("PokemonGoClone.Resources.Items.Pokeball." + $"{i:D3}.json");
+                if (stream != null) {
+                    using (var reader = new StreamReader(stream, Encoding.Default)) {
+                        json = reader.ReadToEnd();
+                    }
+
+                    var values = (JObject)JsonConvert.DeserializeObject(json);
+
+                    PokeballModel item = new PokeballModel(values["Name"].Value<string>(),
+                                                            values["Id"].Value<int>(),
+                                                            values["Charge"].Value<int>(),
+                                                            values["CatchProbability"].Value<double>()
+                                                            );
+
+                    items.Add(item);
+                    i += 1;
+                } else {
+                    break;
+                }
+            }
+            i = 1;
+            while (true) {
+                string json;
+                Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("PokemonGoClone.Resources.Items.Potion." + $"{i:D3}.json");
+                if (stream != null) {
+                    using (var reader = new StreamReader(stream, Encoding.Default)) {
+                        json = reader.ReadToEnd();
+                    }
+
+                    var values = (JObject)JsonConvert.DeserializeObject(json);
+
+                    PotionModel item = new PotionModel(values["Name"].Value<string>(),
+                                                            values["Id"].Value<int>(),
+                                                            values["Charge"].Value<int>(),
+                                                            values["HealHP"].Value<int>()
+                                                            );
+                    items.Add(item);
+                    i += 1;
+                } else {
+                    break;
+                }
+            }
         }
         private void LoadPokemons(List<PokemonModel> pokemons)
         {
@@ -199,7 +256,7 @@ namespace PokemonGoClone.ViewModels
                                                             values["MaxExp"].Value<int>(),
                                                             values["MaxExpPerLevel"].Value<int>(),
                                                             values["Accuracy"].Value<double>(),
-                                                            values["evolveId"].Value<int>(),
+                                                            values["EvolveId"].Value<int>(),
                                                             Abilities[0]);
                     pokemons.Add(pokemon);
                     i += 1;
@@ -291,6 +348,21 @@ namespace PokemonGoClone.ViewModels
             }
         }
 
+        public object ItemStatusViewModel {
+            get { return _itemStatusViewModel; }
+            set {
+                _itemStatusViewModel = value;
+                OnPropertyChanged(nameof(ItemStatusViewModel));
+            }
+        }
+        public object ItemStatusView {
+            get { return _itemStatusView; }
+            set {
+                _itemStatusView = value;
+                OnPropertyChanged(nameof(ItemStatusView));
+            }
+        }
+
 
         public object ItemView {
             get { return _itemView; }
@@ -379,12 +451,18 @@ namespace PokemonGoClone.ViewModels
             CurrentViewModel = BagViewModel;
             CurrentView = BagView;
         }
-
+        public void GoToItemViewModel() {
+            CurrentViewModel = ItemViewModel;
+            CurrentView = ItemView;
+        }
         public void GotoPokemonStatusViewModel() {
             CurrentViewModel = PokemonStatusViewModel;
             CurrentView = PokemonStatusView;
         }
-
+        public void GotoItemStatusViewModel() {
+            CurrentViewModel = ItemStatusViewModel;
+            CurrentView = ItemStatusView;
+        }
         public void GoToBattleViewModel()
         {
             CurrentViewModel = BattleViewModel;

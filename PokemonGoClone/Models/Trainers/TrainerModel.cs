@@ -57,7 +57,11 @@ namespace PokemonGoClone.Models.Trainers
 
         public void AddItem(ItemModel item)
         {
-
+            if (item is PokeballModel) {
+                Items.Add((PokeballModel)(item.Clone()));
+            } else {
+                Items.Add((PotionModel)(item.Clone()));
+            }
         }
 
         public void DropItem(ItemModel item)

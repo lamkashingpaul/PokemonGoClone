@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Reflection;
 using PokemonGoClone.Views;
+using PokemonGoClone.Models.Items;
 
 namespace PokemonGoClone.ViewModels
 {
@@ -141,10 +142,15 @@ namespace PokemonGoClone.ViewModels
                 Player.AddPokemon((PokemonModel)MainWindowViewModel.Pokemons[i].Clone());
                 Player.AddPokemon((PokemonModel)MainWindowViewModel.Pokemons[i].Clone());
             }
+            for (int i = 0; i < MainWindowViewModel.Items.Count; i++) {
+                Player.AddItem((ItemModel)MainWindowViewModel.Items[i].Clone());
+                Player.AddItem((ItemModel)MainWindowViewModel.Items[i].Clone());
+            }
 
             // Update the Bag View
             ((BagViewModel)MainWindowViewModel.BagViewModel).UpdatePlayer(Player);
-            ((BagViewModel)MainWindowViewModel.BagViewModel).MainWindowViewModel = MainWindowViewModel;
+            //((BagViewModel)MainWindowViewModel.BagViewModel).MainWindowViewModel = MainWindowViewModel;
+            ((ItemViewModel)MainWindowViewModel.ItemViewModel).UpdatePlayer(Player);
 
 
             // Add more NPC trainers
