@@ -42,6 +42,7 @@ namespace PokemonGoClone.ViewModels
         private ICommand _moveCommand;
         private ICommand _bagCommand;
         private ICommand _interactCommand;
+        private ICommand _shopCommand;
 
         public ICommand MoveCommand
         {
@@ -49,6 +50,9 @@ namespace PokemonGoClone.ViewModels
         }
         public ICommand BagCommand {
             get { return _bagCommand ?? (_bagCommand = new RelayCommand(x => { Bag(); })); }
+        }
+        public ICommand ShopCommand {
+            get { return _shopCommand ?? (_shopCommand = new RelayCommand(x => { Shop(); })); }
         }
         public ICommand InteractCommand
         {
@@ -155,6 +159,7 @@ namespace PokemonGoClone.ViewModels
             ((BagViewModel)MainWindowViewModel.BagViewModel).UpdatePlayer(Player);
             //((BagViewModel)MainWindowViewModel.BagViewModel).MainWindowViewModel = MainWindowViewModel;
             ((ItemViewModel)MainWindowViewModel.ItemViewModel).UpdatePlayer(Player);
+            ((ShopViewModel)MainWindowViewModel.ShopViewModel).Update(Player, MainWindowViewModel.Items);
 
 
             // Add more NPC trainers
@@ -282,7 +287,6 @@ namespace PokemonGoClone.ViewModels
             }
 
         }
-
         private void Bag() {
             // Bag() is not allowed if there is dialog overlay
             if (DialogViewModel.IsVisible == true)
@@ -291,5 +295,13 @@ namespace PokemonGoClone.ViewModels
             }
             MainWindowViewModel.GoToBagViewModel();
         }
+        private void Shop() {
+            // Shop() is not allowed if there is dialog overlay
+            if (DialogViewModel.IsVisible == true) {
+                return;
+            }
+            MainWindowViewModel.GoToShopViewModel();
+        }
+
     }
 }

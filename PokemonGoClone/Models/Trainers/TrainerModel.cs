@@ -15,6 +15,7 @@ namespace PokemonGoClone.Models.Trainers
         private string _quote;
         public List<PokemonModel> Pokemons;
         public List<ItemModel> Items;
+        public int _money;
 
         // Default constructor
         public TrainerModel(string name, string type, int id)
@@ -24,6 +25,7 @@ namespace PokemonGoClone.Models.Trainers
             Id = id;
             Level = 1;
             Health = 128;
+            Money = 100;
 
             Facing = 'S';
 
@@ -41,6 +43,13 @@ namespace PokemonGoClone.Models.Trainers
             {
                 _quote = value;
                 OnPropertyChanged(nameof(Quote));
+            }
+        }
+        public int Money {
+            get { return _money; }
+            set {
+                _money = value;
+                OnPropertyChanged(nameof(Money));
             }
         }
 

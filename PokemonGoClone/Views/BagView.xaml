@@ -9,7 +9,6 @@
              FocusVisualStyle="{x:Null}">
     <Grid>
         <ItemsControl Focusable="False" ItemsSource="{Binding CurrentViewModel.Pokemons}" Margin="0,50,0,0">
-
             <ItemsControl.Template>
                 <ControlTemplate>
                     <ScrollViewer HorizontalScrollBarVisibility="Hidden">

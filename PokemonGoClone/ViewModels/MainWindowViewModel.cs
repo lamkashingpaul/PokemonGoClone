@@ -42,6 +42,7 @@ namespace PokemonGoClone.ViewModels
         private object _startView;
         private object _trainerCreationView;
         private object _mapView;
+        private object _shopView;
         private object _bagView;
         private object _pokemonStatusView;
         private object _itemView;
@@ -53,6 +54,7 @@ namespace PokemonGoClone.ViewModels
         private object _startViewModel;
         private object _trainerCreationViewModel;
         private object _mapViewModel;
+        private object _shopViewModel;
         private object _bagViewModel;
         private object _pokemonStatusViewModel;
         private object _itemViewModel;
@@ -113,22 +115,20 @@ namespace PokemonGoClone.ViewModels
             TrainerCreationView = new TrainerCreationView();
             MapView = new MapView();
             BattleView = new BattleView();
+            ShopView = new ShopView();
+            BagView = new BagView();
+            ItemView = new ItemView();
+            PokemonStatusView = new PokemonStatusView();
+            ItemStatusView = new ItemStatusView();
 
             StartViewModel = new StartViewModel(this);
             TrainerCreationViewModel = new TrainerCreationViewModel(this);
             MapViewModel = new MapViewModel(this);
             BattleViewModel = new BattleViewModel(this);
-
-            BagView = new BagView();
+            ShopViewModel = new ShopViewModel(this);
             BagViewModel = new BagViewModel(this);
-
-            ItemView = new ItemView();
             ItemViewModel = new ItemViewModel(this);
-
-            PokemonStatusView = new PokemonStatusView();
             PokemonStatusViewModel = new PokemonStatusViewModel(this);
-
-            ItemStatusView = new ItemStatusView();
             ItemStatusViewModel = new ItemStatusViewModel(this);
 
             // Set up game data
@@ -322,6 +322,20 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(MapViewModel));
             }
         }
+        public object ShopView {
+            get { return _shopView; }
+            set {
+                _shopView = value;
+                OnPropertyChanged(nameof(ShopView));
+            }
+        }
+        public object ShopViewModel {
+            get { return _shopViewModel; }
+            set {
+                _shopViewModel = value;
+                OnPropertyChanged(nameof(ShopViewModel));
+            }
+        }
         public object BagView
         {
             get { return _bagView; }
@@ -329,6 +343,13 @@ namespace PokemonGoClone.ViewModels
             {
                 _bagView = value;
                 OnPropertyChanged(nameof(BagView));
+            }
+        }
+        public object BagViewModel {
+            get { return _bagViewModel; }
+            set {
+                _bagViewModel = value;
+                OnPropertyChanged(nameof(BagViewModel));
             }
         }
 
@@ -370,15 +391,7 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(ItemView));
             }
         }
-        public object BagViewModel
-        {
-            get { return _bagViewModel; }
-            set
-            {
-                _bagViewModel = value;
-                OnPropertyChanged(nameof(BagViewModel));
-            }
-        }
+
         public object ItemViewModel {
             get { return _itemViewModel; }
             set {
@@ -449,6 +462,10 @@ namespace PokemonGoClone.ViewModels
         {
             CurrentViewModel = BagViewModel;
             CurrentView = BagView;
+        }
+        public void GoToShopViewModel() {
+            CurrentViewModel = ShopViewModel;
+            CurrentView = ShopView;
         }
         public void GoToItemViewModel() {
             CurrentViewModel = ItemViewModel;

@@ -5,8 +5,57 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PokemonGoClone.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+             d:DesignHeight="450" d:DesignWidth="720">
+    <Grid Background="White">
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Wellcome to Pokemon Shop!" VerticalAlignment="Top" Height="63" Width="800" TextAlignment="Center" FontSize ="32"/>
+        <ItemsControl Focusable="False" ItemsSource="{Binding CurrentViewModel.DefaultItem}" Margin="0,50,0,0">
+            <ItemsControl.Template>
+                <ControlTemplate>
+                    <ScrollViewer Width="Auto" Margin="0,0,560,0">
+                        <ItemsPresenter>
+                        </ItemsPresenter>
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ItemsControl.Template>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Height="140" Width="120" HorizontalAlignment="Center" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.CurrentViewModel.SelectedItemCommand}" CommandParameter="{Binding}">
+                        <StackPanel>
+                            <Image Source="{Binding ImageSource}" HorizontalAlignment="Left"/>
+                            <TextBlock Text="{Binding Name}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        
+        <StackPanel Margin="166,50,0,0">
+            <Border BorderBrush="Black" BorderThickness="1">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock FontSize="24" Text="Total Money: $ " HorizontalAlignment="Left"/>
+                    <TextBlock FontSize="24" Text="{Binding CurrentViewModel.Trainer.Money}" Width="390"/>
+                </StackPanel>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1">
+                <StackPanel>
+                    <TextBlock FontFamily="24" Text="Item" TextAlignment="Center" FontSize="24"/>
+                    <Image Height="100" Width="100" Source="{Binding CurrentViewModel.Choose.ImageSource}"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock FontFamily="24" Text="Name: " TextAlignment="Center" FontSize="24"/>
+                        <TextBlock FontFamily="24" Text="{Binding CurrentViewModel.Choose.Name}" TextAlignment="Center" FontSize="24"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock FontFamily="24" Text="Charge: " TextAlignment="Center" FontSize="24"/>
+                        <TextBlock FontFamily="24" Text="{Binding CurrentViewModel.Choose.Charge}" TextAlignment="Center" FontSize="24"/>
+                    </StackPanel>
+                    <Button Content="Buy" FontSize="24" Command="{Binding CurrentViewModel.BuyCommand}"/>
+                    <Button Content="Exit" FontSize="24" Command="{Binding CurrentViewModel.MainWindowViewModel.GoToMapViewModelCommand}"/>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+
+
+
     </Grid>
 </UserControl>

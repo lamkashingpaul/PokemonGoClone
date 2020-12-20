@@ -165,7 +165,8 @@
 
         <KeyBinding Command="{Binding CurrentViewModel.InteractCommand}" Key="Space"/>
         <KeyBinding Command="{Binding CurrentViewModel.DialogViewModel.CloseCommand}" Key="Esc"/>
-        
+
+        <KeyBinding Command="{Binding CurrentViewModel.ShopCommand}" Key="Q"/>
         <KeyBinding Command="{Binding CurrentViewModel.BagCommand}" Key="B"/>
     </UserControl.InputBindings>
 </UserControl>
