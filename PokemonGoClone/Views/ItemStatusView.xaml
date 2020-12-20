@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PokemonGoClone.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="720">
+             d:DesignHeight="480" d:DesignWidth="720">
     <Grid>
         <StackPanel Canvas.Left="167">
             <Image Source="{Binding CurrentViewModel.Item.ImageSource}" Width="100" Height="100"/>
@@ -18,7 +18,7 @@
                 <TextBlock Text="{Binding CurrentViewModel.Item.Charge}" FontSize="24"/>
             </StackPanel>
         </StackPanel>
-        <Canvas Height="100" Margin="0,350,0,0">
+        <Canvas Height="100" Margin="0,380,0,0">
             <Button Content="Drop" Width="180" Height="100" FontSize="24" Canvas.Left="360" Command="{Binding CurrentViewModel.DropItemCommand}"/>
             <Button Content="Exit" Width="180" Height="100" FontSize="24" Canvas.Left="540" Command="{Binding CurrentViewModel.MainWindowViewModel.GoToItemViewModelCommand}" />
 
