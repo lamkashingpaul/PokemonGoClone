@@ -1,4 +1,5 @@
 ﻿using PokemonGoClone.Models.Items;
+using PokemonGoClone.Models.Pokemons;
 using PokemonGoClone.Models.Trainers;
 using PokemonGoClone.Utilities;
 using System;
@@ -18,14 +19,19 @@ namespace PokemonGoClone.ViewModels
         private List<ItemModel> _defaultItem;
         private TrainerModel _trainer;
         private ItemModel _choose;
+        public PokemonModel _random;
         private ICommand _selectedItemCommand;
         private ICommand _buyCommand;
-
+        private ICommand _randomCommand;
         public ICommand SelectedItemCommand {
             get { return _selectedItemCommand ?? (_selectedItemCommand = new RelayCommand(x => { SelectedItem(x); })); }
         }
         public ICommand BuyCommand {
             get { return _buyCommand ?? (_buyCommand = new RelayCommand(x => { Buy(); })); }
+        }
+
+        public ICommand RandomCommand {
+            get { return _randomCommand ?? (_randomCommand = new RelayCommand(x => { RandomPokemon(); })); }
         }
 
         //constructor
@@ -65,6 +71,14 @@ namespace PokemonGoClone.ViewModels
             }
         }
 
+        public PokemonModel Random {
+            get { return _random; }
+            set {
+                _random = value;
+                OnPropertyChanged(nameof(Random));
+            }
+        }
+
         //Method of ShopViewModel
         public void Update(TrainerModel trainer, List<ItemModel> defaultItem) {
             DefaultItem = defaultItem;
@@ -81,7 +95,34 @@ namespace PokemonGoClone.ViewModels
             Trainer.AddItem(Choose);
         }
 
+        public void RandomPokemon() {
+            Trainer.Money -= 500;
+            PokemonModel pokemon = RandomPokemonMethod();
+            Random = pokemon;
+            Trainer.AddPokemon(pokemon);
+        }
+
+        //factory Method
+        public PokemonModel RandomPokemonMethod() {
+            Random rnd = new Random();
+            int x = rnd.Next(0, MainWindowViewModel.Pokemons.Count);
+            PokemonModel pokemon = MainWindowViewModel.Pokemons[x];
+            int originalHealth = pokemon.MaxHealth;
+            pokemon.MaxHealth = rnd.Next(originalHealth - 200, originalHealth + 101);
+            if (pokemon.MaxHealth <= originalHealth) {
+                pokemon.Description = "It is Normal (N) Pokemon!";
+            } else if (pokemon.MaxHealth <= originalHealth + 90) {
+                pokemon.Description = "It is Rare (R) Pokemon!";
+            } else if (pokemon.MaxHealth < originalHealth + 100) {
+                pokemon.Description = "It is Super Rare (SR) Pokemon!";
+            } else {
+                pokemon.Description = "It is Ultra Rare (UR) Pokemon!";
+            }
+
+            return pokemon;
+        }
 
 
     }
 }
+
