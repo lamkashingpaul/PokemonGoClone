@@ -125,7 +125,6 @@ namespace PokemonGoClone.ViewModels
             ItemView = new ItemView();
             ItemViewModel = new ItemViewModel(this);
 
-
             PokemonStatusView = new PokemonStatusView();
             PokemonStatusViewModel = new PokemonStatusViewModel(this);
 

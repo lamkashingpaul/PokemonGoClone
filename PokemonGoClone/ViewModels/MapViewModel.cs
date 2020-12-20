@@ -144,12 +144,16 @@ namespace PokemonGoClone.ViewModels
             }
             for (int i = 0; i < MainWindowViewModel.Items.Count; i++) {
                 Player.AddItem((ItemModel)MainWindowViewModel.Items[i].Clone());
+            }
+            for (int i = 0; i < MainWindowViewModel.Items.Count; i++) {
                 Player.AddItem((ItemModel)MainWindowViewModel.Items[i].Clone());
             }
 
+
+
             // Update the Bag View
             ((BagViewModel)MainWindowViewModel.BagViewModel).UpdatePlayer(Player);
-            //((BagViewModel)MainWindowViewModel.BagViewModel).MainWindowViewModel = MainWindowViewModel;
+            ((BagViewModel)MainWindowViewModel.BagViewModel).MainWindowViewModel = MainWindowViewModel;
             ((ItemViewModel)MainWindowViewModel.ItemViewModel).UpdatePlayer(Player);
 
 

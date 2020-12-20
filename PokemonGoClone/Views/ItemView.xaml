@@ -30,9 +30,9 @@
         </ItemsControl>
 
         <Canvas Margin="0,0,0,400">
-            <Button Content="Item" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" Height="50" FontSize="24" Canvas.Left="200" Canvas.Top="0" Command="{Binding CurrentViewModel.MainWindowViewModel.GoToItemViewModelCommand}"/>
+            <Button Content="Bag" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" Height="50" FontSize="24" Canvas.Left="200" Canvas.Top="0" Command="{Binding CurrentViewModel.MainWindowViewModel.GoToBagViewModelCommand}"/>
             <Button Content="Exit" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" Height="50" FontSize="24" Command="{Binding CurrentViewModel.MainWindowViewModel.GoToMapViewModelCommand}" Canvas.Left="310"/>
-            <TextBlock TextWrapping="Wrap" Text="Bag" Height="50" Width="200" Background="White" FontSize="35" TextAlignment="Center"/>
+            <TextBlock TextWrapping="Wrap" Text="Item" Height="50" Width="200" Background="White" FontSize="35" TextAlignment="Center"/>
         </Canvas>
     </Grid>
 </UserControl>

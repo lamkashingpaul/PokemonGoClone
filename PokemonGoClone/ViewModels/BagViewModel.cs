@@ -9,6 +9,7 @@ namespace PokemonGoClone.ViewModels
 {
     public class BagViewModel : ViewModelBase
     {
+        //field of BagViewModel
         private MainWindowViewModel _mainWindowViewModel;
         private List<PokemonModel> _pokemons;
         private ICommand _selectedPokemonCommand;
@@ -16,15 +17,14 @@ namespace PokemonGoClone.ViewModels
         public ICommand SelectedPokemonCommand {
             get { return _selectedPokemonCommand ?? (_selectedPokemonCommand = new RelayCommand(x => { SelectedPokemon(x); })); }
         }
+
+        //constructor of BagViewModel
         public BagViewModel(MainWindowViewModel mainWindowViewModel)
         {
             MainWindowViewModel = mainWindowViewModel;
         }
 
-        public void UpdatePlayer(TrainerModel trainer) {
-            Pokemons = trainer.Pokemons;
-        }
-
+        //properties of BagViewModel
         public MainWindowViewModel MainWindowViewModel
         {
             get { return _mainWindowViewModel; }
@@ -35,6 +35,16 @@ namespace PokemonGoClone.ViewModels
             }
         }
 
+        public List<PokemonModel> Pokemons {
+            get { return _pokemons; }
+            set {
+                _pokemons = value;
+                OnPropertyChanged(nameof(Pokemons));
+            }
+        }
+
+
+        //method of BagViewModel
         public void SelectedPokemon(object sender) {
             var pokemon = sender as PokemonModel;
             int index = MainWindowViewModel.Player.Pokemons.IndexOf(pokemon);
@@ -42,13 +52,10 @@ namespace PokemonGoClone.ViewModels
             MainWindowViewModel.GotoPokemonStatusViewModel();
         }
 
-        public List<PokemonModel> Pokemons
-        {
-            get { return _pokemons; }
-            set {
-                _pokemons = value;
-                OnPropertyChanged(nameof(Pokemons));
-            }
-        }        
+        public void UpdatePlayer(TrainerModel trainer) {
+            Pokemons = trainer.Pokemons;
+        }
+
+
     }
 }

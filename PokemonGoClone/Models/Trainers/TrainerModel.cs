@@ -44,6 +44,7 @@ namespace PokemonGoClone.Models.Trainers
             }
         }
 
+
         // All methods of Trainer class
         public void AddPokemon(PokemonModel pokemon)
         {
@@ -52,7 +53,7 @@ namespace PokemonGoClone.Models.Trainers
 
         public void DropPokemon(PokemonModel pokemon)
         {
-
+            Pokemons.Remove(pokemon);
         }
 
         public void AddItem(ItemModel item)
@@ -66,7 +67,7 @@ namespace PokemonGoClone.Models.Trainers
 
         public void DropItem(ItemModel item)
         {
-
+            Items.Remove(item);
         }
     }
 }

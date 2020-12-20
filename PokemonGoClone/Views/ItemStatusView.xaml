@@ -19,7 +19,7 @@
             </StackPanel>
         </StackPanel>
         <Canvas Height="100" Margin="0,350,0,0">
-            <Button Content="Drop" Width="180" Height="100" FontSize="24" Canvas.Left="360"/>
+            <Button Content="Drop" Width="180" Height="100" FontSize="24" Canvas.Left="360" Command="{Binding CurrentViewModel.DropItemCommand}"/>
             <Button Content="Exit" Width="180" Height="100" FontSize="24" Canvas.Left="540" Command="{Binding CurrentViewModel.MainWindowViewModel.GoToItemViewModelCommand}" />
 
         </Canvas>            
