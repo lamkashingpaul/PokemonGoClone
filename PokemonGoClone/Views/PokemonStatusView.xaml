@@ -40,7 +40,7 @@
             <Button Content="Change Name" Width="180" Height="50" FontSize="24" Canvas.Top="50" Command="{Binding CurrentViewModel.ChangeNameCommand}" CommandParameter="{Binding ElementName=ChangingName}"/>
             <Button Content="Power Up" Width="180" Height="50" FontSize="24" Canvas.Left="360"/>
             <Button Content="Evolve" Width="180" Height="50" FontSize="24" Canvas.Left="360" Canvas.Top="50"/>
-            <Button Content="Drop" Width="180" Height="50" FontSize="24" Canvas.Left="540" Command="{Binding CurrenViewModel.DropPokemonCommand}"/>
+            <Button Content="Drop" Width="180" Height="50" FontSize="24" Canvas.Left="540" Command="{Binding CurrentViewModel.DropPokemonCommand}"/>
             <Button Content="Exit" Width="180" Height="50" FontSize="24" Canvas.Left="540" Command="{Binding GoToBagViewModelCommand}" Canvas.Top="50"/>
             <Button Canvas.Left="180" Width="180" Height="100" FontSize="24" Command="{Binding CurrentViewModel.BecomeFirstPokemonCommand}">
                 <TextBlock TextAlignment="Center"> Become <LineBreak/> First Pokemon </TextBlock>

@@ -32,7 +32,7 @@
         <StackPanel Margin="166,50,0,0">
             <Border BorderBrush="Black" BorderThickness="1">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock FontSize="24" Text="Total Money: $ " HorizontalAlignment="Left"/>
+                    <TextBlock FontSize="24" Text=" Total Money: $ " HorizontalAlignment="Left"/>
                     <TextBlock FontSize="24" Text="{Binding CurrentViewModel.Trainer.Money}" Width="390"/>
                 </StackPanel>
             </Border>

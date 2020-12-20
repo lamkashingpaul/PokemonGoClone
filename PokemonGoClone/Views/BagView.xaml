@@ -21,7 +21,7 @@
                 <DataTemplate>
                     <Button Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.CurrentViewModel.SelectedPokemonCommand}" CommandParameter="{Binding}">
                         <StackPanel>
-                            <Image Source="{Binding ImageSource}" HorizontalAlignment="Left"/>
+                            <Image Source="{Binding ImageSource}" HorizontalAlignment="Center"/>
                             <TextBlock Text="{Binding Name}"/>
                         </StackPanel>
                     </Button>

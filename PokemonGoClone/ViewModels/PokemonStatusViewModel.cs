@@ -30,7 +30,7 @@ namespace PokemonGoClone.ViewModels {
         public ICommand BecomeFirstPokemonCommand {
             get { return _becomeFirstPokemonCommand ?? (_becomeFirstPokemonCommand = new RelayCommand(x => { BecomeFirstPokemon(); })); }
         }
-        public ICommand DropItemCommand {
+        public ICommand DropPokemonCommand {
             get { return _dropPokemonCommand ?? (_dropPokemonCommand = new RelayCommand(x => { DropPokemon(); })); }
         }
         /*
