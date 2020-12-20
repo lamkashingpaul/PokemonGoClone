@@ -19,6 +19,7 @@ namespace PokemonGoClone.Models.Trainers
         private int _turnsUntilAction;
         public List<PokemonModel> Pokemons;
         public List<ItemModel> Items;
+        public int _money;
 
         // Default constructor
         public TrainerModel(string name, string type, int id)
@@ -77,6 +78,14 @@ namespace PokemonGoClone.Models.Trainers
                 OnPropertyChanged(nameof(TurnsUntilAction));
             }
         }
+        public int Money {
+            get { return _money; }
+            set {
+                _money = value;
+                OnPropertyChanged(nameof(Money));
+            }
+        }
+
 
         // All methods of Trainer class
         public void AddPokemon(PokemonModel pokemon)
@@ -91,12 +100,16 @@ namespace PokemonGoClone.Models.Trainers
 
         public void AddItem(ItemModel item)
         {
-
+            if (item is PokeballModel) {
+                Items.Add((PokeballModel)(item.Clone()));
+            } else {
+                Items.Add((PotionModel)(item.Clone()));
+            }
         }
 
         public void DropItem(ItemModel item)
         {
-
+            Items.Remove(item);
         }
     }
 }

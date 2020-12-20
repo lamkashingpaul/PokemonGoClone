@@ -9,24 +9,25 @@ namespace PokemonGoClone.ViewModels
 {
     public class BagViewModel : ViewModelBase
     {
+        //field of BagViewModel
         private MainWindowViewModel _mainWindowViewModel;
         private DialogViewModel _dialogViewModel;
         private List<PokemonModel> _pokemons;
         private ICommand _selectedPokemonCommand;
 
-        public ICommand SelectedPokemonCommand {
+        public ICommand SelectedPokemonCommand
+        {
             get { return _selectedPokemonCommand ?? (_selectedPokemonCommand = new RelayCommand(x => { SelectedPokemon(x); })); }
         }
+
+        //constructor of BagViewModel
         public BagViewModel(MainWindowViewModel mainWindowViewModel)
         {
             MainWindowViewModel = mainWindowViewModel;
             DialogViewModel = (DialogViewModel)MainWindowViewModel.DialogViewModel;
         }
 
-        public void UpdatePlayer(TrainerModel trainer) {
-            Pokemons = trainer.Pokemons;
-        }
-
+        //properties of BagViewModel
         public MainWindowViewModel MainWindowViewModel
         {
             get { return _mainWindowViewModel; }
@@ -45,12 +46,6 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(DialogViewModel));
             }
         }
-        public void SelectedPokemon(object sender) {
-            var pokemon = sender as PokemonModel;
-            int index = MainWindowViewModel.Player.Pokemons.IndexOf(pokemon);
-            ((PokemonStatusViewModel)MainWindowViewModel.PokemonStatusViewModel).UpdateView(pokemon, index);
-            MainWindowViewModel.GotoPokemonStatusViewModel(null);
-        }
 
         public List<PokemonModel> Pokemons
         {
@@ -59,6 +54,21 @@ namespace PokemonGoClone.ViewModels
                 _pokemons = value;
                 OnPropertyChanged(nameof(Pokemons));
             }
-        }        
+        }
+
+
+        //method of BagViewModel
+        public void SelectedPokemon(object sender)
+        {
+            var pokemon = sender as PokemonModel;
+            int index = MainWindowViewModel.Player.Pokemons.IndexOf(pokemon);
+            ((PokemonStatusViewModel)MainWindowViewModel.PokemonStatusViewModel).UpdateView(pokemon, index);
+            MainWindowViewModel.GotoPokemonStatusViewModel(null);
+        }
+
+        public void UpdatePlayer(TrainerModel trainer)
+        {
+            Pokemons = trainer.Pokemons;
+        }
     }
 }

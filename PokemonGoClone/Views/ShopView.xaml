@@ -5,8 +5,101 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PokemonGoClone.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+             d:DesignHeight="480" d:DesignWidth="720">
+    <Grid Background="White">
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Wellcome to Pokemon Shop!" VerticalAlignment="Top" Height="63" Width="720" TextAlignment="Center" FontSize ="32"/>
+        <ItemsControl Focusable="False" ItemsSource="{Binding CurrentViewModel.DefaultItem}" Margin="0,50,0,0">
+            <ItemsControl.Template>
+                <ControlTemplate>
+                    <ScrollViewer Width="Auto" Margin="0,0,560,0">
+                        <ItemsPresenter>
+                        </ItemsPresenter>
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ItemsControl.Template>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Height="140" Width="120" HorizontalAlignment="Center" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.CurrentViewModel.SelectedItemCommand}" CommandParameter="{Binding}">
+                        <StackPanel>
+                            <Image Source="{Binding ImageSource}" HorizontalAlignment="Left"/>
+                            <TextBlock Text="{Binding Name}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <StackPanel Margin="166,50,0,0">
+            <Border BorderBrush="Black" BorderThickness="1">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock FontSize="24" Text=" Total Money: $ " HorizontalAlignment="Left"/>
+                    <TextBlock FontSize="24" Text="{Binding CurrentViewModel.Trainer.Money}" Width="390"/>
+                </StackPanel>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1">
+                <StackPanel>
+                    <TextBlock Text="Item" TextAlignment="Center" FontSize="20"/>
+                    <Image Height="100" Width="100" Source="{Binding CurrentViewModel.Choose.ImageSource}"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="Name: " TextAlignment="Center" FontSize="20"/>
+                        <TextBlock Text="{Binding CurrentViewModel.Choose.Name}" TextAlignment="Center" FontSize="20"/>
+                        <TextBlock Text="                      " TextAlignment="Center" FontSize="20"/>
+                        <TextBlock Text="Charge: " TextAlignment="Center" FontSize="20"/>
+                        <TextBlock Text="{Binding CurrentViewModel.Choose.Charge}" TextAlignment="Center" FontSize="20"/>
+                    </StackPanel>
+
+                    <Button Content="Buy" FontSize="20" Command="{Binding CurrentViewModel.BuyCommand}"/>
+                    <Button Content="Exit" FontSize="20" Command="{Binding CurrentViewModel.MainWindowViewModel.GoToMapViewModelCommand}"/>
+                    <TextBlock FontSize="20"/>
+                    <Button Content="Random Pokemon $500 per time" FontSize="20" Command="{Binding CurrentViewModel.RandomCommand}"/>
+
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <StackPanel>
+                            <TextBlock Text="Pokemon You get" FontSize="20" TextAlignment="Center"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Height="95" Width="95" Source="{Binding CurrentViewModel.Random.ImageSource}"/>
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Name: " FontSize="20" TextAlignment="Right" Width="120"/>
+                                                <TextBlock Text="{Binding CurrentViewModel.Random.Name}" FontSize="20" Width="171"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Id:" FontSize="20" Width="114" TextAlignment="Right"/>
+                                                <TextBlock Text="{Binding CurrentViewModel.Random.Id}" FontSize="20" Width="100"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Level: " FontSize="20" Width="113" TextAlignment="Right"/>
+                                                <TextBlock Text="{Binding CurrentViewModel.Random.Level}" FontSize="20" Width="100"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="MaxLevel: " FontSize="20" TextAlignment="Right"/>
+                                                <TextBlock Text="{Binding CurrentViewModel.Random.MaxLevel}" FontSize="20" Width="100"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Health: " FontSize="20" TextAlignment="Right" Width="98"/>
+                                                <TextBlock Text="{Binding CurrentViewModel.Random.MaxHealth}" FontSize="20" Width="100"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Description: " FontSize="20" />
+                                        <TextBlock Text="{Binding CurrentViewModel.Random.Description}" FontSize="20" Width="330"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+
+
+
     </Grid>
 </UserControl>

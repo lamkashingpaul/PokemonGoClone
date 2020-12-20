@@ -96,6 +96,7 @@
     <Compile Include="ViewModels\BagViewModel.cs" />
     <Compile Include="ViewModels\BattleViewModel.cs" />
     <Compile Include="ViewModels\DialogViewModel.cs" />
+    <Compile Include="ViewModels\ItemStatusViewModel.cs" />
     <Compile Include="ViewModels\ItemViewModel.cs" />
     <Compile Include="ViewModels\LoadViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
@@ -112,6 +113,9 @@
     </Compile>
     <Compile Include="Views\BattleView.xaml.cs">
       <DependentUpon>BattleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ItemStatusView.xaml.cs">
+      <DependentUpon>ItemStatusView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ItemView.xaml.cs">
       <DependentUpon>ItemView.xaml</DependentUpon>
@@ -154,6 +158,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BattleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ItemStatusView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -218,11 +226,24 @@
     <EmbeddedResource Include="Resources\Trainers\003.json" />
     <EmbeddedResource Include="Resources\Pokemons\pokemons.json" />
     <EmbeddedResource Include="Resources\Abilities\abilities.json" />
+    <EmbeddedResource Include="Resources\Items\Pokeball\001.json" />
+    <EmbeddedResource Include="Resources\Items\Pokeball\002.json" />
+    <EmbeddedResource Include="Resources\Items\Pokeball\003.json" />
+    <EmbeddedResource Include="Resources\Items\Potion\001.json" />
+    <EmbeddedResource Include="Resources\Items\Potion\002.json" />
+    <EmbeddedResource Include="Resources\Items\Potion\003.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\Items\Pokeball\001.png" />
+    <Resource Include="Images\Items\Pokeball\002.png" />
+    <Resource Include="Images\Items\Pokeball\003.png" />
+    <Resource Include="Images\Items\Potion\001.png" />
+    <Resource Include="Images\Items\Potion\002.png" />
+    <Resource Include="Images\Items\Potion\003.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Pokemons\001.png" />
     <Resource Include="Images\Pokemons\002.png" />

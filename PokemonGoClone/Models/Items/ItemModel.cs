@@ -1,4 +1,5 @@
-﻿using PokemonGoClone.Models.Pokemons;
+﻿using PokemonGoClone.ViewModels;
+using PokemonGoClone.Models.Pokemons;
 using PokemonGoClone.Models.Trainers;
 using System;
 using System.Collections.Generic;
@@ -9,15 +10,18 @@ using System.Threading.Tasks;
 namespace PokemonGoClone.Models.Items
 {
     [Serializable]
-    public abstract class ItemModel
-    {
+    public abstract class ItemModel : ViewModelBase {
         // All fields shared by Item class
         private string _name;
         private int _id;
-        private string _description;
-
         private int _charge;
-        private int _maxCharge;
+        private string _imageSource;
+
+        public ItemModel(string name, int id, int charge) {
+            Name = name;
+            Id = id;
+            Charge = charge;
+        }
 
         // All methods of Item class
         public abstract void Use(TrainerModel trainer, PokemonModel target);
@@ -41,15 +45,6 @@ namespace PokemonGoClone.Models.Items
             }
         }
 
-        public string Description
-        {
-            get { return _description; }
-            set
-            {
-                _description = value;
-            }
-        }
-
         public int Charge
         {
             get { return _charge; }
@@ -58,14 +53,16 @@ namespace PokemonGoClone.Models.Items
                 _charge = value;
             }
         }
-
-        public int MaxCharge
-        {
-            get { return _maxCharge; }
-            set
-            {
-                _maxCharge = value;
+        public string ImageSource {
+            get { return _imageSource; }
+            set {
+                _imageSource = value;
+                OnPropertyChanged(nameof(ImageSource));
             }
         }
+        public object Clone() {
+            return MemberwiseClone();
+        }
+
     }
 }

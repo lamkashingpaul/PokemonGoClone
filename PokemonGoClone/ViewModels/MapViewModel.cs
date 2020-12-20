@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Reflection;
 using PokemonGoClone.Views;
+using PokemonGoClone.Models.Items;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
@@ -57,6 +58,7 @@ namespace PokemonGoClone.ViewModels
         private ICommand _bagCommand;
         private ICommand _menuCommand;
         private ICommand _interactCommand;
+        private ICommand _shopCommand;
 
         // All ICommand properites of MapViewModel
         public ICommand MoveCommand
@@ -69,6 +71,9 @@ namespace PokemonGoClone.ViewModels
         public ICommand MenuCommand
         {
             get { return _menuCommand ?? (_menuCommand = new RelayCommand(x => { Menu(x); }, x => !DialogViewModel.IsVisible)); }
+        }
+        public ICommand ShopCommand {
+            get { return _shopCommand ?? (_shopCommand = new RelayCommand(x => { Shop(); }, x => !DialogViewModel.IsVisible)); }
         }
         public ICommand InteractCommand
         {
@@ -138,9 +143,20 @@ namespace PokemonGoClone.ViewModels
                 Player.AddPokemon((PokemonModel)MainWindowViewModel.Pokemons[i].Clone());
             }
 
+            // Add Items to player
+            for (int i = 0; i < MainWindowViewModel.Items.Count; i++) {
+                Player.AddItem((ItemModel)MainWindowViewModel.Items[i].Clone());
+            }
+            for (int i = 0; i < MainWindowViewModel.Items.Count; i++) {
+                Player.AddItem((ItemModel)MainWindowViewModel.Items[i].Clone());
+            }
+
+
+
             // Update the Bag View
             ((BagViewModel)MainWindowViewModel.BagViewModel).UpdatePlayer(Player);
-            ((BagViewModel)MainWindowViewModel.BagViewModel).MainWindowViewModel = MainWindowViewModel;
+            ((ItemViewModel)MainWindowViewModel.ItemViewModel).UpdatePlayer(Player);
+            ((ShopViewModel)MainWindowViewModel.ShopViewModel).Update(Player, MainWindowViewModel.Items);
 
 
             // Add more NPC trainers
@@ -316,5 +332,10 @@ namespace PokemonGoClone.ViewModels
         {
             DialogViewModel.PopUp("Back to Start?", null, BackToStart);
         }
+        private void Shop()
+        {
+            MainWindowViewModel.GoToShopViewModel();
+        }
+
     }
 }

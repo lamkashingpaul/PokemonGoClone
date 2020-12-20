@@ -1,0 +1,6 @@
+﻿{
+  "Name": "Medium Potion",
+  "Id": 2,
+  "HealHP": 50,
+  "Charge": 100
+}

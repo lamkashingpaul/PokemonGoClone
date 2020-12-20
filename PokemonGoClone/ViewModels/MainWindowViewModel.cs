@@ -45,9 +45,11 @@ namespace PokemonGoClone.ViewModels
         private object _startView;
         private object _trainerCreationView;
         private object _mapView;
+        private object _shopView;
         private object _bagView;
         private object _pokemonStatusView;
         private object _itemView;
+        private object _itemStatusView;
         private object _battleView;
         private object _saveView;
         private object _loadView;
@@ -58,9 +60,11 @@ namespace PokemonGoClone.ViewModels
         private object _startViewModel;
         private object _trainerCreationViewModel;
         private object _mapViewModel;
+        private object _shopViewModel;
         private object _bagViewModel;
         private object _pokemonStatusViewModel;
         private object _itemViewModel;
+        private object _itemStatusViewModel;
         private object _battleViewModel;
         private object _saveViewModel;
         private object _loadViewModel;
@@ -71,6 +75,7 @@ namespace PokemonGoClone.ViewModels
         private ICommand _goToTrainerCreationViewModelCommand;
         private ICommand _goToMapViewModelCommand;
         private ICommand _goToBagViewModelCommand;
+        private ICommand _goToItemViewModelCommand;
         private ICommand _goToBattleViewModelCommand;
         private ICommand _goToSaveViewModelCommand;
         private ICommand _goToLoadViewModelCommand;
@@ -100,6 +105,9 @@ namespace PokemonGoClone.ViewModels
         {
             get { return _goToBagViewModelCommand ?? (_goToBagViewModelCommand = new RelayCommand(x => { GoToBagViewModel(x); })); }
         }
+        public ICommand GoToItemViewModelCommand {
+            get { return _goToItemViewModelCommand ?? (_goToItemViewModelCommand = new RelayCommand(x => { GoToItemViewModel(); })); }
+        }
         public ICommand GoToBattleViewModelCommand
         {
             get { return _goToBattleViewModelCommand ?? (_goToBattleViewModelCommand = new RelayCommand(x => { GoToBattleViewModel(x); })); }
@@ -126,6 +134,9 @@ namespace PokemonGoClone.ViewModels
             BattleView               = new BattleView();
             BagView                  = new BagView();
             PokemonStatusView        = new PokemonStatusView();
+            ItemView                 = new ItemView();
+            ItemStatusView           = new ItemStatusView();
+            ShopView                 = new ShopView();
             LoadView                 = new LoadView();
             SaveView                 = new SaveView();
 
@@ -135,7 +146,10 @@ namespace PokemonGoClone.ViewModels
             MapViewModel             = new MapViewModel(this);
             BattleViewModel          = new BattleViewModel(this);
             BagViewModel             = new BagViewModel(this);
-            PokemonStatusViewModel   = new PokemonStatusViewModel(this);   
+            PokemonStatusViewModel   = new PokemonStatusViewModel(this); 
+            ItemViewModel            = new ItemViewModel(this);
+            ItemStatusViewModel      = new ItemStatusViewModel(this);
+            ShopViewModel            = new ShopViewModel(this);  
             LoadViewModel            = new LoadViewModel(this);
             SaveViewModel            = new SaveViewModel(this);
 
@@ -175,7 +189,57 @@ namespace PokemonGoClone.ViewModels
         }
         private void LoadItems(List<ItemModel> items)
         {
-            //throw new NotImplementedException();
+            int i = 1;
+            while (true)
+            {
+                string json;
+                Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("PokemonGoClone.Resources.Items.Pokeball." + $"{i:D3}.json");
+                if (stream != null)
+                {
+                    using (var reader = new StreamReader(stream, Encoding.Default))
+                    {
+                        json = reader.ReadToEnd();
+                    }
+
+                    var values = (JObject)JsonConvert.DeserializeObject(json);
+
+                    PokeballModel item = new PokeballModel(values["Name"].Value<string>(),
+                                                           values["Id"].Value<int>(),
+                                                           values["Charge"].Value<int>(),
+                                                           values["CatchProbability"].Value<double>()
+                                                           );
+
+                    items.Add(item);
+                    i += 1;
+                } else
+                {
+                    break;
+                }
+            }
+            i = 1;
+            while (true)
+            {
+                string json;
+                Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("PokemonGoClone.Resources.Items.Potion." + $"{i:D3}.json");
+                if (stream != null)
+                {
+                    using (var reader = new StreamReader(stream, Encoding.Default)) {
+                        json = reader.ReadToEnd();
+                    }
+
+                    var values = (JObject)JsonConvert.DeserializeObject(json);
+
+                    PotionModel item = new PotionModel(values["Name"].Value<string>(),
+                                                            values["Id"].Value<int>(),
+                                                            values["Charge"].Value<int>(),
+                                                            values["HealHP"].Value<int>()
+                                                            );
+                    items.Add(item);
+                    i += 1;
+                } else {
+                    break;
+                }
+            }
         }
         private void LoadPokemons(List<PokemonModel> pokemons)
         {
@@ -267,6 +331,24 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(MapViewModel));
             }
         }
+        public object ShopView
+        {
+            get { return _shopView; }
+            set
+            {
+                _shopView = value;
+                OnPropertyChanged(nameof(ShopView));
+            }
+        }
+        public object ShopViewModel
+        {
+            get { return _shopViewModel; }
+            set
+            {
+                _shopViewModel = value;
+                OnPropertyChanged(nameof(ShopViewModel));
+            }
+        }
         public object BagView
         {
             get { return _bagView; }
@@ -274,27 +356,6 @@ namespace PokemonGoClone.ViewModels
             {
                 _bagView = value;
                 OnPropertyChanged(nameof(BagView));
-            }
-        }
-        public object PokemonStatusViewModel {
-            get { return _pokemonStatusViewModel; }
-            set {
-                _pokemonStatusViewModel = value;
-                OnPropertyChanged(nameof(PokemonStatusViewModel));
-            }
-        }
-        public object PokemonStatusView {
-            get { return _pokemonStatusView; }
-            set {
-                _pokemonStatusView = value;
-                OnPropertyChanged(nameof(PokemonStatusView));
-            }
-        }
-        public object ItemView {
-            get { return _itemView; }
-            set {
-                _itemView = value;
-                OnPropertyChanged(nameof(ItemView));
             }
         }
         public object BagViewModel
@@ -306,9 +367,55 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(BagViewModel));
             }
         }
-        public object ItemViewModel {
+        public object PokemonStatusView
+        {
+            get { return _pokemonStatusView; }
+            set
+            {
+                _pokemonStatusView = value;
+                OnPropertyChanged(nameof(PokemonStatusView));
+            }
+        }
+        public object PokemonStatusViewModel
+        {
+            get { return _pokemonStatusViewModel; }
+            set
+            {
+                _pokemonStatusViewModel = value;
+                OnPropertyChanged(nameof(PokemonStatusViewModel));
+            }
+        }
+        public object ItemStatusView {
+            get { return _itemStatusView; }
+            set
+            {
+                _itemStatusView = value;
+                OnPropertyChanged(nameof(ItemStatusView));
+            }
+        }
+        public object ItemStatusViewModel
+        {
+            get { return _itemStatusViewModel; }
+            set
+            {
+                _itemStatusViewModel = value;
+                OnPropertyChanged(nameof(ItemStatusViewModel));
+            }
+        }
+        public object ItemView
+        {
+            get { return _itemView; }
+            set
+            {
+                _itemView = value;
+                OnPropertyChanged(nameof(ItemView));
+            }
+        }
+        public object ItemViewModel
+        {
             get { return _itemViewModel; }
-            set {
+            set
+            {
                 _itemViewModel = value;
                 OnPropertyChanged(nameof(ItemViewModel));
             }
@@ -430,6 +537,26 @@ namespace PokemonGoClone.ViewModels
         {
             CurrentViewModel = PokemonStatusViewModel;
             CurrentView = PokemonStatusView;
+        }
+        public void GoToShopViewModel(object x)
+        {
+            CurrentViewModel = ShopViewModel;
+            CurrentView = ShopView;
+        }
+        public void GoToItemViewModel(object x)
+        {
+            CurrentViewModel = ItemViewModel;
+            CurrentView = ItemView;
+        }
+        public void GotoPokemonStatusViewModel(object x)
+        {
+            CurrentViewModel = PokemonStatusViewModel;
+            CurrentView = PokemonStatusView;
+        }
+        public void GotoItemStatusViewModel(object x)
+        {
+            CurrentViewModel = ItemStatusViewModel;
+            CurrentView = ItemStatusView;
         }
         public void GoToBattleViewModel(object x)
         {
