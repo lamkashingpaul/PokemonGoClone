@@ -104,6 +104,7 @@
     <Compile Include="ViewModels\SaveViewModel.cs" />
     <Compile Include="ViewModels\ShopViewModel.cs" />
     <Compile Include="ViewModels\StartViewModel.cs" />
+    <Compile Include="ViewModels\TemplateViewModel.cs" />
     <Compile Include="ViewModels\TrainerCreationViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\BagView.xaml.cs">
@@ -212,20 +213,11 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <EmbeddedResource Include="Resources\Abilities\001.json" />
-    <EmbeddedResource Include="Resources\Abilities\002.json" />
-    <EmbeddedResource Include="Resources\Pokemons\001.json" />
-    <EmbeddedResource Include="Resources\Pokemons\002.json" />
-    <EmbeddedResource Include="Resources\Pokemons\003.json" />
-    <EmbeddedResource Include="Resources\Pokemons\004.json" />
-    <EmbeddedResource Include="Resources\Pokemons\005.json" />
-    <EmbeddedResource Include="Resources\Pokemons\006.json" />
-    <EmbeddedResource Include="Resources\Pokemons\007.json" />
-    <EmbeddedResource Include="Resources\Pokemons\008.json" />
-    <EmbeddedResource Include="Resources\Pokemons\009.json" />
     <EmbeddedResource Include="Resources\Trainers\001.json" />
     <EmbeddedResource Include="Resources\Trainers\002.json" />
     <EmbeddedResource Include="Resources\Trainers\003.json" />
+    <EmbeddedResource Include="Resources\Pokemons\pokemons.json" />
+    <EmbeddedResource Include="Resources\Abilities\abilities.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

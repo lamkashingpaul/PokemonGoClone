@@ -10,6 +10,7 @@ namespace PokemonGoClone.ViewModels
     public class BagViewModel : ViewModelBase
     {
         private MainWindowViewModel _mainWindowViewModel;
+        private DialogViewModel _dialogViewModel;
         private List<PokemonModel> _pokemons;
         private ICommand _selectedPokemonCommand;
 
@@ -19,6 +20,7 @@ namespace PokemonGoClone.ViewModels
         public BagViewModel(MainWindowViewModel mainWindowViewModel)
         {
             MainWindowViewModel = mainWindowViewModel;
+            DialogViewModel = (DialogViewModel)MainWindowViewModel.DialogViewModel;
         }
 
         public void UpdatePlayer(TrainerModel trainer) {
@@ -34,7 +36,15 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(MainWindowViewModel));
             }
         }
-
+        public DialogViewModel DialogViewModel
+        {
+            get { return _dialogViewModel; }
+            set
+            {
+                _dialogViewModel = value;
+                OnPropertyChanged(nameof(DialogViewModel));
+            }
+        }
         public void SelectedPokemon(object sender) {
             var pokemon = sender as PokemonModel;
             int index = MainWindowViewModel.Player.Pokemons.IndexOf(pokemon);

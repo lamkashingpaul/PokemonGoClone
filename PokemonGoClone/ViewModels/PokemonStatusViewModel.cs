@@ -12,6 +12,7 @@ namespace PokemonGoClone.ViewModels {
     class PokemonStatusViewModel : ViewModelBase {
 
         private MainWindowViewModel _mainWindowViewModel;
+        private DialogViewModel _dialogViewModel;
         private PokemonModel _pokemon;
         private string _originalName;
         private string _defaultName;
@@ -46,6 +47,7 @@ namespace PokemonGoClone.ViewModels {
 
         public PokemonStatusViewModel(MainWindowViewModel mainWindowViewModel) {
             MainWindowViewModel = mainWindowViewModel;
+            DialogViewModel = (DialogViewModel)MainWindowViewModel.DialogViewModel;
             //EvolveButtonIsEnabled = false;
         }
 
@@ -78,6 +80,15 @@ namespace PokemonGoClone.ViewModels {
             set {
                 _mainWindowViewModel = value;
                 OnPropertyChanged(nameof(MainWindowViewModel));
+            }
+        }
+        public DialogViewModel DialogViewModel
+        {
+            get { return _dialogViewModel; }
+            set
+            {
+                _dialogViewModel = value;
+                OnPropertyChanged(nameof(DialogViewModel));
             }
         }
         public PokemonModel Pokemon {

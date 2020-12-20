@@ -17,7 +17,7 @@ namespace PokemonGoClone.ViewModels
     {
         private void EndBattle(object x)
         {
-            DialogViewModel.IsVisible = false;
+            DialogViewModel.Close(x);
             MainWindowViewModel.GoToMapViewModel(null);
         }
 
@@ -56,7 +56,8 @@ namespace PokemonGoClone.ViewModels
         public BattleViewModel(MainWindowViewModel mainWindowViewModel)
         {
             MainWindowViewModel = mainWindowViewModel;
-            DialogViewModel = new DialogViewModel(this);
+            DialogViewModel = (DialogViewModel)MainWindowViewModel.DialogViewModel;
+
             BattleLogs = new ObservableCollection<LogModel>();
             Rng = new Random();
         }
@@ -167,14 +168,14 @@ namespace PokemonGoClone.ViewModels
 
             if (x == null)
             {
-                DialogViewModel.Message = "You must choose an ability to use!";
+                DialogViewModel.PopUp("You must choose an ability to use!");
                 return;
             }
 
             var ability = x as AbilityModel;
             if (ability.Charge == 0)
             {
-                DialogViewModel.Message = "Ability has no charge.";
+                DialogViewModel.PopUp("Ability has no charge.");
             } else
             {
                 string result = ability.Use(PlayerPokemon, OpponentPokemon);
@@ -183,12 +184,16 @@ namespace PokemonGoClone.ViewModels
             }
         }
 
+        private void UseItem(object x)
+        {
+
+        }
+
         private void OpponentTurn()
         {
             if (StateOfBattle() == null) 
             {
-                var rng = new Random();
-                int i = rng.Next(OpponentPokemon.Abilities.Count);
+                int i = Rng.Next(OpponentPokemon.Abilities.Count);
                 var ability = OpponentPokemon.Abilities[i];
                 string result = ability.Use(OpponentPokemon, PlayerPokemon);
                 BattleLogs.Add(new LogModel(result, Id++));
@@ -205,8 +210,7 @@ namespace PokemonGoClone.ViewModels
 
             if (OpponentPokemon.Health == 0)
             {
-                DialogViewModel.CloseDelegateMethod = EndBattle;
-                DialogViewModel.Message = "You Win";
+                DialogViewModel.PopUp("You Win", EndBattle);
 
                 // AI also cheats, if he loses, his pokemon is fully restored
                 OpponentPokemon.Health = OpponentPokemon.MaxHealth;
@@ -218,19 +222,18 @@ namespace PokemonGoClone.ViewModels
                 return true;
             } else if (PlayerPokemon.Health == 0)
             {
-                DialogViewModel.CloseDelegateMethod = EndBattle;
-                DialogViewModel.Message = "You Lose";
-
-                // Cheat, after losing player's pokemon will fully restored and has new skill
+                DialogViewModel.PopUp("You Lose", EndBattle);
+                /*
+                // Cheat, after losing player's pokemon will fully restored and has new ability
                 PlayerPokemon.Health = PlayerPokemon.MaxHealth;
-                PlayerPokemon.AddAbility((AbilityModel)MainWindowViewModel.Abilities[1].Clone());
+                PlayerPokemon.AddRandomNewAbility(MainWindowViewModel.Abilities);
 
                 // Fully charge all abilities
                 foreach (var Ability in PlayerPokemon.Abilities)
                 {
                     Ability.Charge = Ability.MaxCharge;
                 }
-                // Cheat ends
+                // Cheat ends*/
                 return false;
             } else
             {
@@ -255,12 +258,11 @@ namespace PokemonGoClone.ViewModels
 
             if (chance < 0.5)
             {
-                DialogViewModel.CloseDelegateMethod = EndBattle;
-                DialogViewModel.Message = "Successfully Escaped!";
+                DialogViewModel.PopUp("Successfully Escaped!", EndBattle);
             }
             else
             {
-                DialogViewModel.Message = "Escape Failed.";
+                DialogViewModel.PopUp("Escape Failed.");
                 BattleLogs.Add(new LogModel("You failed to escape", Id++));
             }
             OpponentTurn();

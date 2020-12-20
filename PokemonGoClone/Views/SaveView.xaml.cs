@@ -23,6 +23,13 @@ namespace PokemonGoClone.Views
         public SaveView()
         {
             InitializeComponent();
+            Focusable = true;
+            Loaded += (s, e) => Keyboard.Focus(this);
+        }
+
+        private void FileNameField_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            (sender as TextBox).SelectAll();
         }
     }
 }

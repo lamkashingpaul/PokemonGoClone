@@ -14,7 +14,7 @@ namespace PokemonGoClone.ViewModels
         public delegate void ActionDelegate(object x);
         public delegate void CloseDelegate(object x);
 
-        private ViewModelBase _parent;
+        private MainWindowViewModel _mainWindowViewModel;
         private ActionDelegate _actionDelegateMethod;
         private ActionDelegate _closeDelegateMethod;
         private string _message;
@@ -24,9 +24,9 @@ namespace PokemonGoClone.ViewModels
         private ICommand _closeCommand;
         private ICommand _actionCommand;
 
-        public DialogViewModel(ViewModelBase parent)
+        public DialogViewModel(MainWindowViewModel mainWindowViewModel)
         {
-            Parent = parent;
+            MainWindowViewModel = mainWindowViewModel;
             DefaultDelegates();
             IsVisible = false;
         }
@@ -57,14 +57,35 @@ namespace PokemonGoClone.ViewModels
             }
         }
 
-        public ViewModelBase Parent
+        public MainWindowViewModel MainWindowViewModel
         {
-            get { return _parent; }
+            get { return _mainWindowViewModel; }
             set
             {
-                _parent = value;
-                OnPropertyChanged(nameof(Parent));
+                _mainWindowViewModel = value;
+                OnPropertyChanged(nameof(MainWindowViewModel));
             }
+        }
+        public void PopUp(string message)
+        {
+            CloseDelegateMethod = Close;
+            ActionDelegateMethod = null;
+            Message = message;
+            IsVisible = true;
+        }
+        public void PopUp(string message, ActionDelegate closeDelegateMethod)
+        {
+            CloseDelegateMethod = closeDelegateMethod ?? Close;
+            ActionDelegateMethod = null;
+            Message = message;
+            IsVisible = true;
+        }
+        public void PopUp(string message, ActionDelegate closeDelegateMethod, ActionDelegate actionDelegateMethod)
+        {
+            CloseDelegateMethod = closeDelegateMethod ?? Close;
+            ActionDelegateMethod = actionDelegateMethod ?? null;
+            Message = message;
+            IsVisible = true;
         }
 
         public string Message
@@ -73,7 +94,6 @@ namespace PokemonGoClone.ViewModels
             set
             {
                 _message = value;
-                IsVisible = true;
                 OnPropertyChanged(nameof(Message));
             }
         }
@@ -99,6 +119,7 @@ namespace PokemonGoClone.ViewModels
 
         public virtual void Close(object x)
         {
+            DefaultDelegates();
             IsVisible = false;
         }
 

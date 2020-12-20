@@ -17,15 +17,17 @@ using System.IO;
 using System.Reflection;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using System.Collections.ObjectModel;
 
 namespace PokemonGoClone.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        // All models
+        // All preloaded game data
         public List<PokemonModel> Pokemons { get; private set; }   // Pokemon data
         public List<AbilityModel> Abilities { get; private set; }   // Abilities data
         public List<ItemModel> Items { get; private set; }   // Items data
+        public ObservableCollection<string> Saves { get; set; }   // List of *.pkmgc saves
 
         public string Name;   // Name of Player
         public int Choice;    // Choice of starting pokemon
@@ -39,6 +41,7 @@ namespace PokemonGoClone.ViewModels
         public List<TileModel> Map;
 
         // All available views
+        private object _dialogView;
         private object _startView;
         private object _trainerCreationView;
         private object _mapView;
@@ -51,6 +54,7 @@ namespace PokemonGoClone.ViewModels
         private object _currentView;
 
         // All availabe viewmodels
+        private object _dialogViewModel;
         private object _startViewModel;
         private object _trainerCreationViewModel;
         private object _mapViewModel;
@@ -70,7 +74,6 @@ namespace PokemonGoClone.ViewModels
         private ICommand _goToBattleViewModelCommand;
         private ICommand _goToSaveViewModelCommand;
         private ICommand _goToLoadViewModelCommand;
-        private ICommand _closeWindowCommand;
 
         // All properties of ICommands for views and viewmodels navigation
         public ICommand GoToStartViewModelCommand
@@ -101,26 +104,32 @@ namespace PokemonGoClone.ViewModels
         {
             get { return _goToBattleViewModelCommand ?? (_goToBattleViewModelCommand = new RelayCommand(x => { GoToBattleViewModel(x); })); }
         }
-        public ICommand CloseWindowCommand
-        {
-            get { return _closeWindowCommand ?? (_closeWindowCommand = new RelayCommand(x => { CloseWindow(x); })); }
-        }
-
-
 
         // Default constructor
         public MainWindowViewModel()
         {
-            // Create instance for views and viewmodels
-            StartView           = new StartView();
-            TrainerCreationView = new TrainerCreationView();
-            MapView             = new MapView();
-            BattleView          = new BattleView();
-            BagView             = new BagView();
-            PokemonStatusView   = new PokemonStatusView();
-            LoadView            = new LoadView();
-            SaveView            = new SaveView();
+            // Load predefined game data
+            Abilities = new List<AbilityModel>();
+            Items = new List<ItemModel>();
+            Pokemons = new List<PokemonModel>();
 
+            LoadAbilities(Abilities);
+            LoadItems(Items);
+            LoadPokemons(Pokemons);
+
+            Saves = new ObservableCollection<string>();
+
+            // Create instance for views and viewmodels
+            StartView                = new StartView();
+            TrainerCreationView      = new TrainerCreationView();
+            MapView                  = new MapView();
+            BattleView               = new BattleView();
+            BagView                  = new BagView();
+            PokemonStatusView        = new PokemonStatusView();
+            LoadView                 = new LoadView();
+            SaveView                 = new SaveView();
+
+            DialogViewModel          = new DialogViewModel(this);
             StartViewModel           = new StartViewModel(this);
             TrainerCreationViewModel = new TrainerCreationViewModel(this);
             MapViewModel             = new MapViewModel(this);
@@ -130,15 +139,6 @@ namespace PokemonGoClone.ViewModels
             LoadViewModel            = new LoadViewModel(this);
             SaveViewModel            = new SaveViewModel(this);
 
-            // Set up game data
-            Abilities = new List<AbilityModel>();
-            Items = new List<ItemModel>();
-            Pokemons = new List<PokemonModel>();
-
-            LoadAbilities(Abilities);
-            LoadItems(Items);
-            LoadPokemons(Pokemons);
-
             // Set up the startup view and viewmodels
             CurrentViewModel = StartViewModel;
             CurrentView = StartView;
@@ -147,37 +147,30 @@ namespace PokemonGoClone.ViewModels
         // Methods for loading game data
         private void LoadAbilities(List<AbilityModel> abilities)
         {
-            int i = 1;
-            while (true)
+            string json;
+            Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("PokemonGoClone.Resources.Abilities.abilities.json");
+            if (stream != null)
             {
-                string json;
-                Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("PokemonGoClone.Resources.Abilities." + $"{i:D3}.json");
-                if (stream != null)
+                using (var reader = new StreamReader(stream, Encoding.Default))
                 {
-                    using (var reader = new StreamReader(stream, Encoding.Default))
-                    {
-                        json = reader.ReadToEnd();
-                    }
+                    json = reader.ReadToEnd();
+                }
 
-                    var values = (JObject)JsonConvert.DeserializeObject(json);
-
-                    AbilityModel ability = new AbilityModel(values["Name"].Value<string>(),
-                                                            values["Id"].Value<int>(),
-                                                            values["Description"].Value<string>(),
-                                                            values["Damage"].Value<int>(),
-                                                            values["DamagePerLevel"].Value<int>(),
-                                                            values["Level"].Value<int>(),
-                                                            values["MaxLevel"].Value<int>(),
-                                                            values["MaxCharge"].Value<int>(),
-                                                            values["MaxChargePerLevel"].Value<int>(),
-                                                            values["Accuracy"].Value<double>());
+                var jArray = JArray.Parse(json);
+                
+                foreach (var obj in jArray)
+                {
+                    AbilityModel ability = new AbilityModel(obj["Name"].Value<string>(),
+                                                            obj["Id"].Value<int>(),
+                                                            obj["Description"].Value<string>(),
+                                                            obj["Damage"].Value<int>(),
+                                                            obj["DamagePerLevel"].Value<int>(),
+                                                            obj["MaxCharge"].Value<int>(),
+                                                            obj["MaxChargePerLevel"].Value<int>(),
+                                                            obj["Accuracy"].Value<double>());
                     abilities.Add(ability);
-                    i += 1;
                 }
-                else
-                {
-                    break;
-                }
+                
             }
         }
         private void LoadItems(List<ItemModel> items)
@@ -186,38 +179,35 @@ namespace PokemonGoClone.ViewModels
         }
         private void LoadPokemons(List<PokemonModel> pokemons)
         {
-            int i = 1;
-            while (true)
+            string json;
+            Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("PokemonGoClone.Resources.Pokemons.pokemons.json");
+            if (stream != null)
             {
-                string json;
-                Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("PokemonGoClone.Resources.Pokemons." + $"{i:D3}.json");
-                if (stream != null)
+                using (var reader = new StreamReader(stream, Encoding.Default))
                 {
-                    using (var reader = new StreamReader(stream, Encoding.Default))
-                    {
-                        json = reader.ReadToEnd();
-                    }
-
-                    var values = (JObject)JsonConvert.DeserializeObject(json);
-
-                    PokemonModel pokemon = new PokemonModel(values["Name"].Value<string>(),
-                                                            values["Id"].Value<int>(),
-                                                            values["Description"].Value<string>(),
-                                                            values["Level"].Value<int>(),
-                                                            values["MaxLevel"].Value<int>(),
-                                                            values["MaxHealth"].Value<int>(),
-                                                            values["MaxHealthPerLevel"].Value<int>(),
-                                                            values["MaxExp"].Value<int>(),
-                                                            values["MaxExpPerLevel"].Value<int>(),
-                                                            values["Accuracy"].Value<double>(),
-                                                            values["evolveId"].Value<int>(),
-                                                            Abilities[0]);
-                    pokemons.Add(pokemon);
-                    i += 1;
+                    json = reader.ReadToEnd();
                 }
-                else
+
+                var jArray = JArray.Parse(json);
+
+                foreach (var obj in jArray)
                 {
-                    break;
+                    var rng = new Random();
+                    int randomAbilityIndex = rng.Next(Abilities.Count);
+                    PokemonModel pokemon = new PokemonModel(obj["Name"].Value<string>(),
+                                                            obj["Id"].Value<int>(),
+                                                            obj["Description"].Value<string>(),
+                                                            obj["Level"].Value<int>(),
+                                                            obj["MaxLevel"].Value<int>(),
+                                                            obj["MaxHealth"].Value<int>(),
+                                                            obj["MaxHealthPerLevel"].Value<int>(),
+                                                            obj["Accuracy"].Value<double>(),
+                                                            obj["EvolveId"].Value<int>(),
+                                                            obj["EvolveCost"].Value<int>(),
+                                                            obj["PowerUpCostBase"].Value<int>(),
+                                                            obj["PowerUpCostPerLevel"].Value<int>(),
+                                                            Abilities[randomAbilityIndex]);
+                    pokemons.Add(pokemon);
                 }
             }
         }
@@ -378,6 +368,24 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(LoadViewModel));
             }
         }
+        public object DialogView
+        {
+            get { return _dialogView; }
+            set
+            {
+                _dialogView = value;
+                OnPropertyChanged(nameof(DialogView));
+            }
+        }
+        public object DialogViewModel
+        {
+            get { return _dialogViewModel; }
+            set
+            {
+                _dialogViewModel = value;
+                OnPropertyChanged(nameof(DialogViewModel));
+            }
+        }
         public object CurrentView
         {
             get { return _currentView; }
@@ -437,10 +445,6 @@ namespace PokemonGoClone.ViewModels
         {
             CurrentViewModel = SaveViewModel;
             CurrentView = SaveView;
-        }
-        private void CloseWindow(object Windows)
-        {
-            (Windows as System.Windows.Window)?.Close();
         }
     }
 }

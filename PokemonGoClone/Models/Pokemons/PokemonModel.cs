@@ -11,13 +11,16 @@ namespace PokemonGoClone.Models.Pokemons
     [Serializable]
     public class PokemonModel : BeingModel, ICloneable
     {
-        // All fields for TrainerCreation
+        // All fields for TrainerCreationViewModel
         private bool _isChecked;
 
         // All fields of Pokemon class
         private List<AbilityModel> _abilities;
         private double _accuracy;
-        private int _powerUpCost;
+        private int _evolveId;
+        private int _evolveCost;
+        private int _powerUpCostBase;
+        private int _powerUpCostPerLevel;
 
         // Default constructor
         public PokemonModel(string name,
@@ -27,10 +30,11 @@ namespace PokemonGoClone.Models.Pokemons
                             int maxLevel,
                             int maxHealth,
                             int maxHealthPerLevel,
-                            int maxExp,
-                            int maxExpPerLevel,
                             double accuracy,
                             int evolveId,
+                            int evolveCost,
+                            int powerUpCostBase,
+                            int powerUpCostPerLevel,
                             AbilityModel ability)
         {
             Name = name;
@@ -41,10 +45,11 @@ namespace PokemonGoClone.Models.Pokemons
             MaxHealth = maxHealth;
             Health = maxHealth;
             MaxHealthPerLevel = maxHealthPerLevel;
-            MaxExp = maxExp;
-            MaxExpPerLevel = maxExpPerLevel;
-            EvolveId = evolveId;
             Accuracy = accuracy;
+            EvolveId = evolveId;
+            EvolveCost = evolveCost;
+            PowerUpCostBase = powerUpCostBase;
+            PowerUpCostPerLevel = powerUpCostPerLevel;
 
             Abilities = new List<AbilityModel>();
 
@@ -94,36 +99,73 @@ namespace PokemonGoClone.Models.Pokemons
                 _accuracy = value;
             }
         }
-     
-        public int EvolveCost() {
-            if (EvolveId != -1) {
-                return Level * 100;
-            } else {
-                return 0;
-            }        
+
+        public int EvolveId
+        {
+            get { return _evolveId; }
+            set
+            {
+                _evolveId = value;
+                OnPropertyChanged(nameof(EvolveId));
+            }
+        }
+
+        public int EvolveCost {
+            get { return _evolveCost; }
+            set
+            {
+                _evolveCost = value;
+                OnPropertyChanged(nameof(EvolveCost));
+            }
+        }
+        public int PowerUpCostBase
+        {
+            get { return _powerUpCostBase; }
+            set
+            {
+                _powerUpCostBase = value;
+                OnPropertyChanged(nameof(PowerUpCostBase));
+                OnPropertyChanged(nameof(PowerUpCost));
+            }
+        }
+        public int PowerUpCostPerLevel
+        {
+            get { return _powerUpCostPerLevel; }
+            set
+            {
+                _powerUpCostPerLevel = value;
+                OnPropertyChanged(nameof(PowerUpCostPerLevel));
+                OnPropertyChanged(nameof(PowerUpCost));
+            }
+        }
+        public int PowerUpCost
+        {
+            get { return PowerUpCostBase + Level * PowerUpCostPerLevel; }
         }
 
         public void LevelUp() {
             Level += 1;
-            Random rnd = new Random();
-            MaxHealth += rnd.Next(MaxHealthPerLevel - 20, MaxHealthPerLevel + 1);
+            MaxHealth += Rng.Next(MaxHealthPerLevel - 20, MaxHealthPerLevel + 1);
             Health = MaxHealth;
-            LevelUpCost = Level * 100;
+            OnPropertyChanged(nameof(PowerUpCost));
         }
 
-        public int LevelUpCost {
-            get { return _powerUpCost; }
-            set {
-                _powerUpCost = value;
-                OnPropertyChanged(nameof(LevelUpCost));
-            }
-        }
 
         public void AddAbility(AbilityModel ability)
         {
             if (!Abilities.Exists(x => x.Id == ability.Id))
             {
                 Abilities.Add(ability);
+            }
+        }
+
+        public void AddRandomNewAbility(List<AbilityModel>abilities)
+        {
+            var availableAbilities = abilities.Where(x => Abilities.All(x2 =>x2.Id != x.Id)).ToList();
+            if (availableAbilities.Count > 0)
+            {
+                int randomAbilityIndex = Rng.Next(availableAbilities.Count);
+                AddAbility((AbilityModel)availableAbilities[randomAbilityIndex].Clone());
             }
         }
 

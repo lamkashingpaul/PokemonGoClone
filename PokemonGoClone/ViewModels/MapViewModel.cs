@@ -26,7 +26,7 @@ namespace PokemonGoClone.ViewModels
             // If player's first pokemon has 0 health, it's not allowed to fight
             if (Player.Pokemons[0].Health == 0)
             {
-                DialogViewModel.Message = "Your lending pokemon cannot fight, please select other pokemon.";
+                DialogViewModel.PopUp("Your lending pokemon cannot fight, please select other pokemon.");
             }  else
             {
                 ((BattleViewModel)MainWindowViewModel.BattleViewModel).NewBattle(Player, Target);
@@ -34,8 +34,13 @@ namespace PokemonGoClone.ViewModels
                 MainWindowViewModel.GoToBattleViewModel(null);
             }
         }
+        public void BackToStart(object x)
+        {
+            DialogViewModel.Close(x);
+            MainWindowViewModel.GoToStartViewModel(null);
+        }
 
-        
+        // All fields of MapViewModel
         private MainWindowViewModel _mainWindowViewMode;
         private DialogViewModel _dialogViewModel;
 
@@ -47,21 +52,23 @@ namespace PokemonGoClone.ViewModels
         public List<TrainerModel> Trainers { get; private set; }
         public List<TileModel> Map { get; private set; }
 
+        // All ICommands of MapViewModel
         private ICommand _moveCommand;
         private ICommand _bagCommand;
-        private ICommand _saveCommand;
+        private ICommand _menuCommand;
         private ICommand _interactCommand;
 
+        // All ICommand properites of MapViewModel
         public ICommand MoveCommand
         {
-            get { return _moveCommand ?? (_moveCommand = new RelayCommand(x => { Move(x); })); }
+            get { return _moveCommand ?? (_moveCommand = new RelayCommand(x => { Move(x); }, x => !DialogViewModel.IsVisible)); }
         }
         public ICommand BagCommand {
-            get { return _bagCommand ?? (_bagCommand = new RelayCommand(x => { Bag(); })); }
+            get { return _bagCommand ?? (_bagCommand = new RelayCommand(x => { Bag(); }, x => !DialogViewModel.IsVisible)); }
         }
-        public ICommand SaveCommand
+        public ICommand MenuCommand
         {
-            get { return _saveCommand ?? (_saveCommand = new RelayCommand(x => { Save(x); })); }
+            get { return _menuCommand ?? (_menuCommand = new RelayCommand(x => { Menu(x); }, x => !DialogViewModel.IsVisible)); }
         }
         public ICommand InteractCommand
         {
@@ -87,15 +94,23 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(DialogViewModel));
             }
         }
+        public int COL
+        {
+            get { return _col; }
+        }
+        public int ROW
+        {
+            get { return _row; }
+        }
 
+        // Constructor of MapViewModel
         public MapViewModel(MainWindowViewModel mainWindowViewModel)
         {
             MainWindowViewModel = mainWindowViewModel;
-
-            // Subscrible to the DialogViewModel
-            DialogViewModel = new DialogViewModel(this);
+            DialogViewModel = (DialogViewModel)MainWindowViewModel.DialogViewModel;
         }
 
+        // Game initialization for new game
         public void GameInitialization(string name, int choice)
         {
             LoadMap();
@@ -138,6 +153,8 @@ namespace PokemonGoClone.ViewModels
             // Navigate to MapView
             MainWindowViewModel.GoToMapViewModel(null);
         }
+
+        // Game initialization for loading from save
         public void GameLoad(List<TrainerModel> trainers)
         {
             LoadMap();
@@ -145,22 +162,15 @@ namespace PokemonGoClone.ViewModels
             Player = Trainers[0];
             // Update the Bag View
             ((BagViewModel)MainWindowViewModel.BagViewModel).UpdatePlayer(Player);
-            ((BagViewModel)MainWindowViewModel.BagViewModel).MainWindowViewModel = MainWindowViewModel;
             // Create backlink to MainWindow
             MainWindowViewModel.Trainers = Trainers;
             MainWindowViewModel.Player = Player;
+            // Navigate to MapView after loading
+            MainWindowViewModel.GoToMapViewModel(null);
+            DialogViewModel.PopUp("Loaded Successfully");
         }
 
-
-        public int COL
-        {
-            get { return _col; }
-        }
-
-        public int ROW
-        {
-            get { return _row; }
-        }
+        // 
         private void LoadMap()
         {
             // Draw the boundary of map
@@ -243,52 +253,48 @@ namespace PokemonGoClone.ViewModels
 
         }
 
+        // All RelayCommands of MapViewModel
         private void Move(object sender)
         {
-            // Move() is not allowed if there is dialog overlay
-            if (DialogViewModel.IsVisible == true)
-            {
-                return;
-            }
-
             string command = sender as string;
             char direction = command[0];
-            Trainers[0].Facing = direction;
+            Player.Facing = direction;
 
             // Find if there is any object in front
-            var frontTile = Map.Find(x => x.XCoordinate == Trainers[0].XFacing && x.YCoordinate == Trainers[0].YFacing);
-            var frontBeing = Trainers.Find(x => x.XCoordinate == Trainers[0].XFacing && x.YCoordinate == Trainers[0].YFacing);
+            var frontTile = Map.Find(x => x.XCoordinate == Player.XFacing && x.YCoordinate == Player.YFacing);
+            var frontBeing = Trainers.Find(x => x.XCoordinate == Player.XFacing && x.YCoordinate == Player.YFacing);
 
             if (frontTile.Texture == 'G' && frontBeing == null)
             {
                 switch (direction)
                 {
                     case 'W':
-                        Trainers[0].XCoordinate -= 1;
+                        Player.XCoordinate -= 1;
                         break;
                     case 'S':
-                        Trainers[0].XCoordinate += 1;
+                        Player.XCoordinate += 1;
                         break;
                     case 'A':
-                        Trainers[0].YCoordinate -= 1;
+                        Player.YCoordinate -= 1;
                         break;
                     case 'D':
-                        Trainers[0].YCoordinate += 1;
+                        Player.YCoordinate += 1;
                         break;
                     default:
                         break;
                 }
-                Trainers[0].Facing = direction;
+                Player.Facing = direction;
             }
         }
 
         private void Interact()
         {
-            // If there is dialog overlay, Interact() is not allowed
+            // If there is dialog overlay, Interact() is used to invoke [OK] Button
             if (DialogViewModel.IsVisible == true)
             {
                 DialogViewModel.ActionDelegateMethod?.Invoke(null);
-            } else
+            }
+            else
             {
                 Target = Trainers.Find(x => x.XCoordinate == Player.XFacing && x.YCoordinate == Player.YFacing);
                 if (Target == null)
@@ -297,33 +303,18 @@ namespace PokemonGoClone.ViewModels
                 }
                 else
                 {
-                    DialogViewModel.ActionDelegateMethod = AcceptBattle;
-                    DialogViewModel.Message = Target.Quote;
+                    DialogViewModel.PopUp(Target.Quote, null, AcceptBattle);
                 }
             }
-
         }
 
-        private void Bag() {
-            // Bag() is not allowed if there is dialog overlay
-            if (DialogViewModel.IsVisible == true)
-            {
-                return;
-            }
+        private void Bag()
+        {
             MainWindowViewModel.GoToBagViewModel(null);
         }
-
-        private void Save(object x)
+        private void Menu(object sender)
         {
-            // Save() is not allowed if there is dialog overlay
-            if (DialogViewModel.IsVisible == true)
-            {
-                return;
-            }
-
-            bool success = Serializator.Serialize("data.dat", Trainers);
-            string result = success ? "Game saved." : "Save failed.";
-            DialogViewModel.Message = result;
+            DialogViewModel.PopUp("Back to Start?", null, BackToStart);
         }
     }
 }

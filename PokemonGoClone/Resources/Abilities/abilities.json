@@ -1,0 +1,21 @@
+[
+{
+    "Name": "Scratch",
+    "Id": 1,
+    "Description": "Scratch is one of the most common and basic moves a Pokémon learns. It deals damage with no additional effects.",
+    "Damage": 40,
+    "DamagePerLevel": 5,
+    "MaxCharge": 35,
+    "MaxChargePerLevel": 1,
+    "Accuracy": 0.9
+},
+{
+    "Name": "Headbutt",
+    "Id": 2,
+    "Description": "Headbutt deals damage and has a 30% chance of causing the target to flinch (if the target has not yet moved).",
+    "Damage": 70,
+    "DamagePerLevel": 10,
+    "MaxCharge": 15,
+    "MaxChargePerLevel": 1,
+    "Accuracy": 0.9
+}]

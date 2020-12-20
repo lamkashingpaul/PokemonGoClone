@@ -23,10 +23,6 @@ namespace PokemonGoClone.Models.Abilities
         private int _damage;
         private int _damagePerLevel;
 
-        private int _level;
-        private int _maxlevel;
-
-
         private int _charge;
         private int _maxCharge;
         private int _maxChargePerLevel;
@@ -39,8 +35,6 @@ namespace PokemonGoClone.Models.Abilities
                             string description,
                             int damage,
                             int damagePerLevel,
-                            int level,
-                            int maxlevel,
                             int maxCharge,
                             int maxChargePerLevel,
                             double accuracy)
@@ -50,8 +44,6 @@ namespace PokemonGoClone.Models.Abilities
             Description = description;
             Damage = damage;
             DamagePerLevel = damagePerLevel;
-            Level = level;
-            MaxLevel = maxlevel;
             MaxCharge = maxCharge;
             MaxChargePerLevel = maxChargePerLevel;
             Charge = MaxCharge;
@@ -68,19 +60,19 @@ namespace PokemonGoClone.Models.Abilities
             {
                 if (Damage > 0)
                 {
-                    target.Health -= Damage * Level;
+                    target.Health -= Damage + DamagePerLevel * caster.Level;
                     return $"{caster.Name} dealt {Damage} damage to {target.Name}";
                 }
                 else
                 {
                     // This is not damage ability
                     // Action shall be implemented here
-                    return "This is not damage ability";
+                    return "This is not damage ability.";
 
                 }
             } else {
                 // You ability missed
-                return "Your ability missed";
+                return $"{caster.Name}'s ability missed.";
             }
         }
 
@@ -135,25 +127,6 @@ namespace PokemonGoClone.Models.Abilities
             }
         }
 
-        public int Level
-        {
-            get { return _level; }
-            set
-            {
-                _level = value;
-                OnPropertyChanged(nameof(Level));
-            }
-        }
-        public int MaxLevel
-        {
-            get { return _maxlevel; }
-            set
-            {
-                _maxlevel = value;
-                OnPropertyChanged(nameof(MaxLevel));
-            }
-        }
-
         public int Charge
         {
             get { return _charge; }
@@ -190,16 +163,6 @@ namespace PokemonGoClone.Models.Abilities
             {
                 _accuracy = value;
                 OnPropertyChanged(nameof(Accuracy));
-            }
-        }
-
-        public void LevelUp()
-        {
-            if (Level < MaxLevel)
-            {
-                Level += 1;
-                Damage += DamagePerLevel;
-                MaxCharge += MaxChargePerLevel;
             }
         }
 

@@ -20,38 +20,37 @@ namespace PokemonGoClone.ViewModels
         private int? _choice;
 
         public List<PokemonModel> StartPokemon { get; private set; }
-       
-        // All ICommands for the viewmodel
+
+        // All ICommands for the TrainerCreationViewModel
         private ICommand _updateChoiceCommand;
         private ICommand _trainerCreationCommand;
 
-        // All properties for ICommands
+        // All ICommand properties for TrainerCreationViewModel
         public ICommand UpdateChoiceCommand
         {
             get { return _updateChoiceCommand ?? (_updateChoiceCommand = new RelayCommand(x => { UpdateChoice(x); })); }
         }
-
         public ICommand TrainerCreationCommand
         {
             get { return _trainerCreationCommand ?? (_trainerCreationCommand = new RelayCommand(x => { TrainerCreation(x); })); }
         }
 
-        // Default constructor
+        // Constructor of TrainerCreationViewModel
         public TrainerCreationViewModel(MainWindowViewModel mainWindowViewModel)
         {
             MainWindowViewModel = mainWindowViewModel;
+            DialogViewModel = (DialogViewModel)MainWindowViewModel.DialogViewModel;
+            DialogViewModel.DefaultDelegates();
 
-            // Set up pokemon choices
+            // Set up starting pokemon choices
             StartPokemon = new List<PokemonModel>
             {
                 new PokemonModel(001, "Bulbasaur", false),
-                new PokemonModel(004, "Charmander", true),
+                new PokemonModel(004, "Charmander", false),
                 new PokemonModel(007, "Squirtle", false),
             };
-            Choice = null;   // Default choice
 
-            // Subscrible to the DialogViewModel
-            DialogViewModel = new DialogViewModel(this);
+            Choice = null;   // Default choice
         }
 
         public MainWindowViewModel MainWindowViewModel
@@ -63,7 +62,6 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(MainWindowViewModel));
             }
         }
-
         public DialogViewModel DialogViewModel
         {
             get { return _dialogViewModel; }
@@ -74,7 +72,7 @@ namespace PokemonGoClone.ViewModels
             }
         }
 
-        // All properties of TrainerCreationViewModel class
+        // All properties of TrainerCreationViewModel
         public int? Choice
         {
             get { return _choice; }
@@ -85,7 +83,7 @@ namespace PokemonGoClone.ViewModels
             }
         }
 
-        //  All RelayCommands for ICommand
+        //  All RelayCommands for TrainerCreationViewModel
         private void UpdateChoice(object sender)
         {
             int? choice = sender as int?;
@@ -105,11 +103,11 @@ namespace PokemonGoClone.ViewModels
 
             if (string.IsNullOrEmpty(name))
             {
-                DialogViewModel.Message = "You must enter your name.";
+                DialogViewModel.PopUp("You must enter your name.");
                 return;
             } else if (choice == null)
             {
-                DialogViewModel.Message = "You must pick up your Pokemon.";
+                DialogViewModel.PopUp("You must pick up your Pokemon.");
                 return;
             }
 

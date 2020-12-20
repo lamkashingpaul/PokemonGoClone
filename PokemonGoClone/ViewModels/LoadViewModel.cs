@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.IO;
+using System.Collections.ObjectModel;
 
 namespace PokemonGoClone.ViewModels
 {
@@ -13,10 +15,14 @@ namespace PokemonGoClone.ViewModels
     {
         private MainWindowViewModel _mainWindowViewModel;
         private DialogViewModel _dialogViewModel;
+        public ObservableCollection<string> Saves { get; set; }
+
         public LoadViewModel(MainWindowViewModel mainWindowViewModel)
         {
             MainWindowViewModel = mainWindowViewModel;
-            DialogViewModel = new DialogViewModel(this);
+            DialogViewModel = (DialogViewModel)MainWindowViewModel.DialogViewModel;
+            Saves = MainWindowViewModel.Saves;
+            Update();
         }
         public MainWindowViewModel MainWindowViewModel
         {
@@ -36,24 +42,44 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(DialogViewModel));
             }
         }
+        public void Update()
+        {
+            Saves.Clear();
+            foreach(var save in Directory.EnumerateFiles(@".\", "*.pkmgc", SearchOption.TopDirectoryOnly).Select(Path.GetFileName).ToList())
+            {
+                Saves.Add(save);
+            }
+        }
         private ICommand _loadCommand;
+        private ICommand _refreshCommand;
         public ICommand LoadCommand
         {
-            get { return _loadCommand ?? (_loadCommand = new RelayCommand(x => { Load(x); })); }
+            get { return _loadCommand ?? (_loadCommand = new RelayCommand(x => { Load(x); }, x => !DialogViewModel.IsVisible)); }
+        }
+        public ICommand RefreshCommand
+        {
+            get { return _refreshCommand ?? (_refreshCommand = new RelayCommand(x => { Refresh(x); }, x => !DialogViewModel.IsVisible)); }
         }
         private void Load(object x)
         {
-            var trainers = Serializator.Deserialize<List<TrainerModel>>("data.dat");
+            if (!(x is string save))
+            {
+                DialogViewModel.PopUp("You must choose a save.");
+                return;
+            }
+
+            var trainers = Serializator.Deserialize<List<TrainerModel>>(save);
             if (trainers == null)
             {
-                DialogViewModel.CloseDelegateMethod = MainWindowViewModel.GoToStartViewModel;
-                DialogViewModel.Message = "Loading Failed";
+                DialogViewModel.PopUp("Loading failed. Please choose another save.");
             } else
             {
                 ((MapViewModel)MainWindowViewModel.MapViewModel).GameLoad(trainers);
-                DialogViewModel.CloseDelegateMethod = MainWindowViewModel.GoToMapViewModel;
-                DialogViewModel.Message = "Loaded Successfully";
             }
+        }
+        private void Refresh(object x)
+        {
+            Update();
         }
     }
 }
