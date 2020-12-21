@@ -120,7 +120,7 @@ namespace PokemonGoClone.ViewModels
 
         public void Buy()
         {
-            if (Trainer.Candy < Choose.Candy)
+            if (Trainer.Candy < Choose.Cost)
             {
                 DialogViewModel.PopUp("You don't have enough Candy.");
             } else
