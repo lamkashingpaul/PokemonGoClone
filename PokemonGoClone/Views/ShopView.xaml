@@ -92,6 +92,10 @@
                                                 <TextBlock Text="Health: " FontSize="20" TextAlignment="Right" Width="98"/>
                                                 <TextBlock Text="{Binding CurrentViewModel.Random.MaxHealth}" FontSize="20" Width="100"/>
                                             </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Accuracy: " FontSize="20" TextAlignment="Right" Width="98"/>
+                                                <TextBlock Text="{Binding CurrentViewModel.Random.Accuracy}" FontSize="20" Width="100"/>
+                                            </StackPanel>
                                         </StackPanel>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
