@@ -16,6 +16,7 @@ namespace PokemonGoClone.ViewModels
         private TrainerModel _trainer;
         private ItemModel _choose;
         public PokemonModel _random;
+        private DialogViewModel _dialogViewModel;
         private ICommand _selectedItemCommand;
         private ICommand _buyCommand;
         private ICommand _randomCommand;
@@ -37,6 +38,7 @@ namespace PokemonGoClone.ViewModels
         public ShopViewModel(MainWindowViewModel mainWindowViewModel)
         {
             MainWindowViewModel = mainWindowViewModel;
+            DialogViewModel = (DialogViewModel)MainWindowViewModel.DialogViewModel;
         }
 
         //properties of ShopViewModel
@@ -88,6 +90,13 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(Random));
             }
         }
+        public DialogViewModel DialogViewModel {
+            get { return _dialogViewModel; }
+            set {
+                _dialogViewModel = value;
+                OnPropertyChanged(nameof(DialogViewModel));
+            }
+        }
 
         //Method of ShopViewModel
         public void Update(TrainerModel trainer, List<ItemModel> defaultItem)
@@ -104,16 +113,25 @@ namespace PokemonGoClone.ViewModels
 
         public void Buy()
         {
-            Trainer.Money -= Choose.Charge;
-            Trainer.AddItem(Choose);
+            if (Trainer.Money < Choose.Charge) {
+                DialogViewModel.PopUp("You don't have enough Money");
+            } else {
+                Trainer.Money -= Choose.Charge;
+                Trainer.AddItem(Choose);
+            }
         }
 
         public void RandomPokemon()
         {
-            Trainer.Money -= 500;
-            PokemonModel pokemon = RandomPokemonMethod();
-            Random = pokemon;
-            Trainer.AddPokemon(pokemon);
+            Trainer.Money = 500;
+            if (Trainer.Money < 500) {
+                DialogViewModel.PopUp("You don't have enough Money");
+            } else {
+                Trainer.Money -= 500;
+                PokemonModel pokemon = RandomPokemonMethod();
+                Random = pokemon;
+                Trainer.AddPokemon(pokemon);
+            }
         }
 
         //factory Method
@@ -121,24 +139,29 @@ namespace PokemonGoClone.ViewModels
         {
             Random rnd = new Random();
             int x = rnd.Next(0, MainWindowViewModel.Pokemons.Count);
+            int lucky = rnd.Next(0, 10000);
             PokemonModel pokemon = MainWindowViewModel.Pokemons[x];
-            int originalHealth = pokemon.MaxHealth;
-            pokemon.MaxHealth = rnd.Next(originalHealth - 200, originalHealth + 101);
-            if (pokemon.MaxHealth <= originalHealth)
-            {
-                pokemon.Description = "It is Normal (N) Pokemon!";
-            }
-            else if (pokemon.MaxHealth <= originalHealth + 90)
-            {
-                pokemon.Description = "It is Rare (R) Pokemon!";
-            }
-            else if (pokemon.MaxHealth < originalHealth + 100)
-            {
-                pokemon.Description = "It is Super Rare (SR) Pokemon!";
-            }
-            else
-            {
-                pokemon.Description = "It is Ultra Rare (UR) Pokemon!";
+            if (((pokemon.Id >= 144 && pokemon.Id <= 146) || (pokemon.Id >= 150 && pokemon.Id <= 151)) && lucky == 8888) { //special Pokemon
+                pokemon.Accuracy = 1;
+                return pokemon;
+            } else if ((pokemon.Id >= 144 && pokemon.Id <= 146) || (pokemon.Id >= 150 && pokemon.Id <= 151)) {
+                pokemon = MainWindowViewModel.Pokemons[x - 8];
+            } else {
+                int originalHealth = pokemon.MaxHealth;
+                pokemon.MaxHealth = rnd.Next(originalHealth - 200, originalHealth + 101);
+                if (pokemon.MaxHealth <= originalHealth) {
+                    pokemon.Accuracy = rnd.Next(60, 70) / 100.0;
+                    pokemon.Description = "It is Normal (N) Pokemon!";
+                } else if (pokemon.MaxHealth <= originalHealth + 90) {
+                    pokemon.Accuracy = rnd.Next(70, 80) / 100.0;
+                    pokemon.Description = "It is Rare (R) Pokemon!";
+                } else if (pokemon.MaxHealth < originalHealth + 100) {
+                    pokemon.Accuracy = rnd.Next(80, 90) / 100.0;
+                    pokemon.Description = "It is Super Rare (SR) Pokemon!";
+                } else {
+                    pokemon.Accuracy = rnd.Next(90, 96) / 100.0;
+                    pokemon.Description = "It is Ultra Rare (UR) Pokemon!";
+                }
             }
 
             return pokemon;

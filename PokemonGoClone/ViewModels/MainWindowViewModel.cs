@@ -267,7 +267,7 @@ namespace PokemonGoClone.ViewModels
                                                             obj["MaxHealth"].Value<int>(),
                                                             obj["MaxHealthPerLevel"].Value<int>(),
                                                             obj["Accuracy"].Value<double>(),
-                                                            obj["EvolveId"].Value<int>(),
+                                                            obj["EvolveId"].ToObject<int[]>(),
                                                             obj["EvolveCost"].Value<int>(),
                                                             obj["PowerUpCostBase"].Value<int>(),
                                                             obj["PowerUpCostPerLevel"].Value<int>(),

@@ -14,7 +14,7 @@ namespace PokemonGoClone.Models.Pokemons
         // All fields of Pokemon class
         private List<AbilityModel> _abilities;
         private double _accuracy;
-        private int _evolveId;
+        private int[] _evolveId;
         private int _evolveCost;
         private int _powerUpCostBase;
         private int _powerUpCostPerLevel;
@@ -28,7 +28,7 @@ namespace PokemonGoClone.Models.Pokemons
                             int maxHealth,
                             int maxHealthPerLevel,
                             double accuracy,
-                            int evolveId,
+                            int[] evolveId,
                             int evolveCost,
                             int powerUpCostBase,
                             int powerUpCostPerLevel,
@@ -97,7 +97,7 @@ namespace PokemonGoClone.Models.Pokemons
             }
         }
 
-        public int EvolveId
+        public int[] EvolveId
         {
             get { return _evolveId; }
             set
