@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="PokemonGoClone.Views.SaveView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PokemonGoClone.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="480" d:DesignWidth="640"
+             Background="White"
+             FocusVisualStyle="{x:Null}">
+
+    <Grid DataContext="{Binding CurrentViewModel}" Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="64"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="64"/>
+            <RowDefinition Height="64"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Column="0" Grid.Row="0" FontSize="36" Text="Save to File" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <ListBox x:Name="SaveToFile" ItemsSource="{Binding Saves}" Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Stretch">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Button Content="{Binding}"
+                            FontSize="26"
+                            Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.CurrentViewModel.UpdateFileNameCommand}"
+                            CommandParameter="{Binding}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <DockPanel Grid.Column="0" Grid.Row="2" LastChildFill="True">
+            <TextBlock DockPanel.Dock="Left" Text="FileName: " FontSize="36" VerticalAlignment="Center"/>
+            <TextBox x:Name="FileNameField" Text="{Binding DefaultFileName}" FontSize="36" VerticalAlignment="Center" HorizontalContentAlignment="Right" MouseDoubleClick="FileNameField_MouseDoubleClick"/>
+        </DockPanel>
+        <UniformGrid Grid.Column="0" Grid.Row="3" Columns="3" Rows="1">
+            <Button Content="Back" FontSize="36" Command="{Binding MainWindowViewModel.GoToStartViewModelCommand}"/>
+            <Button Content="Refresh" FontSize="36" Command="{Binding RefreshCommand}"/>
+            <Button Content="Save" FontSize="36" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=FileNameField}"/>
+        </UniformGrid>
+    </Grid>
+
+    <UserControl.InputBindings>
+        <KeyBinding Command="{Binding CurrentViewModel.DialogViewModel.CloseCommand}" Key="Esc"/>
+    </UserControl.InputBindings>
+</UserControl>

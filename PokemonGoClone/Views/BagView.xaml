@@ -9,7 +9,6 @@
              FocusVisualStyle="{x:Null}">
     <Grid>
         <ItemsControl Focusable="False" ItemsSource="{Binding CurrentViewModel.Pokemons}" Margin="0,50,0,0">
-
             <ItemsControl.Template>
                 <ControlTemplate>
                     <ScrollViewer HorizontalScrollBarVisibility="Hidden">
@@ -22,7 +21,7 @@
                 <DataTemplate>
                     <Button Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.CurrentViewModel.SelectedPokemonCommand}" CommandParameter="{Binding}">
                         <StackPanel>
-                            <Image Source="{Binding ImageSource}" HorizontalAlignment="Left"/>
+                            <Image Source="{Binding ImageSource}" HorizontalAlignment="Center"/>
                             <TextBlock Text="{Binding Name}"/>
                         </StackPanel>
                     </Button>
@@ -31,7 +30,7 @@
         </ItemsControl>
 
         <Canvas Margin="0,0,0,400">
-            <Button Content="Item" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" Height="50" FontSize="24" Canvas.Left="200" Canvas.Top="0"/>
+            <Button Content="Item" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" Height="50" FontSize="24" Canvas.Left="200" Canvas.Top="0" Command="{Binding CurrentViewModel.MainWindowViewModel.GoToItemViewModelCommand}"/>
             <Button Content="Exit" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" Height="50" FontSize="24" Command="{Binding CurrentViewModel.MainWindowViewModel.GoToMapViewModelCommand}" Canvas.Left="310"/>
             <TextBlock TextWrapping="Wrap" Text="Bag" Height="50" Width="200" Background="White" FontSize="35" TextAlignment="Center"/>
         </Canvas>

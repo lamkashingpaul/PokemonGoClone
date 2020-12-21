@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="PokemonGoClone.Views.LoadView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PokemonGoClone.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="480" d:DesignWidth="640"
+             Background="White"
+             FocusVisualStyle="{x:Null}">
+
+    <Grid DataContext="{Binding CurrentViewModel}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="64"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="64"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Column="0" Grid.Row="0" FontSize="36" Text="Load from Save" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <ListBox x:Name="ListOfSaves" ItemsSource="{Binding Saves}" Grid.Column="0" Grid.Row="1">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" FontSize="26"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <UniformGrid Grid.Column="0" Grid.Row="2" Columns="3" Rows="1">
+            <Button Content="Back" FontSize="36" Command="{Binding MainWindowViewModel.GoToStartViewModelCommand}"/>
+            <Button Content="Refresh" FontSize="36" Command="{Binding RefreshCommand}"/>
+            <Button Content="Load" FontSize="36" Command="{Binding LoadCommand}" CommandParameter="{Binding ElementName=ListOfSaves, Path=SelectedItem}"/>
+        </UniformGrid>
+    </Grid>
+
+    <UserControl.InputBindings>
+        <KeyBinding Command="{Binding CurrentViewModel.DialogViewModel.CloseCommand}" Key="Esc"/>
+    </UserControl.InputBindings>
+</UserControl>

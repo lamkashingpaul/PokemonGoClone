@@ -7,20 +7,30 @@
              mc:Ignorable="d" 
              d:DesignHeight="480" d:DesignWidth="640"
              FocusVisualStyle="{x:Null}">
-    
-    <Grid>
+
+    <Grid DataContext="{Binding CurrentViewModel}">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
-        <Button Focusable="True" Grid.Column="0" Grid.Row="0" Margin="10" FontSize="36" Content="New" Command="{Binding GoToTrainerCreationViewModelCommand}"/>
-        <Button Focusable="True" Grid.Column="0" Grid.Row="1" Margin="10" FontSize="36" Content="Load" Command="{Binding GoToLoadViewModelCommand}"/>
-        <Button Focusable="True" Grid.Column="0" Grid.Row="2" Margin="10" FontSize="36" Content="Exit" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
+        <Button Focusable="True" Grid.Column="0" Grid.Row="0" Margin="10" FontSize="36" Content="[N]ew" Command="{Binding NewCommand}"/>
+        <UniformGrid Focusable="True" Columns="2" Grid.Column="0" Grid.Row="1">
+            <Button Focusable="True" Margin="10" FontSize="36" Content="[C]ontinue" Command="{Binding ContinueCommand}" IsEnabled="{Binding IsContinue}"/>
+            <Button Focusable="True" Margin="10" FontSize="36" Content="[S]ave" Command="{Binding SaveCommand}" IsEnabled="{Binding IsContinue}"/>
+        </UniformGrid>
+        <Button Focusable="True" Grid.Column="0" Grid.Row="2" Margin="10" FontSize="36" Content="[L]oad" Command="{Binding LoadCommand}"/>
+        <Button Focusable="True" Grid.Column="0" Grid.Row="3" Margin="10" FontSize="36" Content="[E]xit" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
     </Grid>
 
     <UserControl.InputBindings>
-        <KeyBinding Command="{Binding GoToTrainerCreationViewModelCommand}" Key="Space"/>
+        <KeyBinding Command="{Binding CurrentViewModel.NewCommand}" Key="N"/>
+        <KeyBinding Command="{Binding CurrentViewModel.ContinueCommand}" Key="C"/>
+        <KeyBinding Command="{Binding CurrentViewModel.LoadCommand}" Key="L"/>
+        <KeyBinding Command="{Binding CurrentViewModel.SaveCommand}" Key="S"/>
+        <KeyBinding Command="{Binding CurrentViewModel.CloseWindowCommand}" Key="E" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
+        <KeyBinding Command="{Binding CurrentViewModel.CloseWindowCommand}" Key="Esc" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
     </UserControl.InputBindings>
 
 </UserControl>

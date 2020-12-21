@@ -92,15 +92,20 @@
     <Compile Include="Utilities\MultipleBindingConverter.cs" />
     <Compile Include="Utilities\RelayCommand.cs" />
     <Compile Include="Utilities\ScrollingListBox.cs" />
+    <Compile Include="Utilities\Serializator.cs" />
     <Compile Include="ViewModels\BagViewModel.cs" />
     <Compile Include="ViewModels\BattleViewModel.cs" />
     <Compile Include="ViewModels\DialogViewModel.cs" />
+    <Compile Include="ViewModels\ItemStatusViewModel.cs" />
     <Compile Include="ViewModels\ItemViewModel.cs" />
+    <Compile Include="ViewModels\LoadViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\MapViewModel.cs" />
     <Compile Include="ViewModels\PokemonStatusViewModel.cs" />
+    <Compile Include="ViewModels\SaveViewModel.cs" />
     <Compile Include="ViewModels\ShopViewModel.cs" />
     <Compile Include="ViewModels\StartViewModel.cs" />
+    <Compile Include="ViewModels\TemplateViewModel.cs" />
     <Compile Include="ViewModels\TrainerCreationViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\BagView.xaml.cs">
@@ -109,14 +114,23 @@
     <Compile Include="Views\BattleView.xaml.cs">
       <DependentUpon>BattleView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ItemStatusView.xaml.cs">
+      <DependentUpon>ItemStatusView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ItemView.xaml.cs">
       <DependentUpon>ItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoadView.xaml.cs">
+      <DependentUpon>LoadView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MapView.xaml.cs">
       <DependentUpon>MapView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PokemonStatusView.xaml.cs">
       <DependentUpon>PokemonStatusView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SaveView.xaml.cs">
+      <DependentUpon>SaveView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShopView.xaml.cs">
       <DependentUpon>ShopView.xaml</DependentUpon>
@@ -147,7 +161,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ItemStatusView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoadView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -156,6 +178,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PokemonStatusView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SaveView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -195,25 +221,29 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <EmbeddedResource Include="Resources\Abilities\001.json" />
-    <EmbeddedResource Include="Resources\Abilities\002.json" />
-    <EmbeddedResource Include="Resources\Pokemons\001.json" />
-    <EmbeddedResource Include="Resources\Pokemons\002.json" />
-    <EmbeddedResource Include="Resources\Pokemons\003.json" />
-    <EmbeddedResource Include="Resources\Pokemons\004.json" />
-    <EmbeddedResource Include="Resources\Pokemons\005.json" />
-    <EmbeddedResource Include="Resources\Pokemons\006.json" />
-    <EmbeddedResource Include="Resources\Pokemons\007.json" />
-    <EmbeddedResource Include="Resources\Pokemons\008.json" />
-    <EmbeddedResource Include="Resources\Pokemons\009.json" />
     <EmbeddedResource Include="Resources\Trainers\001.json" />
     <EmbeddedResource Include="Resources\Trainers\002.json" />
     <EmbeddedResource Include="Resources\Trainers\003.json" />
+    <EmbeddedResource Include="Resources\Pokemons\pokemons.json" />
+    <EmbeddedResource Include="Resources\Abilities\abilities.json" />
+    <EmbeddedResource Include="Resources\Items\Pokeball\001.json" />
+    <EmbeddedResource Include="Resources\Items\Pokeball\002.json" />
+    <EmbeddedResource Include="Resources\Items\Pokeball\003.json" />
+    <EmbeddedResource Include="Resources\Items\Potion\001.json" />
+    <EmbeddedResource Include="Resources\Items\Potion\002.json" />
+    <EmbeddedResource Include="Resources\Items\Potion\003.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\Items\Pokeball\001.png" />
+    <Resource Include="Images\Items\Pokeball\002.png" />
+    <Resource Include="Images\Items\Pokeball\003.png" />
+    <Resource Include="Images\Items\Potion\001.png" />
+    <Resource Include="Images\Items\Potion\002.png" />
+    <Resource Include="Images\Items\Potion\003.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Pokemons\001.png" />
     <Resource Include="Images\Pokemons\002.png" />

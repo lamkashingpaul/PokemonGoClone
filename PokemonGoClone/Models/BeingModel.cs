@@ -1,15 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PokemonGoClone.Models
 {
     // This is an abstract class for all beings in the game.
     // All beings are expected to share all following fields.
+    [Serializable]
     public abstract class BeingModel : TileModel
     {
+
+        // All Being plays dice
+        private Random _rng;
+
         private string _name;
         private string _description;
         private int _level;
@@ -25,6 +26,21 @@ namespace PokemonGoClone.Models
 
         private int _xFacing;
         private int _yFacing;
+
+        public BeingModel()
+        {
+            Rng = new Random();
+        }
+
+        public Random Rng
+        {
+            get { return _rng; }
+            set
+            {
+                _rng = value;
+                OnPropertyChanged(nameof(Rng));
+            }
+        }
 
         public string Name
         {
