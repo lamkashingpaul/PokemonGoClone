@@ -1,23 +1,26 @@
 ﻿using PokemonGoClone.Models.Pokemons;
 using PokemonGoClone.Models.Trainers;
+using System;
 
 namespace PokemonGoClone.Models.Items
 {
+    [Serializable]
     public class PotionModel : ItemModel
     {
         //field of Potion
-        private string _itemType;
         private int _healHP;
-        public PotionModel(string name, int id, int charge, int healHP) : base(name, id, charge)
+        public PotionModel(string name, int id, string description, int charge, int healHP) : base(name, id, charge)
         {
+            Description = description;
             HealHP = healHP;
-            ItemType = "Pokeball";
-            ImageSource = $"/PokemonGoClone;component/Images/Items/Potion/{Id:D3}.png";
+            ItemType = "Potion";
+            ImageSource = $"/PokemonGoClone;component/Images/Items/Potions/{Id:D6}.png";
         }
-        public override void Use(TrainerModel trainer, PokemonModel target)
+        public override string Use(TrainerModel trainer, PokemonModel target)
         {
             target.Health = target.MaxHealth;
             Charge -= 1;
+            return "";
         }
 
         //Properties of PokeballModel
@@ -27,15 +30,6 @@ namespace PokemonGoClone.Models.Items
             set
             {
                 _healHP = value;
-            }
-        }
-
-        public string ItemType
-        {
-            get { return _itemType; }
-            private set
-            {
-                _itemType = value;
             }
         }
     }

@@ -12,11 +12,12 @@ namespace PokemonGoClone.ViewModels
         private MainWindowViewModel _mainWindowViewModel;
         private DialogViewModel _dialogViewModel;
         private List<ItemModel> _items;
+        private TrainerModel _player;
         private ICommand _selectedItemCommand;
 
         public ICommand SelectedItemCommand
         {
-            get { return _selectedItemCommand ?? (_selectedItemCommand = new RelayCommand(x => { SelectedItem(x); })); }
+            get { return _selectedItemCommand ?? (_selectedItemCommand = new RelayCommand(x => { SelectedItem(x); }, x => !DialogViewModel.IsVisible)); }
         }
 
         //Constructor of ItemViewModel 
@@ -55,6 +56,15 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(Items));
             }
         }
+        public TrainerModel Player
+        {
+            get { return _player; }
+            set
+            {
+                _player = value;
+                OnPropertyChanged(nameof(Player));
+            }
+        }
 
         //Method of ItemViewModel
         public void SelectedItem(object sender)
@@ -64,9 +74,10 @@ namespace PokemonGoClone.ViewModels
             ((ItemStatusViewModel)MainWindowViewModel.ItemStatusViewModel).UpdateView(item, index);
             MainWindowViewModel.GotoItemStatusViewModel(null);
         }
-        public void UpdatePlayer(TrainerModel trainer)
+        public void UpdatePlayer(TrainerModel player)
         {
-            Items = trainer.Items;
+            Player = player;
+            Items = player.Items;
         }
 
 

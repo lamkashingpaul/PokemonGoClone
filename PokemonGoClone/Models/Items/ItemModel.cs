@@ -11,18 +11,22 @@ namespace PokemonGoClone.Models.Items
         // All fields shared by Item class
         private string _name;
         private int _id;
+        private string _description;
+        private string _itemType;
         private int _charge;
+        private int _cost;
         private string _imageSource;
 
-        public ItemModel(string name, int id, int charge)
+        public ItemModel(string name, int id, int cost)
         {
             Name = name;
             Id = id;
-            Charge = charge;
+            Cost = cost;
+            Charge = 1;
         }
 
         // All methods of Item class
-        public abstract void Use(TrainerModel trainer, PokemonModel target);
+        public abstract string Use(TrainerModel trainer, PokemonModel target);
 
         // All properties of fields
         public string Name
@@ -31,6 +35,7 @@ namespace PokemonGoClone.Models.Items
             set
             {
                 _name = value;
+                OnPropertyChanged(nameof(Name));
             }
         }
 
@@ -40,15 +45,43 @@ namespace PokemonGoClone.Models.Items
             set
             {
                 _id = value;
+                OnPropertyChanged(nameof(Id));
             }
         }
-
+        public string Description
+        {
+            get { return _description; }
+            set
+            {
+                _description = value;
+                OnPropertyChanged(nameof(Description));
+            }
+        }
         public int Charge
         {
             get { return _charge; }
             set
             {
                 _charge = value;
+                OnPropertyChanged(nameof(Charge));
+            }
+        }
+        public int Cost
+        {
+            get { return _cost; }
+            set
+            {
+                _cost = value;
+                OnPropertyChanged(nameof(Cost));
+            }
+        }
+        public string ItemType
+        {
+            get { return _itemType; }
+            set
+            {
+                _itemType = value;
+                OnPropertyChanged(nameof(ItemType));
             }
         }
         public string ImageSource

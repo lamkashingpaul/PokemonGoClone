@@ -6,9 +6,16 @@
              xmlns:local="clr-namespace:PokemonGoClone.Views"
              mc:Ignorable="d" 
              d:DesignHeight="480" d:DesignWidth="640"
+             Background="White"
              FocusVisualStyle="{x:Null}">
-    <Grid>
-        <ItemsControl Focusable="False" ItemsSource="{Binding CurrentViewModel.Pokemons}" Margin="0,50,0,0">
+
+    <Grid Focusable="False">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <ItemsControl Grid.Row="1" Focusable="False" ItemsSource="{Binding CurrentViewModel.Pokemons}">
             <ItemsControl.Template>
                 <ControlTemplate>
                     <ScrollViewer HorizontalScrollBarVisibility="Hidden">
@@ -19,20 +26,35 @@
             </ItemsControl.Template>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Button Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.CurrentViewModel.SelectedPokemonCommand}" CommandParameter="{Binding}">
-                        <StackPanel>
+                    <Button Height="96" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.CurrentViewModel.SelectedPokemonCommand}" CommandParameter="{Binding}">
+                        <StackPanel Orientation="Horizontal">
                             <Image Source="{Binding ImageSource}" HorizontalAlignment="Center"/>
-                            <TextBlock Text="{Binding Name}"/>
+                            <TextBlock VerticalAlignment="Center" FontSize="24">
+                                <Run Text="Name: "/>
+                                <Run Text="{Binding Name}"/>
+                                <Run Text=" | HP: "/>
+                                <Run Text="{Binding Health}"/>
+                                <Run Text=" / "/>
+                                <Run Text="{Binding MaxHealth}"/>
+                            </TextBlock>
                         </StackPanel>
                     </Button>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
-        <Canvas Margin="0,0,0,400">
-            <Button Content="Item" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" Height="50" FontSize="24" Canvas.Left="200" Canvas.Top="0" Command="{Binding CurrentViewModel.MainWindowViewModel.GoToItemViewModelCommand}"/>
+        <DockPanel Grid.Row="0" VerticalAlignment="Center">
+            <TextBlock TextWrapping="Wrap" Text="Bag" Height="50" Width="128" Background="White" FontSize="35" TextAlignment="Center"/>
+            <Button Content="Item" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" Height="50" FontSize="24" Command="{Binding CurrentViewModel.MainWindowViewModel.GoToItemViewModelCommand}"/>
             <Button Content="Exit" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" Height="50" FontSize="24" Command="{Binding CurrentViewModel.MainWindowViewModel.GoToMapViewModelCommand}" Canvas.Left="310"/>
-            <TextBlock TextWrapping="Wrap" Text="Bag" Height="50" Width="200" Background="White" FontSize="35" TextAlignment="Center"/>
-        </Canvas>
+            <TextBlock DockPanel.Dock="Top" FontSize="16" VerticalAlignment="Center">
+                <Run Text=" Total    Candy ($): "/>
+                <Run Text="{Binding CurrentViewModel.Player.Candy}"/>
+            </TextBlock>
+            <TextBlock DockPanel.Dock="Bottom" FontSize="16" VerticalAlignment="Center">
+                <Run Text=" Total Stardust (*): "/>
+                <Run Text="{Binding CurrentViewModel.Player.Stardust}"/>
+            </TextBlock>
+        </DockPanel>
     </Grid>
 </UserControl>

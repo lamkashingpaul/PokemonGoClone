@@ -8,7 +8,8 @@
     "MaxHealth": 450,
     "MaxHealthPerLevel": 50,
     "Accuracy": 0.9,
-    "EvolveId": 2,
+    "EvolveId": 2
+,
     "EvolveCost": 50,
     "PowerUpCostBase": 1000,
     "PowerUpCostPerLevel": 500

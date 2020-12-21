@@ -186,59 +186,48 @@ namespace PokemonGoClone.ViewModels
         }
         private void LoadItems(List<ItemModel> items)
         {
-            int i = 1;
-            while (true)
+            // Load Pokeballs
+            string json;
+            Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("PokemonGoClone.Resources.Items.Pokeballs.pokeballs.json");
+            if (stream != null)
             {
-                string json;
-                Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("PokemonGoClone.Resources.Items.Pokeball." + $"{i:D3}.json");
-                if (stream != null)
+                using (var reader = new StreamReader(stream, Encoding.Default))
                 {
-                    using (var reader = new StreamReader(stream, Encoding.Default))
-                    {
-                        json = reader.ReadToEnd();
-                    }
-
-                    var values = (JObject)JsonConvert.DeserializeObject(json);
-
-                    PokeballModel item = new PokeballModel(values["Name"].Value<string>(),
-                                                           values["Id"].Value<int>(),
-                                                           values["Charge"].Value<int>(),
-                                                           values["CatchProbability"].Value<double>()
-                                                           );
-
-                    items.Add(item);
-                    i += 1;
+                    json = reader.ReadToEnd();
                 }
-                else
+
+                var jArray = JArray.Parse(json);
+
+                foreach (var obj in jArray)
                 {
-                    break;
+                    PokeballModel item = new PokeballModel(obj["Name"].Value<string>(),
+                                                           obj["Id"].Value<int>(),
+                                                           obj["Description"].Value<string>(),
+                                                           obj["Cost"].Value<int>(),
+                                                           obj["CatchProbability"].Value<double>());
+                    items.Add(item);
                 }
             }
-            i = 1;
-            while (true)
+
+            // Load Potions
+            stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("PokemonGoClone.Resources.Items.Potions.potions.json");
+            if (stream != null)
             {
-                string json;
-                Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("PokemonGoClone.Resources.Items.Potion." + $"{i:D3}.json");
-                if (stream != null)
+                using (var reader = new StreamReader(stream, Encoding.Default))
                 {
-                    using (var reader = new StreamReader(stream, Encoding.Default))
-                    {
-                        json = reader.ReadToEnd();
-                    }
-
-                    var values = (JObject)JsonConvert.DeserializeObject(json);
-
-                    PotionModel item = new PotionModel(values["Name"].Value<string>(),
-                                                            values["Id"].Value<int>(),
-                                                            values["Charge"].Value<int>(),
-                                                            values["HealHP"].Value<int>()
-                                                            );
-                    items.Add(item);
-                    i += 1;
+                    json = reader.ReadToEnd();
                 }
-                else
+
+                var jArray = JArray.Parse(json);
+
+                foreach (var obj in jArray)
                 {
-                    break;
+                    PotionModel item = new PotionModel(obj["Name"].Value<string>(),
+                                                       obj["Id"].Value<int>(),
+                                                       obj["Description"].Value<string>(),
+                                                       obj["Cost"].Value<int>(),
+                                                       obj["HealHP"].Value<int>());
+                    items.Add(item);
                 }
             }
         }
@@ -267,7 +256,7 @@ namespace PokemonGoClone.ViewModels
                                                             obj["MaxHealth"].Value<int>(),
                                                             obj["MaxHealthPerLevel"].Value<int>(),
                                                             obj["Accuracy"].Value<double>(),
-                                                            obj["EvolveId"].Value<int>(),
+                                                            obj["EvolveId"].ToObject<int[]>(),
                                                             obj["EvolveCost"].Value<int>(),
                                                             obj["PowerUpCostBase"].Value<int>(),
                                                             obj["PowerUpCostPerLevel"].Value<int>(),

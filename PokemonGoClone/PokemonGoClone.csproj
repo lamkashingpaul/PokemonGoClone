@@ -226,23 +226,11 @@
     <EmbeddedResource Include="Resources\Trainers\003.json" />
     <EmbeddedResource Include="Resources\Pokemons\pokemons.json" />
     <EmbeddedResource Include="Resources\Abilities\abilities.json" />
-    <EmbeddedResource Include="Resources\Items\Pokeball\001.json" />
-    <EmbeddedResource Include="Resources\Items\Pokeball\002.json" />
-    <EmbeddedResource Include="Resources\Items\Pokeball\003.json" />
-    <EmbeddedResource Include="Resources\Items\Potion\001.json" />
-    <EmbeddedResource Include="Resources\Items\Potion\002.json" />
-    <EmbeddedResource Include="Resources\Items\Potion\003.json" />
+    <EmbeddedResource Include="Resources\Items\Pokeballs\pokeballs.json" />
+    <EmbeddedResource Include="Resources\Items\Potions\potions.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Items\Pokeball\001.png" />
-    <Resource Include="Images\Items\Pokeball\002.png" />
-    <Resource Include="Images\Items\Pokeball\003.png" />
-    <Resource Include="Images\Items\Potion\001.png" />
-    <Resource Include="Images\Items\Potion\002.png" />
-    <Resource Include="Images\Items\Potion\003.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Pokemons\001.png" />
@@ -420,5 +408,16 @@
     <Resource Include="Images\Players\001S.png" />
     <Resource Include="Images\Players\001W.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Items\Pokeballs\001001.png" />
+    <Resource Include="Images\Items\Pokeballs\001002.png" />
+    <Resource Include="Images\Items\Pokeballs\001003.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Items\Potions\002001.png" />
+    <Resource Include="Images\Items\Potions\002002.png" />
+    <Resource Include="Images\Items\Potions\002003.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

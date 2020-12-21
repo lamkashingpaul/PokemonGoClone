@@ -1,9 +1,11 @@
 ﻿using PokemonGoClone.Models;
 using PokemonGoClone.Models.Abilities;
+using PokemonGoClone.Models.Items;
 using PokemonGoClone.Models.Pokemons;
 using PokemonGoClone.Models.Trainers;
 using PokemonGoClone.Utilities;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -28,25 +30,32 @@ namespace PokemonGoClone.ViewModels
         private int _id;
         private Random _rng;
 
+        public HashSet<string> BannedItems { get; set; }
         public ObservableCollection<LogModel> BattleLogs { get; set; }
         public ObservableCollection<AbilityModel> PlayerPokemonAbilities { get; set; }
+        public ObservableCollection<ItemModel> PlayerItems { get; set; }
 
 
         private ICommand _useAbilityCommand;
+        private ICommand _useItemCommand;
         private ICommand _afkCommand;
         private ICommand _esacapeCommand;
 
         public ICommand UseAbilityCommand
         {
-            get { return _useAbilityCommand ?? (_useAbilityCommand = new RelayCommand(x => { UseAbility(x); })); }
+            get { return _useAbilityCommand ?? (_useAbilityCommand = new RelayCommand(x => { UseAbility(x); }, x => !DialogViewModel.IsVisible)); }
+        }
+        public ICommand UseItemCommand
+        {
+            get { return _useItemCommand ?? (_useItemCommand = new RelayCommand(x => { UseItem(x); }, x => !DialogViewModel.IsVisible)); }
         }
         public ICommand AFKCommand
         {
-            get { return _afkCommand ?? (_afkCommand = new RelayCommand(x => { AFK(x); })); }
+            get { return _afkCommand ?? (_afkCommand = new RelayCommand(x => { AFK(x); }, x => !DialogViewModel.IsVisible)); }
         }
         public ICommand EsacapeCommand
         {
-            get { return _esacapeCommand ?? (_esacapeCommand = new RelayCommand(x => { Esacape(x); })); }
+            get { return _esacapeCommand ?? (_esacapeCommand = new RelayCommand(x => { Esacape(x); }, x => !DialogViewModel.IsVisible)); }
         }
 
         public BattleViewModel(MainWindowViewModel mainWindowViewModel)
@@ -136,7 +145,7 @@ namespace PokemonGoClone.ViewModels
             }
         }
 
-        public void NewBattle(TrainerModel player, TrainerModel opponent)
+        public void NewBattle(TrainerModel player, TrainerModel opponent, string typeOfBattle)
         {
             Player = player;
             Opponent = opponent;
@@ -147,6 +156,14 @@ namespace PokemonGoClone.ViewModels
             OpponentPokemon.Health = OpponentPokemon.MaxHealth;
 
             PlayerPokemonAbilities = new ObservableCollection<AbilityModel>(PlayerPokemon.Abilities);
+            PlayerItems = new ObservableCollection<ItemModel>(Player.Items);
+
+            // Create BannedItem table
+            BannedItems = new HashSet<string>();
+            if (typeOfBattle.Equals("Gym"))
+            {
+                BannedItems.Add("Pokeball");
+            } else if (typeOfBattle.Equals("")) { }
 
             BattleLogs.Clear();
             DialogViewModel.DefaultDelegates();
@@ -156,12 +173,6 @@ namespace PokemonGoClone.ViewModels
 
         private void UseAbility(object x)
         {
-            // If there is overlay, UseAbility() is not allowed
-            if (DialogViewModel.IsVisible)
-            {
-                return;
-            }
-
             if (x == null)
             {
                 DialogViewModel.PopUp("You must choose an ability to use!");
@@ -247,15 +258,9 @@ namespace PokemonGoClone.ViewModels
 
         private void Esacape(object x)
         {
-            // If there is overlay, Escape() is not allowed
-            if (DialogViewModel.IsVisible)
-            {
-                return;
-            }
-
             double chance = Rng.NextDouble();
 
-            if (chance < 0.5)
+            if (chance <= 0.5)
             {
                 DialogViewModel.PopUp("Successfully Escaped!", EndBattle);
             }

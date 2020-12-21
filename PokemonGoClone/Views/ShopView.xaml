@@ -5,8 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PokemonGoClone.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="480" d:DesignWidth="720">
-    <Grid Background="White">
+             d:DesignHeight="480" d:DesignWidth="720"
+             Background="White"
+             >
+    <Grid>
         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Wellcome to Pokemon Shop!" VerticalAlignment="Top" Height="63" Width="720" TextAlignment="Center" FontSize ="32"/>
         <ItemsControl Focusable="False" ItemsSource="{Binding CurrentViewModel.DefaultItem}" Margin="0,50,0,0">
             <ItemsControl.Template>
@@ -31,10 +33,16 @@
 
         <StackPanel Margin="166,50,0,0">
             <Border BorderBrush="Black" BorderThickness="1">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock FontSize="24" Text=" Total Money: $ " HorizontalAlignment="Left"/>
-                    <TextBlock FontSize="24" Text="{Binding CurrentViewModel.Trainer.Money}" Width="390"/>
-                </StackPanel>
+                <UniformGrid Columns="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontSize="24" Text=" Total Candy ($): " HorizontalAlignment="Left"/>
+                        <TextBlock FontSize="24" Text="{Binding CurrentViewModel.Trainer.Candy}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontSize="24" Text=" Total Stardust (*): " HorizontalAlignment="Left"/>
+                        <TextBlock FontSize="24" Text="{Binding CurrentViewModel.Trainer.Stardust}"/>
+                    </StackPanel>
+                </UniformGrid>
             </Border>
             <Border BorderBrush="Black" BorderThickness="1">
                 <StackPanel>
@@ -43,9 +51,10 @@
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <TextBlock Text="Name: " TextAlignment="Center" FontSize="20"/>
                         <TextBlock Text="{Binding CurrentViewModel.Choose.Name}" TextAlignment="Center" FontSize="20"/>
-                        <TextBlock Text="                      " TextAlignment="Center" FontSize="20"/>
-                        <TextBlock Text="Charge: " TextAlignment="Center" FontSize="20"/>
-                        <TextBlock Text="{Binding CurrentViewModel.Choose.Charge}" TextAlignment="Center" FontSize="20"/>
+                        <TextBlock Text=" | Current Charge: " TextAlignment="Center" FontSize="20"/>
+                        <TextBlock Text="{Binding CurrentViewModel.CurrentChargeofChoose}" TextAlignment="Center" FontSize="20"/>
+                        <TextBlock Text=" | Cost: " TextAlignment="Center" FontSize="20"/>
+                        <TextBlock Text="{Binding CurrentViewModel.Choose.Cost}" TextAlignment="Center" FontSize="20"/>
                     </StackPanel>
 
                     <Button Content="Buy" FontSize="20" Command="{Binding CurrentViewModel.BuyCommand}"/>
@@ -93,13 +102,11 @@
                             </StackPanel>
                         </StackPanel>
                     </Border>
-
                 </StackPanel>
             </Border>
-
         </StackPanel>
-
-
-
     </Grid>
+    
+    
+    
 </UserControl>

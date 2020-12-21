@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PokemonGoClone.Views" xmlns:viewmodels="clr-namespace:PokemonGoClone.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
              mc:Ignorable="d" 
-             d:DesignHeight="480" d:DesignWidth="720"
+             d:DesignHeight="480" d:DesignWidth="640"
+             Background="White"
              FocusVisualStyle="{x:Null}">
     <Grid>
         <StackPanel Canvas.Left="167">

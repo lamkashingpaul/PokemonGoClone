@@ -26,7 +26,7 @@ namespace PokemonGoClone.ViewModels
             }
             else
             {
-                ((BattleViewModel)MainWindowViewModel.BattleViewModel).NewBattle(Player, Target);
+                ((BattleViewModel)MainWindowViewModel.BattleViewModel).NewBattle(Player, Target, "");
                 DialogViewModel.IsVisible = false;
                 MainWindowViewModel.GoToBattleViewModel(null);
             }
@@ -139,26 +139,18 @@ namespace PokemonGoClone.ViewModels
             for (int i = 0; i < MainWindowViewModel.Pokemons.Count; i++)
             {
                 Player.AddPokemon((PokemonModel)MainWindowViewModel.Pokemons[i].Clone());
-                Player.AddPokemon((PokemonModel)MainWindowViewModel.Pokemons[i].Clone());
             }
 
             // Add Items to player
-            for (int i = 0; i < MainWindowViewModel.Items.Count; i++)
-            {
-                Player.AddItem((ItemModel)MainWindowViewModel.Items[i].Clone());
-            }
-            for (int i = 0; i < MainWindowViewModel.Items.Count; i++)
+            for (int i = 1; i < MainWindowViewModel.Items.Count; i++)
             {
                 Player.AddItem((ItemModel)MainWindowViewModel.Items[i].Clone());
             }
 
-
-
-            // Update the Bag View
+            // Update the Bag, Item and Shop ViewModel
             ((BagViewModel)MainWindowViewModel.BagViewModel).UpdatePlayer(Player);
             ((ItemViewModel)MainWindowViewModel.ItemViewModel).UpdatePlayer(Player);
-            ((ShopViewModel)MainWindowViewModel.ShopViewModel).Update(Player, MainWindowViewModel.Items);
-
+            ((ShopViewModel)MainWindowViewModel.ShopViewModel).UpdatePlayer(Player);
 
             // Add more NPC trainers
             LoadOtherTrainers();
@@ -177,8 +169,11 @@ namespace PokemonGoClone.ViewModels
             LoadMap();
             Trainers = trainers;
             Player = Trainers[0];
-            // Update the Bag View
+            // Update the Bag, Item and Shop ViewModel
             ((BagViewModel)MainWindowViewModel.BagViewModel).UpdatePlayer(Player);
+            ((PokemonStatusViewModel)MainWindowViewModel.PokemonStatusViewModel).Update(Player);
+            ((ItemViewModel)MainWindowViewModel.ItemViewModel).UpdatePlayer(Player);
+            ((ShopViewModel)MainWindowViewModel.ShopViewModel).UpdatePlayer(Player);
             // Create backlink to MainWindow
             MainWindowViewModel.Trainers = Trainers;
             MainWindowViewModel.Player = Player;
@@ -186,8 +181,6 @@ namespace PokemonGoClone.ViewModels
             MainWindowViewModel.GoToMapViewModel(null);
             DialogViewModel.PopUp("Loaded Successfully");
         }
-
-        // 
         private void LoadMap()
         {
             // Draw the boundary of map

@@ -12,11 +12,12 @@ namespace PokemonGoClone.ViewModels
         private MainWindowViewModel _mainWindowViewModel;
         private DialogViewModel _dialogViewModel;
         private List<PokemonModel> _pokemons;
+        private TrainerModel _player;
         private ICommand _selectedPokemonCommand;
 
         public ICommand SelectedPokemonCommand
         {
-            get { return _selectedPokemonCommand ?? (_selectedPokemonCommand = new RelayCommand(x => { SelectedPokemon(x); })); }
+            get { return _selectedPokemonCommand ?? (_selectedPokemonCommand = new RelayCommand(x => { SelectedPokemon(x); }, x => !DialogViewModel.IsVisible)); }
         }
 
         //constructor of BagViewModel
@@ -55,7 +56,15 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(Pokemons));
             }
         }
-
+        public TrainerModel Player
+        {
+            get { return _player; }
+            set
+            {
+                _player = value;
+                OnPropertyChanged(nameof(Player));
+            }
+        }
 
         //method of BagViewModel
         public void SelectedPokemon(object sender)
@@ -66,9 +75,10 @@ namespace PokemonGoClone.ViewModels
             MainWindowViewModel.GotoPokemonStatusViewModel(null);
         }
 
-        public void UpdatePlayer(TrainerModel trainer)
+        public void UpdatePlayer(TrainerModel player)
         {
-            Pokemons = trainer.Pokemons;
+            Player = player;
+            Pokemons = player.Pokemons;
         }
     }
 }

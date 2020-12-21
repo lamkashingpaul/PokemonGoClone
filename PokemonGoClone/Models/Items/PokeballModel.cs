@@ -1,24 +1,26 @@
 ﻿using PokemonGoClone.Models.Pokemons;
 using PokemonGoClone.Models.Trainers;
+using System;
 
 namespace PokemonGoClone.Models.Items
 {
+    [Serializable]
     public class PokeballModel : ItemModel
     {
         //field of Pokemonball
         private double _catchProbability;
-        private string _itemType;
 
         //derived class constructor
-        public PokeballModel(string name, int id, int charge, double catchProbability) : base(name, id, charge)
+        public PokeballModel(string name, int id, string description, int cost, double catchProbability) : base(name, id, cost)
         {
+            Description = description;
             CatchProbability = catchProbability;
             ItemType = "Pokeball";
-            ImageSource = $"/PokemonGoClone;component/Images/Items/Pokeball/{Id:D3}.png";
+            ImageSource = $"/PokemonGoClone;component/Images/Items/Pokeballs/{Id:D6}.png";
         }
-        public override void Use(TrainerModel trainer, PokemonModel target)
+        public override string Use(TrainerModel trainer, PokemonModel target)
         {
-            return;
+            return "";
         }
 
         //Properties of PokeballModel
@@ -28,17 +30,8 @@ namespace PokemonGoClone.Models.Items
             set
             {
                 _catchProbability = value;
+                OnPropertyChanged(nameof(CatchProbability));
             }
         }
-
-        public string ItemType
-        {
-            get { return _itemType; }
-            private set
-            {
-                _itemType = value;
-            }
-        }
-
     }
 }

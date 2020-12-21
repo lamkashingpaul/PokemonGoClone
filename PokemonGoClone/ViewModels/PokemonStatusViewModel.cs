@@ -1,4 +1,5 @@
 ﻿using PokemonGoClone.Models.Pokemons;
+using PokemonGoClone.Models.Trainers;
 using PokemonGoClone.Utilities;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -13,6 +14,7 @@ namespace PokemonGoClone.ViewModels
         private MainWindowViewModel _mainWindowViewModel;
         private DialogViewModel _dialogViewModel;
         private PokemonModel _pokemon;
+        private TrainerModel _player;
         private string _originalName;
         private string _defaultName;
         private int _index;
@@ -25,15 +27,15 @@ namespace PokemonGoClone.ViewModels
         private ICommand _dropPokemonCommand;
         public ICommand ChangeNameCommand
         {
-            get { return _changeNameCommand ?? (_changeNameCommand = new RelayCommand(x => { ChangeName(x); })); }
+            get { return _changeNameCommand ?? (_changeNameCommand = new RelayCommand(x => { ChangeName(x); }, x => !DialogViewModel.IsVisible)); }
         }
         public ICommand BecomeFirstPokemonCommand
         {
-            get { return _becomeFirstPokemonCommand ?? (_becomeFirstPokemonCommand = new RelayCommand(x => { BecomeFirstPokemon(); })); }
+            get { return _becomeFirstPokemonCommand ?? (_becomeFirstPokemonCommand = new RelayCommand(x => { BecomeFirstPokemon(); }, x => !DialogViewModel.IsVisible)); }
         }
         public ICommand DropPokemonCommand
         {
-            get { return _dropPokemonCommand ?? (_dropPokemonCommand = new RelayCommand(x => { DropPokemon(); })); }
+            get { return _dropPokemonCommand ?? (_dropPokemonCommand = new RelayCommand(x => { DropPokemon(); }, x => !DialogViewModel.IsVisible)); }
         }
         /*
         public bool IsEnabled {
@@ -105,6 +107,15 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(Pokemon));
             }
         }
+        public TrainerModel Player
+        {
+            get { return _player; }
+            set
+            {
+                _player = value;
+                OnPropertyChanged(nameof(Player));
+            }
+        }
         public int Index
         {
             get { return _index; }
@@ -136,6 +147,11 @@ namespace PokemonGoClone.ViewModels
                 MainWindowViewModel.Player.Pokemons[Index - i] = MainWindowViewModel.Player.Pokemons[Index - i - 1];
             }
             MainWindowViewModel.Player.Pokemons[0] = tmp;
+            DialogViewModel.PopUp($"{tmp.Name} is now your leading pokemon now.");
+        }
+        public void Update(TrainerModel player)
+        {
+            Player = player;
         }
         public void UpdateView(PokemonModel pokemon, int index)
         {
@@ -143,7 +159,6 @@ namespace PokemonGoClone.ViewModels
             OriginalName = Pokemon.Name;
             DefaultName = Pokemon.Name;
             Index = index;
-            //OnPropertyChanged(nameof(EvolveButtonIsEnabled));
         }
         public void DropPokemon()
         {

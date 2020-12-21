@@ -12,6 +12,7 @@ namespace PokemonGoClone.ViewModels
     {
         //field of ShopViewModel
         private MainWindowViewModel _mainWindowViewModel;
+        private DialogViewModel _dialogViewModel;
         private List<ItemModel> _defaultItem;
         private TrainerModel _trainer;
         private ItemModel _choose;
@@ -37,6 +38,7 @@ namespace PokemonGoClone.ViewModels
         public ShopViewModel(MainWindowViewModel mainWindowViewModel)
         {
             MainWindowViewModel = mainWindowViewModel;
+            DialogViewModel = (DialogViewModel)MainWindowViewModel.DialogViewModel;
         }
 
         //properties of ShopViewModel
@@ -47,6 +49,15 @@ namespace PokemonGoClone.ViewModels
             {
                 _mainWindowViewModel = value;
                 OnPropertyChanged(nameof(MainWindowViewModel));
+            }
+        }
+        public DialogViewModel DialogViewModel
+        {
+            get { return _dialogViewModel; }
+            set
+            {
+                _dialogViewModel = value;
+                OnPropertyChanged(nameof(DialogViewModel));
             }
         }
 
@@ -78,6 +89,10 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(Choose));
             }
         }
+        public int CurrentChargeofChoose
+        {
+            get { return Trainer.Items.Find(x => x.Id == Choose.Id)?.Charge ?? 0; }
+        }
 
         public PokemonModel Random
         {
@@ -90,9 +105,9 @@ namespace PokemonGoClone.ViewModels
         }
 
         //Method of ShopViewModel
-        public void Update(TrainerModel trainer, List<ItemModel> defaultItem)
+        public void UpdatePlayer(TrainerModel trainer)
         {
-            DefaultItem = defaultItem;
+            DefaultItem = MainWindowViewModel.Items;
             Trainer = trainer;
             Choose = MainWindowViewModel.Items[0];
         }
@@ -100,17 +115,19 @@ namespace PokemonGoClone.ViewModels
         public void SelectedItem(object item)
         {
             Choose = item as ItemModel;
+            OnPropertyChanged(nameof(CurrentChargeofChoose));
         }
 
         public void Buy()
         {
-            Trainer.Money -= Choose.Charge;
+            Trainer.Candy -= Choose.Cost;
             Trainer.AddItem(Choose);
+            OnPropertyChanged(nameof(CurrentChargeofChoose));
         }
 
         public void RandomPokemon()
         {
-            Trainer.Money -= 500;
+            Trainer.Candy -= 500;
             PokemonModel pokemon = RandomPokemonMethod();
             Random = pokemon;
             Trainer.AddPokemon(pokemon);
@@ -123,7 +140,8 @@ namespace PokemonGoClone.ViewModels
             int x = rnd.Next(0, MainWindowViewModel.Pokemons.Count);
             PokemonModel pokemon = MainWindowViewModel.Pokemons[x];
             int originalHealth = pokemon.MaxHealth;
-            pokemon.MaxHealth = rnd.Next(originalHealth - 200, originalHealth + 101);
+            pokemon.MaxHealth = pokemon.Health = rnd.Next(originalHealth - 200, originalHealth + 101);
+
             if (pokemon.MaxHealth <= originalHealth)
             {
                 pokemon.Description = "It is Normal (N) Pokemon!";
