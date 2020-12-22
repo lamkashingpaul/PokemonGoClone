@@ -43,6 +43,7 @@ namespace PokemonGoClone.ViewModels
         private object _mapView;
         private object _shopView;
         private object _bagView;
+        private object _gymView;
         private object _pokemonStatusView;
         private object _itemView;
         private object _itemStatusView;
@@ -58,6 +59,7 @@ namespace PokemonGoClone.ViewModels
         private object _mapViewModel;
         private object _shopViewModel;
         private object _bagViewModel;
+        private object _gymViewModel;
         private object _pokemonStatusViewModel;
         private object _itemViewModel;
         private object _itemStatusViewModel;
@@ -71,6 +73,7 @@ namespace PokemonGoClone.ViewModels
         private ICommand _goToTrainerCreationViewModelCommand;
         private ICommand _goToMapViewModelCommand;
         private ICommand _goToBagViewModelCommand;
+        private ICommand _goToGymViewModelCommand;
         private ICommand _goToItemViewModelCommand;
         private ICommand _goToBattleViewModelCommand;
         private ICommand _goToSaveViewModelCommand;
@@ -101,6 +104,9 @@ namespace PokemonGoClone.ViewModels
         {
             get { return _goToBagViewModelCommand ?? (_goToBagViewModelCommand = new RelayCommand(x => { GoToBagViewModel(x); })); }
         }
+        public ICommand GoToGymViewModelCommand {
+            get { return _goToGymViewModelCommand ?? (_goToGymViewModelCommand = new RelayCommand(x => { GoToGymViewModel(x); })); }
+        }
         public ICommand GoToItemViewModelCommand
         {
             get { return _goToItemViewModelCommand ?? (_goToItemViewModelCommand = new RelayCommand(x => { GoToItemViewModel(x); })); }
@@ -130,6 +136,7 @@ namespace PokemonGoClone.ViewModels
             MapView = new MapView();
             BattleView = new BattleView();
             BagView = new BagView();
+            GymView = new GymView();
             PokemonStatusView = new PokemonStatusView();
             ItemView = new ItemView();
             ItemStatusView = new ItemStatusView();
@@ -143,6 +150,7 @@ namespace PokemonGoClone.ViewModels
             MapViewModel = new MapViewModel(this);
             BattleViewModel = new BattleViewModel(this);
             BagViewModel = new BagViewModel(this);
+            GymViewModel = new GymViewModel(this);
             PokemonStatusViewModel = new PokemonStatusViewModel(this);
             ItemViewModel = new ItemViewModel(this);
             ItemStatusViewModel = new ItemStatusViewModel(this);
@@ -357,6 +365,20 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(BagViewModel));
             }
         }
+        public object GymView {
+            get { return _gymView; }
+            set {
+                _gymView = value;
+                OnPropertyChanged(nameof(GymView));
+            }
+        }
+        public object GymViewModel {
+            get { return _gymViewModel; }
+            set {
+                _gymViewModel = value;
+                OnPropertyChanged(nameof(GymViewModel));
+            }
+        }
         public object PokemonStatusView
         {
             get { return _pokemonStatusView; }
@@ -524,10 +546,9 @@ namespace PokemonGoClone.ViewModels
             CurrentViewModel = BagViewModel;
             CurrentView = BagView;
         }
-        public void GotoPokemonStatusViewModel(object x)
-        {
-            CurrentViewModel = PokemonStatusViewModel;
-            CurrentView = PokemonStatusView;
+        public void GoToGymViewModel(object x) {
+            CurrentViewModel = GymViewModel;
+            CurrentView = GymView;
         }
         public void GoToShopViewModel(object x)
         {

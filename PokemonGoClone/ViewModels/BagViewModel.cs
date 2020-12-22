@@ -72,7 +72,7 @@ namespace PokemonGoClone.ViewModels
             var pokemon = sender as PokemonModel;
             int index = MainWindowViewModel.Player.Pokemons.IndexOf(pokemon);
             ((PokemonStatusViewModel)MainWindowViewModel.PokemonStatusViewModel).UpdateView(pokemon, index);
-            MainWindowViewModel.GotoPokemonStatusViewModel(null);
+            MainWindowViewModel.GoToPokemonStatusViewModel(null);
         }
 
         public void UpdatePlayer(TrainerModel player)

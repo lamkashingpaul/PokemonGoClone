@@ -57,7 +57,6 @@ namespace PokemonGoClone.ViewModels
         {
             MainWindowViewModel = mainWindowViewModel;
             DialogViewModel = (DialogViewModel)MainWindowViewModel.DialogViewModel;
-            //EvolveButtonIsEnabled = false;
         }
 
         //Properties of PokemonStatusViewModel

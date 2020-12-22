@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PokemonGoClone.Views" xmlns:viewmodels="clr-namespace:PokemonGoClone.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
              mc:Ignorable="d" 
-             d:DesignHeight="480" d:DesignWidth="720"
+             d:DesignHeight="576" d:DesignWidth="720"
              Background="White"
              FocusVisualStyle="{x:Null}">
     <Grid>
@@ -54,7 +54,7 @@
                 <TextBlock Text="{Binding CurrentViewModel.EvolveCost}" FontSize="24"/>
             </StackPanel>
         </StackPanel>
-        <Canvas Height="100" Margin="0,380,0,0">
+        <Canvas Height="100" VerticalAlignment="Bottom">
             <TextBox x:Name="ChangingName" Height="50" TextWrapping="Wrap" Text="{Binding CurrentViewModel.DefaultName}" Width="180" FontSize="24" TextAlignment="Center"/>
             <Button Content="Change Name" Width="180" Height="50" FontSize="24" Canvas.Top="50" Command="{Binding CurrentViewModel.ChangeNameCommand}" CommandParameter="{Binding ElementName=ChangingName}"/>
             <Button Content="Power Up" Width="180" Height="50" FontSize="24" Canvas.Left="360" Command="{Binding CurrentViewModel.PowerUpCommand}"/>

@@ -151,9 +151,11 @@ namespace PokemonGoClone.ViewModels
             ((BagViewModel)MainWindowViewModel.BagViewModel).UpdatePlayer(Player);
             ((ItemViewModel)MainWindowViewModel.ItemViewModel).UpdatePlayer(Player);
             ((ShopViewModel)MainWindowViewModel.ShopViewModel).UpdatePlayer(Player);
+            ((GymViewModel)MainWindowViewModel.GymViewModel).UpdatePlayer(Player);
 
             // Add more NPC trainers
             LoadOtherTrainers();
+            LoadGym(); 
 
             // Create backlink to MainWindow
             MainWindowViewModel.Trainers = Trainers;
@@ -174,6 +176,8 @@ namespace PokemonGoClone.ViewModels
             ((PokemonStatusViewModel)MainWindowViewModel.PokemonStatusViewModel).Update(Player);
             ((ItemViewModel)MainWindowViewModel.ItemViewModel).UpdatePlayer(Player);
             ((ShopViewModel)MainWindowViewModel.ShopViewModel).UpdatePlayer(Player);
+            ((GymViewModel)MainWindowViewModel.GymViewModel).UpdatePlayer(Player);
+
             // Create backlink to MainWindow
             MainWindowViewModel.Trainers = Trainers;
             MainWindowViewModel.Player = Player;
@@ -262,6 +266,21 @@ namespace PokemonGoClone.ViewModels
                 }
             }
 
+        }
+
+        private void LoadGym() {
+            var rnd = new Random();
+            int randomX, randomY;
+            do {
+                randomX = rnd.Next(1, ROW - 1);
+                randomY = rnd.Next(1, ROW - 1);
+            } while (Trainers.Find(x => x.XCoordinate == randomX && x.YCoordinate == randomY) != null);
+            TrainerModel gym = new TrainerModel("Gym", "Gym", 999) {
+                XCoordinate = randomX,
+                YCoordinate = randomY,
+            };
+
+            Trainers.Add(gym);
         }
 
         // All RelayCommands of MapViewModel
