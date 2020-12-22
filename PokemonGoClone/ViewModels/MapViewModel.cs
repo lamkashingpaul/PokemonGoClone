@@ -7,9 +7,12 @@ using PokemonGoClone.Models.Trainers;
 using PokemonGoClone.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace PokemonGoClone.ViewModels
@@ -46,8 +49,9 @@ namespace PokemonGoClone.ViewModels
 
         public TrainerModel Player;
         public TrainerModel Target;
-        public List<TrainerModel> Trainers { get; private set; }
-        public List<TileModel> Map { get; private set; }
+        public ObservableCollection<TrainerModel> Trainers { get; private set; }
+        public ObservableCollection<TileModel> Map { get; private set; }
+        public CompositeCollection Grid { get; private set; }
 
         // All ICommands of MapViewModel
         private ICommand _moveCommand;
@@ -121,7 +125,7 @@ namespace PokemonGoClone.ViewModels
             // Create player
             // Note that the player is always the Trainers[0]
 
-            Trainers = new List<TrainerModel>
+            Trainers = new ObservableCollection<TrainerModel>
             {
                 new TrainerModel(name, "Player", 1)
                 {
@@ -155,6 +159,13 @@ namespace PokemonGoClone.ViewModels
             // Add more NPC trainers
             LoadOtherTrainers();
 
+            // Create CompositeCollection from view binding
+            Grid = new CompositeCollection
+            {
+                new CollectionContainer() { Collection = Map },
+                new CollectionContainer() { Collection = Trainers }
+            };
+
             // Create backlink to MainWindow
             MainWindowViewModel.Trainers = Trainers;
             MainWindowViewModel.Player = Player;
@@ -164,7 +175,7 @@ namespace PokemonGoClone.ViewModels
         }
 
         // Game initialization for loading from save
-        public void GameLoad(List<TrainerModel> trainers)
+        public void GameLoad(ObservableCollection<TrainerModel> trainers)
         {
             LoadMap();
             Trainers = trainers;
@@ -184,7 +195,7 @@ namespace PokemonGoClone.ViewModels
         private void LoadMap()
         {
             // Draw the boundary of map
-            Map = new List<TileModel>
+            Map = new ObservableCollection<TileModel>
             {
                 new TileModel('B', "Tile", 5, 0, 0),
                 new TileModel('B', "Tile", 7, 0, COL - 1),
@@ -241,7 +252,7 @@ namespace PokemonGoClone.ViewModels
                     {
                         randomX = rng.Next(1, ROW - 1);
                         randomY = rng.Next(1, ROW - 1);
-                    } while (Trainers.Find(x => x.XCoordinate == randomX && x.YCoordinate == randomY) != null);
+                    } while (Trainers.Where(x => x.XCoordinate == randomX && x.YCoordinate == randomY).FirstOrDefault() != null);
 
                     TrainerModel trainer = new TrainerModel(values["Name"].Value<string>(), "NPC", i)
                     {
@@ -251,7 +262,7 @@ namespace PokemonGoClone.ViewModels
                     };
 
                     int randomPokemon = rng.Next(MainWindowViewModel.Pokemons.Count) + 1;
-                    trainer.AddPokemon((PokemonModel)(MainWindowViewModel.Pokemons.Find(x => x.Id == randomPokemon).Clone()));
+                    trainer.AddPokemon((PokemonModel)MainWindowViewModel.Pokemons.Find(x => x.Id == randomPokemon).Clone());
                     Trainers.Add(trainer);
 
                     i += 1;
@@ -272,8 +283,8 @@ namespace PokemonGoClone.ViewModels
             Player.Facing = direction;
 
             // Find if there is any object in front
-            var frontTile = Map.Find(x => x.XCoordinate == Player.XFacing && x.YCoordinate == Player.YFacing);
-            var frontBeing = Trainers.Find(x => x.XCoordinate == Player.XFacing && x.YCoordinate == Player.YFacing);
+            var frontTile = Map.Where(x => x.XCoordinate == Player.XFacing && x.YCoordinate == Player.YFacing).FirstOrDefault();
+            var frontBeing = Trainers.Where(x => x.XCoordinate == Player.XFacing && x.YCoordinate == Player.YFacing).FirstOrDefault();
 
             if (frontTile.Texture == 'G' && frontBeing == null)
             {
@@ -307,7 +318,7 @@ namespace PokemonGoClone.ViewModels
             }
             else
             {
-                Target = Trainers.Find(x => x.XCoordinate == Player.XFacing && x.YCoordinate == Player.YFacing);
+                Target = Trainers.Where(x => x.XCoordinate == Player.XFacing && x.YCoordinate == Player.YFacing).First();
                 if (Target == null)
                 {
                     return;

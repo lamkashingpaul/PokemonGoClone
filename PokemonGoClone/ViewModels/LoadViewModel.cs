@@ -65,7 +65,7 @@ namespace PokemonGoClone.ViewModels
                 return;
             }
 
-            var trainers = Serializator.Deserialize<List<TrainerModel>>(save);
+            var trainers = Serializator.Deserialize<ObservableCollection<TrainerModel>>(save);
             if (trainers == null)
             {
                 DialogViewModel.PopUp("Loading failed. Please choose another save.");

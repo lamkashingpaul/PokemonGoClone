@@ -20,7 +20,17 @@ namespace PokemonGoClone.Models.Items
         }
         public override string Use(TrainerModel trainer, PokemonModel target)
         {
-            return "";
+            Charge -= 1;
+            double chance = Rng.NextDouble();
+            double successChance = 1 - (target.Health / (double)target.MaxHealth) + CatchProbability;
+            if (chance <= successChance)
+            {
+                trainer.AddPokemon(target);
+                return $"You caught {target.Name}.";
+            } else
+            {
+                return "";
+            }
         }
 
         //Properties of PokeballModel

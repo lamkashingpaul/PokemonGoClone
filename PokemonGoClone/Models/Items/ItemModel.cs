@@ -16,6 +16,7 @@ namespace PokemonGoClone.Models.Items
         private int _charge;
         private int _cost;
         private string _imageSource;
+        private Random _rng;
 
         public ItemModel(string name, int id, int cost)
         {
@@ -23,6 +24,7 @@ namespace PokemonGoClone.Models.Items
             Id = id;
             Cost = cost;
             Charge = 1;
+            Rng = new Random();
         }
 
         // All methods of Item class
@@ -91,6 +93,15 @@ namespace PokemonGoClone.Models.Items
             {
                 _imageSource = value;
                 OnPropertyChanged(nameof(ImageSource));
+            }
+        }
+        public Random Rng
+        {
+            get { return _rng; }
+            set
+            {
+                _rng = value;
+                OnPropertyChanged(nameof(Rng));
             }
         }
         public object Clone()

@@ -31,10 +31,10 @@ namespace PokemonGoClone.ViewModels
         public TrainerModel Player;
         // All trainers inside the game, Trainers[0] is assigned to variable Player
         // Trainers is linked with Trainers inside MapViewModel;
-        public List<TrainerModel> Trainers;
+        public ObservableCollection<TrainerModel> Trainers;
 
         // Map of the game, it is linked with Map inside MapViewModel
-        public List<TileModel> Map;
+        public ObservableCollection<TileModel> Map;
 
         // All available views
         private object _dialogView;

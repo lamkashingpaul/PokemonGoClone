@@ -18,9 +18,11 @@ namespace PokemonGoClone.Models.Items
         }
         public override string Use(TrainerModel trainer, PokemonModel target)
         {
-            target.Health = target.MaxHealth;
             Charge -= 1;
-            return "";
+            var TrainerPokemon = trainer.Pokemons[0];
+            int originalHealth = TrainerPokemon.Health;
+            TrainerPokemon.Health = Math.Min(TrainerPokemon.MaxHealth, TrainerPokemon.Health + HealHP);
+            return $"You healed your {TrainerPokemon.Name} by {TrainerPokemon.Health - originalHealth} HP.";
         }
 
         //Properties of PokeballModel
