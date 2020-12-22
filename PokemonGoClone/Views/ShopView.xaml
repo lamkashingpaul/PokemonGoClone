@@ -59,7 +59,7 @@
 
                     <Button Content="Buy" FontSize="20" Command="{Binding CurrentViewModel.BuyCommand}"/>
                     <Button Content="Exit" FontSize="20" Command="{Binding CurrentViewModel.MainWindowViewModel.GoToMapViewModelCommand}"/>
-                    <TextBlock FontSize="20"/>
+                    <Button Content="Stardust (500 Candy/each)" FontSize="20" Command="{Binding CurrentViewModel.BuyStardustCommand}"/>
                     <Button Content="Random Pokemon $500 per time" FontSize="20" Command="{Binding CurrentViewModel.RandomCommand}"/>
 
                     <Border BorderBrush="Black" BorderThickness="1">

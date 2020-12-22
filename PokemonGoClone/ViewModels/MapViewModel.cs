@@ -138,7 +138,7 @@ namespace PokemonGoClone.ViewModels
             Trainers[0].AddPokemon((PokemonModel)(MainWindowViewModel.Pokemons.Find(x => x.Id == choice).Clone()));
             for (int i = 0; i < MainWindowViewModel.Pokemons.Count; i++)
             {
-                Player.AddPokemon((PokemonModel)MainWindowViewModel.Pokemons[i].Clone());
+                Player.AddPokemon((PokemonModel)MainWindowViewModel.Pokemons[133-1].Clone());
             }
 
             // Add Items to player

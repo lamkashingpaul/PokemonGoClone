@@ -19,19 +19,22 @@ namespace PokemonGoClone.ViewModels
         public PokemonModel _random;
         private ICommand _selectedItemCommand;
         private ICommand _buyCommand;
+        private ICommand _buyStardustCommand;
         private ICommand _randomCommand;
         public ICommand SelectedItemCommand
         {
-            get { return _selectedItemCommand ?? (_selectedItemCommand = new RelayCommand(x => { SelectedItem(x); })); }
+            get { return _selectedItemCommand ?? (_selectedItemCommand = new RelayCommand(x => { SelectedItem(x); }, x => !DialogViewModel.IsVisible)); }
         }
         public ICommand BuyCommand
         {
-            get { return _buyCommand ?? (_buyCommand = new RelayCommand(x => { Buy(); })); }
+            get { return _buyCommand ?? (_buyCommand = new RelayCommand(x => { Buy(); }, x => !DialogViewModel.IsVisible)); }
         }
-
+        public ICommand BuyStardustCommand {
+            get { return _buyStardustCommand ?? (_buyStardustCommand = new RelayCommand(x => { BuyStardust(); }, x => !DialogViewModel.IsVisible)); }
+        }
         public ICommand RandomCommand
         {
-            get { return _randomCommand ?? (_randomCommand = new RelayCommand(x => { RandomPokemon(); })); }
+            get { return _randomCommand ?? (_randomCommand = new RelayCommand(x => { RandomPokemon(); }, x => !DialogViewModel.IsVisible)); }
         }
 
         //constructor
@@ -130,10 +133,17 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(CurrentChargeofChoose));
             }
         }
+        public void BuyStardust() {
+            if (Trainer.Candy < 5000) {
+                DialogViewModel.PopUp("You don't have enough Candy.");
+            } else {
+                Trainer.Candy -= 5000;
+                Trainer.Stardust++;
+            }
+        }
 
         public void RandomPokemon()
         {
-            // Trainer.Money = 500;
             if (Trainer.Candy < 500) {
                 DialogViewModel.PopUp("You don't have enough Candy.");
             } else {
