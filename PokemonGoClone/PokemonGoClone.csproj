@@ -96,6 +96,7 @@
     <Compile Include="ViewModels\BagViewModel.cs" />
     <Compile Include="ViewModels\BattleViewModel.cs" />
     <Compile Include="ViewModels\DialogViewModel.cs" />
+    <Compile Include="ViewModels\GymViewModel.cs" />
     <Compile Include="ViewModels\ItemStatusViewModel.cs" />
     <Compile Include="ViewModels\ItemViewModel.cs" />
     <Compile Include="ViewModels\LoadViewModel.cs" />
@@ -425,6 +426,8 @@
     <Resource Include="Images\Items\Potions\002002.png" />
     <Resource Include="Images\Items\Potions\002003.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\Gym\999.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
