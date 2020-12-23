@@ -10,7 +10,7 @@
              Background="White"
              FocusVisualStyle="{x:Null}">
 
-    <Grid DataContext="{Binding CurrentViewModel}">
+    <Grid DataContext="{Binding CurrentViewModel}" Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="128"/>
@@ -18,36 +18,40 @@
 
         <Grid Grid.Column="3" Grid.Row="0">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="128"/>
                 <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="128"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel DataContext="{Binding PlayerPokemon}" Grid.Column="0" VerticalAlignment="Center">
-                <Image Source="{Binding ImageSource}"
+            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                <TextBlock Text="{Binding PlayerPokemon.Name}"/>
+                <Image Source="{Binding PlayerPokemon.ImageSource}"
                    Height="64"
                    Width="64"
                    />
-                <TextBlock HorizontalAlignment="Center">
-                    <TextBlock.Text>
-                        <MultiBinding StringFormat="{}{0} / {1}">
-                            <Binding Path="Health"/>
-                            <Binding Path="MaxHealth"/>
-                        </MultiBinding>
-                    </TextBlock.Text>
+                <TextBlock HorizontalAlignment="Center" FontSize="16">
+                    <Run Text="HP: "/>
+                    <Run Text="{Binding PlayerPokemon.Health}"/>
+                    <Run Text=" / "/>
+                    <Run Text="{Binding PlayerPokemon.MaxHealth}"/>
                 </TextBlock>
+                <TextBlock HorizontalAlignment="Center" FontSize="16" Text="Turn Until Move :"/>
+                <TextBlock HorizontalAlignment="Center" FontSize="16" Text="{Binding Player.TurnsUntilAction}"/>
             </StackPanel>
 
-            <ulti:ScrollingListBox Grid.Column="1" ItemsSource="{Binding BattleLogs}">
+            <ulti:ScrollingListBox Grid.Column="1"
+                                   ItemsSource="{Binding BattleLogs}"
+                                   ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Log}"/>
+                        <TextBlock Text="{Binding Log}" TextWrapping="Wrap"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ulti:ScrollingListBox>
 
-            <StackPanel DataContext="{Binding OpponentPokemon}" Grid.Column="2" VerticalAlignment="Center">
-                <Image Source="{Binding ImageSource}"
+            <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                <TextBlock Text="{Binding OpponentPokemon.Name}"/>
+                <Image Source="{Binding OpponentPokemon.ImageSource}"
                        Height="64"
                        Width="64"
                        RenderTransformOrigin="0.5,0.5">
@@ -55,14 +59,14 @@
                         <ScaleTransform ScaleX="-1"/>
                     </Image.RenderTransform>
                 </Image>
-                <TextBlock HorizontalAlignment="Center">
-                    <TextBlock.Text>
-                        <MultiBinding StringFormat="{}{0} / {1}">
-                            <Binding Path="Health"/>
-                            <Binding Path="MaxHealth"/>
-                        </MultiBinding>
-                    </TextBlock.Text>
+                <TextBlock HorizontalAlignment="Center" FontSize="16">
+                    <Run Text="HP: "/>
+                    <Run Text="{Binding OpponentPokemon.Health}"/>
+                    <Run Text=" / "/>
+                    <Run Text="{Binding OpponentPokemon.MaxHealth}"/>
                 </TextBlock>
+                <TextBlock HorizontalAlignment="Center" FontSize="16" Text="Turn Until Move :"/>
+                <TextBlock HorizontalAlignment="Center" FontSize="16" Text="{Binding Opponent.TurnsUntilAction}"/>
             </StackPanel>
         </Grid>
 
@@ -92,8 +96,26 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </DockPanel>
-                <StackPanel Grid.Column="1">
-                </StackPanel>
+
+                <DockPanel Grid.Column="1" LastChildFill="True">
+                    <Button DockPanel.Dock="Right" Content="Use Item" Command="{Binding UseItemCommand}" CommandParameter="{Binding ElementName=PlayerItems, Path=SelectedItem}"/>
+                    <ListBox DockPanel.Dock="Right" x:Name="PlayerItems" ItemsSource="{Binding PlayerItems}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Height="32" Width="32" Source="{Binding ImageSource}"/>
+                                    <TextBlock VerticalAlignment="Center">
+                                    <Run Text="("/>
+                                    <Run Text="{Binding Charge}"/>
+                                    <Run Text=") "/>
+                                    <Run Text="{Binding Name}"/>
+                                    </TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+
                 <Button Grid.Column="2" Content="AFK" Command="{Binding AFKCommand}"/>
                 <Button Grid.Column="3" Content="Escape" Command="{Binding EsacapeCommand}"/>
             </Grid>

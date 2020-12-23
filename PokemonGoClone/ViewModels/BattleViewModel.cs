@@ -7,6 +7,7 @@ using PokemonGoClone.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace PokemonGoClone.ViewModels
@@ -43,11 +44,11 @@ namespace PokemonGoClone.ViewModels
 
         public ICommand UseAbilityCommand
         {
-            get { return _useAbilityCommand ?? (_useAbilityCommand = new RelayCommand(x => { UseAbility(x); }, x => !DialogViewModel.IsVisible)); }
+            get { return _useAbilityCommand ?? (_useAbilityCommand = new RelayCommand(x => { UseAbility(x); }, x => !DialogViewModel.IsVisible && Player.TurnsUntilAction == 0)); }
         }
         public ICommand UseItemCommand
         {
-            get { return _useItemCommand ?? (_useItemCommand = new RelayCommand(x => { UseItem(x); }, x => !DialogViewModel.IsVisible)); }
+            get { return _useItemCommand ?? (_useItemCommand = new RelayCommand(x => { UseItem(x); }, x => !DialogViewModel.IsVisible && Player.TurnsUntilAction == 0)); }
         }
         public ICommand AFKCommand
         {
@@ -55,7 +56,7 @@ namespace PokemonGoClone.ViewModels
         }
         public ICommand EsacapeCommand
         {
-            get { return _esacapeCommand ?? (_esacapeCommand = new RelayCommand(x => { Esacape(x); }, x => !DialogViewModel.IsVisible)); }
+            get { return _esacapeCommand ?? (_esacapeCommand = new RelayCommand(x => { Esacape(x); }, x => !DialogViewModel.IsVisible || Player.TurnsUntilAction > 0)); }
         }
 
         public BattleViewModel(MainWindowViewModel mainWindowViewModel)
@@ -154,39 +155,44 @@ namespace PokemonGoClone.ViewModels
 
             // Test Environment, Opponent's Pokemon always starts with full HP
             OpponentPokemon.Health = OpponentPokemon.MaxHealth;
+            // Test Environment ends
 
             PlayerPokemonAbilities = new ObservableCollection<AbilityModel>(PlayerPokemon.Abilities);
-            PlayerItems = new ObservableCollection<ItemModel>(Player.Items);
+            PlayerItems = Player.Items;
 
             // Create BannedItem table
             BannedItems = new HashSet<string>();
             if (typeOfBattle.Equals("Gym"))
             {
                 BannedItems.Add("Pokeball");
-            } else if (typeOfBattle.Equals("")) { }
+            }
+            else if (typeOfBattle.Equals("")) { }
 
             BattleLogs.Clear();
             DialogViewModel.DefaultDelegates();
 
             Id = 0;
+            Player.TurnsUntilAction = 0;
+            Opponent.TurnsUntilAction = 0;
         }
 
         private void UseAbility(object x)
         {
+            string result;
             if (x == null)
             {
-                DialogViewModel.PopUp("You must choose an ability to use!");
+                DialogViewModel.PopUp("You must choose an ability to use! ");
                 return;
             }
 
             var ability = x as AbilityModel;
             if (ability.Charge == 0)
             {
-                DialogViewModel.PopUp("Ability has no charge.");
+                DialogViewModel.PopUp("Ability has no charge. ");
             }
             else
             {
-                string result = ability.Use(PlayerPokemon, OpponentPokemon);
+                result = ability.Use(Player, Opponent, PlayerPokemon, OpponentPokemon);
                 BattleLogs.Add(new LogModel(result, Id++));
                 OpponentTurn();
             }
@@ -194,16 +200,60 @@ namespace PokemonGoClone.ViewModels
 
         private void UseItem(object x)
         {
+            if (x == null)
+            {
+                DialogViewModel.PopUp("You must choose an item to use! ");
+                return;
+            }
 
+            var item = x as ItemModel;
+            var result = item.Use(Player, Opponent, PlayerPokemon, OpponentPokemon);
+
+            BattleLogs.Add(new LogModel(result.Item1, Id++));
+            if (result.Item2 == true)
+            {
+                DialogViewModel.PopUp(result.Item1, EndBattle);
+            } else
+            {
+                OpponentTurn();
+            }
         }
 
         private void OpponentTurn()
         {
+            string result;
             if (StateOfBattle() == null)
             {
-                int i = Rng.Next(OpponentPokemon.Abilities.Count);
-                var ability = OpponentPokemon.Abilities[i];
-                string result = ability.Use(OpponentPokemon, PlayerPokemon);
+                if (Opponent.TurnsUntilAction > 0)
+                {
+                    Opponent.TurnsUntilAction -= 1;
+                    result = $"\"{OpponentPokemon.Name}\" passed. ";
+                }
+                else
+                {
+                    int abilityId = 0;
+                    var damageAbilities = OpponentPokemon.Abilities.Where(x => x.Damage > 0).ToList();
+                    var healAbilities = OpponentPokemon.Abilities.Where(x => x.Heal > 0).ToList();
+                    
+                    if (OpponentPokemon.Health / (double)OpponentPokemon.MaxHealth < 0.4)
+                    {
+                        // If AI is in danger, he always try to heal if it is possible
+                        if (healAbilities.Count > 0)
+                        {
+                            abilityId = healAbilities[Opponent.Rng.Next(healAbilities.Count)].Id;
+                        }
+                    }
+                    else
+                    {
+                        // Pokemon must have at least one damage spell by default
+                        abilityId = damageAbilities[Opponent.Rng.Next(damageAbilities.Count)].Id;
+                    }
+
+                    var ability = OpponentPokemon.Abilities.Where(x => x.Id == abilityId).FirstOrDefault();
+                    ability.Charge += 1;   // AI's ability also has charge
+
+                    result = ability.Use(Opponent, Player, OpponentPokemon, PlayerPokemon);
+                }
                 BattleLogs.Add(new LogModel(result, Id++));
             }
             StateOfBattle();
@@ -218,7 +268,7 @@ namespace PokemonGoClone.ViewModels
 
             if (OpponentPokemon.Health == 0)
             {
-                DialogViewModel.PopUp("You Win", EndBattle);
+                DialogViewModel.PopUp("You Win! ", EndBattle);
 
                 // AI also cheats, if he loses, his pokemon is fully restored
                 OpponentPokemon.Health = OpponentPokemon.MaxHealth;
@@ -231,9 +281,8 @@ namespace PokemonGoClone.ViewModels
             }
             else if (PlayerPokemon.Health == 0)
             {
-                DialogViewModel.PopUp("You Lose", EndBattle);
-                /*
-                // Cheat, after losing player's pokemon will fully restored and has new ability
+                DialogViewModel.PopUp("You Lose! ", EndBattle);
+                /* Cheat, after losing player's pokemon will fully restored and has new ability
                 PlayerPokemon.Health = PlayerPokemon.MaxHealth;
                 PlayerPokemon.AddRandomNewAbility(MainWindowViewModel.Abilities);
 
@@ -252,24 +301,25 @@ namespace PokemonGoClone.ViewModels
         }
         private void AFK(object x)
         {
-            BattleLogs.Add(new LogModel("You chose to AFK", Id++));
+            BattleLogs.Add(new LogModel("You chose to AFK. ", Id++));
+            Player.TurnsUntilAction -= 1;
             OpponentTurn();
         }
 
         private void Esacape(object x)
         {
             double chance = Rng.NextDouble();
-
-            if (chance <= 0.5)
+            double successfulEscape = 0.05 + (PlayerPokemon.MaxHealth) / (double)PlayerPokemon.MaxHealth / 5;
+            if (chance <= successfulEscape)
             {
-                DialogViewModel.PopUp("Successfully Escaped!", EndBattle);
+                DialogViewModel.PopUp("Successfully Escaped! ", EndBattle);
             }
             else
             {
-                DialogViewModel.PopUp("Escape Failed.");
-                BattleLogs.Add(new LogModel("You failed to escape", Id++));
+                DialogViewModel.PopUp("Escape Failed. ");
+                BattleLogs.Add(new LogModel("You failed to escape. ", Id++));
+                OpponentTurn();
             }
-            OpponentTurn();
         }
     }
 }

@@ -2,6 +2,7 @@
 using PokemonGoClone.Models.Trainers;
 using PokemonGoClone.Utilities;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace PokemonGoClone.ViewModels
@@ -11,7 +12,7 @@ namespace PokemonGoClone.ViewModels
         //field of ItemViewModel
         private MainWindowViewModel _mainWindowViewModel;
         private DialogViewModel _dialogViewModel;
-        private List<ItemModel> _items;
+        private ObservableCollection<ItemModel> _items;
         private TrainerModel _player;
         private ICommand _selectedItemCommand;
 
@@ -47,7 +48,7 @@ namespace PokemonGoClone.ViewModels
             }
         }
 
-        public List<ItemModel> Items
+        public ObservableCollection<ItemModel> Items
         {
             get { return _items; }
             set

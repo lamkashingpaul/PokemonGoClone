@@ -16,13 +16,18 @@ namespace PokemonGoClone.Models.Items
             ItemType = "Potion";
             ImageSource = $"/PokemonGoClone;component/Images/Items/Potions/{Id:D6}.png";
         }
-        public override string Use(TrainerModel trainer, PokemonModel target)
+        public override (string, bool?) Use(TrainerModel player, TrainerModel opponent, PokemonModel playerPokemon, PokemonModel opponentPokemon)
         {
             Charge -= 1;
-            var TrainerPokemon = trainer.Pokemons[0];
-            int originalHealth = TrainerPokemon.Health;
-            TrainerPokemon.Health = Math.Min(TrainerPokemon.MaxHealth, TrainerPokemon.Health + HealHP);
-            return $"You healed your {TrainerPokemon.Name} by {TrainerPokemon.Health - originalHealth} HP.";
+            int originalHealth = playerPokemon.Health;
+            playerPokemon.Health = Math.Min(playerPokemon.MaxHealth, playerPokemon.Health + HealHP);
+
+            if (Charge == 0)
+            {
+                player.DropItem(this);
+            }
+
+            return ($"You healed your \"{playerPokemon.Name}\" [{playerPokemon.Health - originalHealth}] HP using [{Name}]. ", null);
         }
 
         //Properties of PokeballModel

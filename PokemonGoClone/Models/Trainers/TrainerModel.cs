@@ -2,6 +2,8 @@
 using PokemonGoClone.Models.Pokemons;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace PokemonGoClone.Models.Trainers
 {
@@ -13,8 +15,8 @@ namespace PokemonGoClone.Models.Trainers
         private int _candy;
         private int _stardust;
         private int _turnsUntilAction;
-        public List<PokemonModel> Pokemons;
-        public List<ItemModel> Items;
+        public ObservableCollection<PokemonModel> Pokemons;
+        public ObservableCollection<ItemModel> Items;
 
         // Default constructor
         public TrainerModel(string name, string type, int id)
@@ -32,8 +34,8 @@ namespace PokemonGoClone.Models.Trainers
 
             ImageSource = $"/PokemonGoClone;component/Images/{Type}s/{Id:D3}{Facing}.png";
 
-            Pokemons = new List<PokemonModel>();
-            Items = new List<ItemModel>();
+            Pokemons = new ObservableCollection<PokemonModel>();
+            Items = new ObservableCollection<ItemModel>();
         }
 
         // All properties of Trainer class
@@ -87,13 +89,13 @@ namespace PokemonGoClone.Models.Trainers
 
         public void AddItem(ItemModel item)
         {
-            if (Items.Find(x => x.Id == item.Id) == null)
+            if (Items.Where(x => x.Id == item.Id).FirstOrDefault() == null)
             {
                 Items.Add((ItemModel)item.Clone());
             }
             else
             {
-                Items.Find(x => x.Id == item.Id).Charge += item.Charge;
+                Items.Where(x => x.Id == item.Id).FirstOrDefault().Charge += item.Charge;
             }
         }
 

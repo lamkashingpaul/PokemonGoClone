@@ -18,18 +18,18 @@ namespace PokemonGoClone.Models.Items
             ItemType = "Pokeball";
             ImageSource = $"/PokemonGoClone;component/Images/Items/Pokeballs/{Id:D6}.png";
         }
-        public override string Use(TrainerModel trainer, PokemonModel target)
+        public override (string, bool?) Use(TrainerModel player, TrainerModel opponent, PokemonModel playerPokemon, PokemonModel opponentPokemon)
         {
             Charge -= 1;
             double chance = Rng.NextDouble();
-            double successChance = 1 - (target.Health / (double)target.MaxHealth) + CatchProbability;
+            double successChance = 1 - (opponentPokemon.Health / (double)opponentPokemon.MaxHealth) + CatchProbability;
             if (chance <= successChance)
             {
-                trainer.AddPokemon(target);
-                return $"You caught {target.Name}.";
+                player.AddPokemon(opponentPokemon);
+                return ($"You caught {opponentPokemon.Name}.", true);
             } else
             {
-                return "";
+                return ("Your pokeball missed", null);
             }
         }
 

@@ -4,6 +4,7 @@ using PokemonGoClone.Models.Trainers;
 using PokemonGoClone.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
 
 namespace PokemonGoClone.ViewModels
@@ -91,7 +92,7 @@ namespace PokemonGoClone.ViewModels
         }
         public int CurrentChargeofChoose
         {
-            get { return Trainer.Items.Find(x => x.Id == Choose.Id)?.Charge ?? 0; }
+            get { return Trainer.Items.Where(x => x.Id == Choose.Id).FirstOrDefault()?.Charge ?? 0; }
         }
 
         public PokemonModel Random

@@ -1,4 +1,5 @@
-﻿using PokemonGoClone.Models.Pokemons;
+﻿using PokemonGoClone.Models.Abilities;
+using PokemonGoClone.Models.Pokemons;
 using PokemonGoClone.Models.Trainers;
 using PokemonGoClone.Utilities;
 using System.Windows.Controls;
@@ -24,6 +25,7 @@ namespace PokemonGoClone.ViewModels
         //ICommand of PokemonStatusViewModel
         private ICommand _changeNameCommand;
         private ICommand _becomeFirstPokemonCommand;
+        private ICommand _showAbilityDescriptionCommand;
         private ICommand _dropPokemonCommand;
         public ICommand ChangeNameCommand
         {
@@ -32,6 +34,10 @@ namespace PokemonGoClone.ViewModels
         public ICommand BecomeFirstPokemonCommand
         {
             get { return _becomeFirstPokemonCommand ?? (_becomeFirstPokemonCommand = new RelayCommand(x => { BecomeFirstPokemon(); }, x => !DialogViewModel.IsVisible)); }
+        }
+        public ICommand ShowAbilityDescriptionCommand
+        {
+            get { return _showAbilityDescriptionCommand ?? (_showAbilityDescriptionCommand = new RelayCommand(x => { ShowAbilityDescription(x); }, x => !DialogViewModel.IsVisible)); }
         }
         public ICommand DropPokemonCommand
         {
@@ -127,28 +133,6 @@ namespace PokemonGoClone.ViewModels
         }
 
         //Method of PokemonStatusViewModel
-        public void ChangeName(object value)
-        {
-            var text = value as TextBox;
-            string newName = text.Text;
-            if (!string.IsNullOrEmpty(newName))
-            {
-                Pokemon.Name = newName;
-                OriginalName = newName;
-            }
-            DefaultName = OriginalName;
-        }
-
-        public void BecomeFirstPokemon()
-        {
-            PokemonModel tmp = MainWindowViewModel.Player.Pokemons[Index];
-            for (int i = 0; i < Index; i++)
-            {
-                MainWindowViewModel.Player.Pokemons[Index - i] = MainWindowViewModel.Player.Pokemons[Index - i - 1];
-            }
-            MainWindowViewModel.Player.Pokemons[0] = tmp;
-            DialogViewModel.PopUp($"{tmp.Name} is now your leading pokemon now.");
-        }
         public void Update(TrainerModel player)
         {
             Player = player;
@@ -160,11 +144,49 @@ namespace PokemonGoClone.ViewModels
             DefaultName = Pokemon.Name;
             Index = index;
         }
-        public void DropPokemon()
+        private void ChangeName(object value)
         {
-            MainWindowViewModel.Player.DropPokemon(Pokemon);
-            MainWindowViewModel.GoToBagViewModel(null);
+            string result;
+            var text = value as TextBox;
+            string newName = text.Text;
+            if (!string.IsNullOrEmpty(newName))
+            {
+                Pokemon.Name = newName;
+                OriginalName = newName;
+                result = $"Your pokemon has new name \"{newName}\".";
+            } else
+            {
+                result = $"You must provide a name for your pokemon.";
+            }
+            DialogViewModel.PopUp(result);
+            DefaultName = OriginalName;
         }
 
+        private void BecomeFirstPokemon()
+        {
+            PokemonModel tmp = Player.Pokemons[Index];
+            for (int i = 0; i < Index; i++)
+            {
+                Player.Pokemons[Index - i] = Player.Pokemons[Index - i - 1];
+            }
+            Player.Pokemons[0] = tmp;
+            DialogViewModel.PopUp($"{tmp.Name} is now your leading pokemon now.");
+        }
+        private void ShowAbilityDescription(object x)
+        {
+            var ability = x as AbilityModel;
+            DialogViewModel.PopUp(ability.Description);
+        }
+        private void DropPokemon()
+        {
+            if (Player.Pokemons.Count == 1)
+            {
+                DialogViewModel.PopUp("You are not allowed to drop your last Pokemon.");
+            } else
+            {
+                Player.DropPokemon(Pokemon);
+                MainWindowViewModel.GoToBagViewModel(null);
+            }
+        }
     }
 }

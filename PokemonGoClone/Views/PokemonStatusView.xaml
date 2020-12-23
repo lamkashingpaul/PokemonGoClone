@@ -3,50 +3,108 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:PokemonGoClone.Views" xmlns:viewmodels="clr-namespace:PokemonGoClone.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
+             xmlns:local="clr-namespace:PokemonGoClone.Views"
+             xmlns:viewmodels="clr-namespace:PokemonGoClone.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="480" d:DesignWidth="640"
              Background="White"
              FocusVisualStyle="{x:Null}">
     <Grid>
-        <StackPanel Canvas.Left="167">
-            <Image Source="{Binding CurrentViewModel.Pokemon.ImageSource}" Width="100" Height="100"/>
-            <StackPanel Orientation="Horizontal" Margin = "274,0,0,0">
-                <TextBlock Text="Name: " FontSize="24"/>
-                <TextBlock Text="{Binding CurrentViewModel.Pokemon.Name}" FontSize="24"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin = "274,0,0,0">
-                <TextBlock Text="       ID: " FontSize="24"/>
-                <TextBlock Text="{Binding CurrentViewModel.Pokemon.Id}" FontSize="24"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin = "259,0,0,0">
-                <TextBlock Text="    Level: " FontSize="24" Width="89"/>
-                <TextBlock Text="{Binding CurrentViewModel.Pokemon.Level}" FontSize="24"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin = "234,0,0,0">
-                <TextBlock Text="MaxLevel: " FontSize="24" Width="114"/>
-                <TextBlock Text="{Binding CurrentViewModel.Pokemon.MaxLevel}" FontSize="24"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin = "217,0,0,0">
-                <TextBlock Text="MaxHealth: " FontSize="24" Width="129"/>
-                <TextBlock Text="{Binding CurrentViewModel.Pokemon.MaxHealth}" FontSize="24"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin = "211,0,0,0">
-                <TextBlock Text="Description: " FontSize="24"/>
-                <TextBlock Text="{Binding CurrentViewModel.Pokemon.Description}" FontSize="24"/>
-            </StackPanel>
-        </StackPanel>
-        <Canvas Height="100" Margin="0,380,0,0">
-            <TextBox x:Name="ChangingName" Height="50" TextWrapping="Wrap" Text="{Binding CurrentViewModel.DefaultName}" Width="180" FontSize="24" TextAlignment="Center"/>
-            <Button Content="Change Name" Width="180" Height="50" FontSize="24" Canvas.Top="50" Command="{Binding CurrentViewModel.ChangeNameCommand}" CommandParameter="{Binding ElementName=ChangingName}"/>
-            <Button Content="Power Up" Width="180" Height="50" FontSize="24" Canvas.Left="360"/>
-            <Button Content="Evolve" Width="180" Height="50" FontSize="24" Canvas.Left="360" Canvas.Top="50"/>
-            <Button Content="Drop" Width="180" Height="50" FontSize="24" Canvas.Left="540" Command="{Binding CurrentViewModel.DropPokemonCommand}"/>
-            <Button Content="Exit" Width="180" Height="50" FontSize="24" Canvas.Left="540" Command="{Binding GoToBagViewModelCommand}" Canvas.Top="50"/>
-            <Button Canvas.Left="180" Width="180" Height="100" FontSize="24" Command="{Binding CurrentViewModel.BecomeFirstPokemonCommand}">
-                <TextBlock TextAlignment="Center"> Become <LineBreak/> First Pokemon </TextBlock>
-            </Button>
-        </Canvas>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
 
+        <Grid Grid.Column="0" Grid.Row="0" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="192"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">
+                <Image Source="{Binding CurrentViewModel.Pokemon.ImageSource}" Width="128" Height="128"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" FontSize="26" Text="Id: "/>
+                    <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" FontSize="26" Text="HP: "/>
+
+                    <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" Text="{Binding CurrentViewModel.Pokemon.Id}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} / {1}">
+                                <Binding Path="CurrentViewModel.Pokemon.Health"/>
+                                <Binding Path="CurrentViewModel.Pokemon.MaxHealth"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </Grid>
+            </StackPanel>
+
+            <Grid Grid.Column="2" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="64"/>
+                    <RowDefinition Height="64"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" FontSize="26" Text="Name: "/>
+                <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" FontSize="26" Text="Description: "/>
+                <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" FontSize="26" Text="Skill: "/>
+
+                <DockPanel Grid.Column="1" Grid.Row="0">
+                    <TextBox DockPanel.Dock="Top" x:Name="ChangingName" TextWrapping="Wrap" Text="{Binding CurrentViewModel.DefaultName}" FontSize="24" TextAlignment="Center"/>
+                    <Button DockPanel.Dock="Bottom" Content="Change Name" FontSize="16" Command="{Binding CurrentViewModel.ChangeNameCommand}" CommandParameter="{Binding ElementName=ChangingName}"/>
+                </DockPanel>
+                <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" FontSize="16" Text="{Binding CurrentViewModel.Pokemon.Description}" TextWrapping="Wrap"/>
+                <ItemsControl Focusable="False" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding CurrentViewModel.Pokemon.Abilities}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button FontSize="26" DataContext="{Binding }" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.CurrentViewModel.ShowAbilityDescriptionCommand }" CommandParameter="{Binding }">
+                                <Button.Content>
+                                    <TextBlock>
+                                        <Run Text="{Binding Name}"/>
+                                        <Run Text=" ("/>
+                                        <Run Text="{Binding Charge}"/>
+                                        <Run Text=" / "/>
+                                        <Run Text="{Binding MaxCharge}"/>
+                                        <Run Text=")"/>
+                                    </TextBlock>
+                                </Button.Content>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+        </Grid>
+
+        <UniformGrid Grid.Column="0" Grid.Row="1" Rows="1">
+            <Button Content="Power Up" FontSize="24"/>
+            <Button Content="Evolve" FontSize="24"/>
+            <Button FontSize="24" Command="{Binding CurrentViewModel.BecomeFirstPokemonCommand}">
+                <Button.Content>
+                    <TextBlock Text="Make Leader" TextWrapping="Wrap" TextAlignment="Center"/>
+                </Button.Content>
+            </Button>
+            <Button Content="Drop" FontSize="24" Command="{Binding CurrentViewModel.DropPokemonCommand}"/>
+            <Button Content="Exit" FontSize="24" Command="{Binding CurrentViewModel.MainWindowViewModel.GoToBagViewModelCommand}"/>
+        </UniformGrid>
     </Grid>
+
+    <UserControl.InputBindings>
+        <KeyBinding Command="{Binding CurrentViewModel.DialogViewModel.CloseCommand}" Key="Esc"/>
+    </UserControl.InputBindings>
+
 </UserControl>

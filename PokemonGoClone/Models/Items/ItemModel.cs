@@ -28,7 +28,7 @@ namespace PokemonGoClone.Models.Items
         }
 
         // All methods of Item class
-        public abstract string Use(TrainerModel trainer, PokemonModel target);
+        public abstract (string, bool?) Use(TrainerModel player, TrainerModel opponent, PokemonModel playerPokemon, PokemonModel opponentPokemon);
 
         // All properties of fields
         public string Name

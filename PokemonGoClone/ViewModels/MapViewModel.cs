@@ -139,10 +139,15 @@ namespace PokemonGoClone.ViewModels
             Player = Trainers[0];
 
             // Add Pokemon to player
-            Trainers[0].AddPokemon((PokemonModel)(MainWindowViewModel.Pokemons.Find(x => x.Id == choice).Clone()));
-            for (int i = 0; i < MainWindowViewModel.Pokemons.Count; i++)
+            Player.AddPokemon((PokemonModel)MainWindowViewModel.Pokemons.Find(x => x.Id == choice).Clone());
+
+            // Add all pokemon to player if there is cheat
+            if (Player.Name == "WhosYourDaddy")
             {
-                Player.AddPokemon((PokemonModel)MainWindowViewModel.Pokemons[i].Clone());
+                for (int i = 0; i < MainWindowViewModel.Pokemons.Count; i++)
+                {
+                    Player.AddPokemon((PokemonModel)MainWindowViewModel.Pokemons[i].Clone());
+                }
             }
 
             // Add Items to player
@@ -153,6 +158,7 @@ namespace PokemonGoClone.ViewModels
 
             // Update the Bag, Item and Shop ViewModel
             ((BagViewModel)MainWindowViewModel.BagViewModel).UpdatePlayer(Player);
+            ((PokemonStatusViewModel)MainWindowViewModel.PokemonStatusViewModel).Update(Player);
             ((ItemViewModel)MainWindowViewModel.ItemViewModel).UpdatePlayer(Player);
             ((ShopViewModel)MainWindowViewModel.ShopViewModel).UpdatePlayer(Player);
 
@@ -185,6 +191,12 @@ namespace PokemonGoClone.ViewModels
             ((PokemonStatusViewModel)MainWindowViewModel.PokemonStatusViewModel).Update(Player);
             ((ItemViewModel)MainWindowViewModel.ItemViewModel).UpdatePlayer(Player);
             ((ShopViewModel)MainWindowViewModel.ShopViewModel).UpdatePlayer(Player);
+            // Create CompositeCollection from view binding
+            Grid = new CompositeCollection
+            {
+                new CollectionContainer() { Collection = Map },
+                new CollectionContainer() { Collection = Trainers }
+            };
             // Create backlink to MainWindow
             MainWindowViewModel.Trainers = Trainers;
             MainWindowViewModel.Player = Player;
@@ -275,6 +287,13 @@ namespace PokemonGoClone.ViewModels
 
         }
 
+        // Random Wild Pokemon Spawn
+        private void WildPokemonSpawn()
+        {
+
+        }
+
+
         // All RelayCommands of MapViewModel
         private void Move(object sender)
         {
@@ -318,7 +337,7 @@ namespace PokemonGoClone.ViewModels
             }
             else
             {
-                Target = Trainers.Where(x => x.XCoordinate == Player.XFacing && x.YCoordinate == Player.YFacing).First();
+                Target = Trainers.Where(x => x.XCoordinate == Player.XFacing && x.YCoordinate == Player.YFacing).FirstOrDefault();
                 if (Target == null)
                 {
                     return;

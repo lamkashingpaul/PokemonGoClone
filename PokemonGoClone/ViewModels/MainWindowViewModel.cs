@@ -176,6 +176,8 @@ namespace PokemonGoClone.ViewModels
                                                             obj["Description"].Value<string>(),
                                                             obj["Damage"].Value<int>(),
                                                             obj["DamagePerLevel"].Value<int>(),
+                                                            obj["Heal"].Value<int>(),
+                                                            obj["HealPerLevel"].Value<int>(),
                                                             obj["MaxCharge"].Value<int>(),
                                                             obj["MaxChargePerLevel"].Value<int>(),
                                                             obj["Accuracy"].Value<double>());
@@ -244,10 +246,12 @@ namespace PokemonGoClone.ViewModels
 
                 var jArray = JArray.Parse(json);
 
+                var rng = new Random();
+                List<AbilityModel> damageAbilities = Abilities.FindAll(x => x.Damage > 0);
                 foreach (var obj in jArray)
                 {
-                    var rng = new Random();
-                    int randomAbilityIndex = rng.Next(Abilities.Count);
+                    // Each Pokemon must have one damage ability
+                    int randomAbilityIndex = rng.Next(damageAbilities.Count);
                     PokemonModel pokemon = new PokemonModel(obj["Name"].Value<string>(),
                                                             obj["Id"].Value<int>(),
                                                             obj["Description"].Value<string>(),
@@ -260,7 +264,9 @@ namespace PokemonGoClone.ViewModels
                                                             obj["EvolveCost"].Value<int>(),
                                                             obj["PowerUpCostBase"].Value<int>(),
                                                             obj["PowerUpCostPerLevel"].Value<int>(),
-                                                            Abilities[randomAbilityIndex]);
+                                                            damageAbilities[randomAbilityIndex]);
+                    // Add additional on ability to pokemon
+                    pokemon.AddRandomNewAbility(Abilities);
                     pokemons.Add(pokemon);
                 }
             }

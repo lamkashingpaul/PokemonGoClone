@@ -51,4 +51,9 @@
             <Button HorizontalAlignment="Right" DockPanel.Dock="Right" Content="Drop" Width="180" Height="100" FontSize="24" Command="{Binding CurrentViewModel.DropItemCommand}"/>
         </DockPanel>
     </Grid>
+
+    <UserControl.InputBindings>
+        <KeyBinding Command="{Binding CurrentViewModel.DialogViewModel.CloseCommand}" Key="Esc"/>
+    </UserControl.InputBindings>
+
 </UserControl>
