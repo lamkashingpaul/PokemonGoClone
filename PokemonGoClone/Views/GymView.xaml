@@ -69,6 +69,7 @@
 
         <Border BorderThickness="1" BorderBrush="Black" Margin="360,240,0,0">
             <StackPanel>
+                <TextBlock Text= ""/>
                 <Image Width="100" Height="100" Source="{Binding CurrentViewModel.Pokemon.ImageSource}"/>
                 <StackPanel Orientation="Horizontal" Margin = "0,0,0,0">
                     <TextBlock Text="  Name: " FontSize="24"/>
@@ -78,8 +79,7 @@
                     <TextBlock Text=" Health: " FontSize="24"/>
                     <TextBlock Text="{Binding CurrentViewModel.Pokemon.Health}" FontSize="24"/>
                 </StackPanel>
-
-                <Button Content="Challenge the Player" FontSize="24"/>
+                <Button Content="Challenge the Player" FontSize="24" Command="{Binding CurrentViewModel.ChallangePlayerCommand}"/>
                 <Button Content="Exit" FontSize="24" Command="{Binding CurrentViewModel.MainWindowViewModel.GoToMapViewModelCommand}"/>
             </StackPanel>
         </Border>

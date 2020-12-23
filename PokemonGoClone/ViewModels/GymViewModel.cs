@@ -15,12 +15,17 @@ namespace PokemonGoClone.ViewModels {
         private MainWindowViewModel _mainWindowViewModel;
         private DialogViewModel _dialogViewModel;
         private ObservableCollection<PokemonModel> _pokemons;
+        private ObservableCollection<TrainerModel> _trainers;
         private PokemonModel _pokemon;
         private TrainerModel _currentOccupier;
         private PokemonModel _currentPokemon;
         private TrainerModel _player;
+        private ICommand _challangePlayerCommand;
         private ICommand _selectedPokemonCommand;
 
+        public ICommand ChallangePlayerCommand {
+            get { return _challangePlayerCommand ?? (_challangePlayerCommand = new RelayCommand(x => { ChallangePlayer(); }, x => EnableButton())); }
+        }
         public ICommand SelectedPokemonCommand {
             get { return _selectedPokemonCommand ?? (_selectedPokemonCommand = new RelayCommand(x => { SelectedPokemon(x); }, x => !DialogViewModel.IsVisible)); }
         }
@@ -53,6 +58,13 @@ namespace PokemonGoClone.ViewModels {
             set {
                 _pokemons = value;
                 OnPropertyChanged(nameof(Pokemons));
+            }
+        }
+        public ObservableCollection<TrainerModel> Trainers {
+            get { return _trainers; }
+            set {
+                _trainers = value;
+                OnPropertyChanged(nameof(Trainers));
             }
         }
         public PokemonModel Pokemon {
@@ -91,13 +103,38 @@ namespace PokemonGoClone.ViewModels {
         //Method of GymViewModel
         public void UpdatePlayer(TrainerModel player) {
             Player = player;
-            Pokemons = player.Pokemons;
+            Pokemons = player.Pokemons;            
+        }
+
+        public void UpdateTrainers(ObservableCollection<TrainerModel> trainers) {
+            Trainers = trainers;
+            Random rnd = new Random();
+            int index1 = rnd.Next(1,Trainers.Count - 1);
+            CurrentOccupier = Trainers[index1];
+            int index2 = rnd.Next(0, Trainers[index1].Pokemons.Count);
+            CurrentPokemon = CurrentOccupier.Pokemons[index2];
         }
 
         public void SelectedPokemon(object sender) {
             var pokemon = sender as PokemonModel;
-            Pokemon = pokemon;
-            
+            Pokemon = pokemon;            
+        }
+        public void UpdateOccupier(TrainerModel player,PokemonModel pokemon) {
+            CurrentOccupier = player;
+            CurrentPokemon = pokemon;
+        }
+
+        public bool EnableButton() {
+            if (CurrentOccupier == Player) {
+                CurrentOccupier.ImageSource = $"/PokemonGoClone;component/Images/Players/{Player.Id:D3}S.png"; ;
+                return false;
+            }
+            return true;        
+        }
+
+        public void ChallangePlayer() {
+            ((BattleViewModel)MainWindowViewModel.BattleViewModel).NewBattle(Player, CurrentOccupier, Pokemon, CurrentPokemon, "Gym");
+            MainWindowViewModel.GoToBattleViewModel(null);
         }
 
     }

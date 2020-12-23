@@ -176,6 +176,33 @@ namespace PokemonGoClone.ViewModels
             Opponent.TurnsUntilAction = 0;
         }
 
+        public void NewBattle(TrainerModel player, TrainerModel opponent, PokemonModel playerPokemon, PokemonModel opponetPokemon,string typeOfBattle) {
+            Player = player;
+            Opponent = opponent;
+            PlayerPokemon = playerPokemon;
+            OpponentPokemon = opponetPokemon;
+
+            // Test Environment, Opponent's Pokemon always starts with full HP
+            OpponentPokemon.Health = OpponentPokemon.MaxHealth;
+            // Test Environment ends
+
+            PlayerPokemonAbilities = new ObservableCollection<AbilityModel>(PlayerPokemon.Abilities);
+            PlayerItems = Player.Items;
+
+            // Create BannedItem table
+            BannedItems = new HashSet<string>();
+            if (typeOfBattle.Equals("Gym")) {
+                BannedItems.Add("Pokeball");
+            } else if (typeOfBattle.Equals("")) { }
+
+            BattleLogs.Clear();
+            DialogViewModel.DefaultDelegates();
+
+            Id = 0;
+            Player.TurnsUntilAction = 0;
+            Opponent.TurnsUntilAction = 0;
+        }
+
         private void UseAbility(object x)
         {
             string result;
@@ -281,6 +308,7 @@ namespace PokemonGoClone.ViewModels
             }
             else if (PlayerPokemon.Health == 0)
             {
+                ((MapViewModel)MainWindowViewModel.MapViewModel).RunTimer();
                 DialogViewModel.PopUp("You Lose! ", EndBattle);
                 /* Cheat, after losing player's pokemon will fully restored and has new ability
                 PlayerPokemon.Health = PlayerPokemon.MaxHealth;

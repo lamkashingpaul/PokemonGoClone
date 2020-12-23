@@ -14,6 +14,7 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace PokemonGoClone.ViewModels
 {
@@ -36,17 +37,16 @@ namespace PokemonGoClone.ViewModels
         }
         public void EnterGym(object x)
         {
-            if (Player.Pokemons[0].Health == 0)
-            {
-                DialogViewModel.PopUp("Your lending pokemon cannot fight, please select other pokemon.");
-            }
-            else
-            {
-                // You may want to do some update before going into GymViewModel
-                DialogViewModel.IsVisible = false;
-                MainWindowViewModel.GoToGymViewModel(null);
-            }
+            // You may want to do some update before going into GymViewModel
+            DialogViewModel.IsVisible = false;
+            MainWindowViewModel.GoToGymViewModel(null);
         }
+        public void NotAccept(object x) {
+            // You may want to do some update before going into GymViewModel
+            DialogViewModel.PopUp("You must accept the Battle", NotAccept, EnterGym);            
+            
+        }
+
 
         public void BackToStart(object x)
         {
@@ -57,6 +57,7 @@ namespace PokemonGoClone.ViewModels
         // All fields of MapViewModel
         private MainWindowViewModel _mainWindowViewMode;
         private DialogViewModel _dialogViewModel;
+        private DispatcherTimer _timer;
 
         private const int _col = 11;
         private const int _row = 11;
@@ -123,6 +124,12 @@ namespace PokemonGoClone.ViewModels
         {
             get { return _row; }
         }
+        public DispatcherTimer Timer {
+            get { return _timer; }
+            set { 
+                _timer = value;
+            }
+        }
 
         // Constructor of MapViewModel
         public MapViewModel(MainWindowViewModel mainWindowViewModel)
@@ -135,6 +142,7 @@ namespace PokemonGoClone.ViewModels
         public void GameInitialization(string name, int choice)
         {
             LoadMap();
+
 
             // Create player
             // Note that the player is always the Trainers[0]
@@ -151,6 +159,7 @@ namespace PokemonGoClone.ViewModels
             };
 
             Player = Trainers[0];
+
 
             // Add Pokemon to player
             Player.AddPokemon((PokemonModel)MainWindowViewModel.Pokemons.Find(x => x.Id == choice).Clone());
@@ -177,9 +186,16 @@ namespace PokemonGoClone.ViewModels
             ((ShopViewModel)MainWindowViewModel.ShopViewModel).UpdatePlayer(Player);
             ((GymViewModel)MainWindowViewModel.GymViewModel).UpdatePlayer(Player);
 
+            //Initialize the timer
+            Timer = new DispatcherTimer();
+            RunTimer();
+                       
+
             // Add more NPC trainers
             LoadOtherTrainers();
-            LoadGym(); 
+            LoadGym();
+           
+            ((GymViewModel)MainWindowViewModel.GymViewModel).UpdateTrainers(Trainers);
 
             // Create CompositeCollection from view binding
             Grid = new CompositeCollection
@@ -290,7 +306,7 @@ namespace PokemonGoClone.ViewModels
                         YCoordinate = randomY,
                         Quote = values["Quote"].Value<string>()
                     };
-
+                                        
                     int randomPokemon = rng.Next(MainWindowViewModel.Pokemons.Count) + 1;
                     trainer.AddPokemon((PokemonModel)MainWindowViewModel.Pokemons.Find(x => x.Id == randomPokemon).Clone());
                     Trainers.Add(trainer);
@@ -318,6 +334,7 @@ namespace PokemonGoClone.ViewModels
             };
 
             Trainers.Add(gym);
+
         }
 
         // Random Wild Pokemon Spawn
@@ -377,10 +394,11 @@ namespace PokemonGoClone.ViewModels
                 }
                 else if (Target.Type == "NPC")
                 {
+                    Timer.Stop();
                     DialogViewModel.PopUp(Target.Quote, null, AcceptBattle);
                 } else if (Target.Type == "Gym")
                 {
-                    DialogViewModel.PopUp(Target.Quote, null, AcceptBattle);
+                    DialogViewModel.PopUp(Target.Quote, null, EnterGym);
                 }
             }
         }
@@ -396,6 +414,24 @@ namespace PokemonGoClone.ViewModels
         private void Shop()
         {
             MainWindowViewModel.GoToShopViewModel(null);
+        }
+
+        public void RunTimer() {
+            if (((GymViewModel)MainWindowViewModel.GymViewModel).Player == ((GymViewModel)MainWindowViewModel.GymViewModel).CurrentOccupier) {
+                Random rnd = new Random();
+                int time = rnd.Next(300, 600);
+                Timer.Interval = new TimeSpan(0, 0, time);
+                Timer.Tick += TimeCount;
+                Timer.Start();
+            } else { 
+                //nothing
+            }
+
+        }
+
+        public void TimeCount(object sender, EventArgs e) {
+            DialogViewModel.PopUp("Someone challange you! You must accept", NotAccept, EnterGym);
+            Timer.Stop();
         }
 
     }
