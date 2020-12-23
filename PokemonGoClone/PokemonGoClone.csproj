@@ -114,6 +114,9 @@
     <Compile Include="Views\BattleView.xaml.cs">
       <DependentUpon>BattleView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\GymView.xaml.cs">
+      <DependentUpon>GymView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ItemStatusView.xaml.cs">
       <DependentUpon>ItemStatusView.xaml</DependentUpon>
     </Compile>
@@ -160,6 +163,10 @@
     <Page Include="Views\BattleView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GymView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ItemStatusView.xaml">
       <SubType>Designer</SubType>
