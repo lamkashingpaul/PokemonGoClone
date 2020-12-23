@@ -34,6 +34,20 @@ namespace PokemonGoClone.ViewModels
                 MainWindowViewModel.GoToBattleViewModel(null);
             }
         }
+        public void EnterGym(object x)
+        {
+            if (Player.Pokemons[0].Health == 0)
+            {
+                DialogViewModel.PopUp("Your lending pokemon cannot fight, please select other pokemon.");
+            }
+            else
+            {
+                // You may want to do some update before going into GymViewModel
+                DialogViewModel.IsVisible = false;
+                MainWindowViewModel.GoToGymViewModel(null);
+            }
+        }
+
         public void BackToStart(object x)
         {
             DialogViewModel.Close(x);
@@ -361,7 +375,10 @@ namespace PokemonGoClone.ViewModels
                 {
                     return;
                 }
-                else
+                else if (Target.Type == "NPC")
+                {
+                    DialogViewModel.PopUp(Target.Quote, null, AcceptBattle);
+                } else if (Target.Type == "Gym")
                 {
                     DialogViewModel.PopUp(Target.Quote, null, AcceptBattle);
                 }
