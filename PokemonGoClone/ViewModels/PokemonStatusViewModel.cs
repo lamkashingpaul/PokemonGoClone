@@ -207,6 +207,7 @@ namespace PokemonGoClone.ViewModels
             Pokemon.Level++;
             int add = rnd.Next(1, Pokemon.MaxHealthPerLevel + 1);
             Pokemon.MaxHealth += add;
+            Pokemon.Health = Pokemon.MaxHealth;
             Player.Candy -= PowerUpCost;
             DialogViewModel.PopUp($"You have successfully Power Up {Pokemon.Name} \n Its MaxHealth is added by {add}");
         }
@@ -243,6 +244,7 @@ namespace PokemonGoClone.ViewModels
             Pokemon.PowerUpCostBase = tmp.PowerUpCostBase;
             Pokemon.PowerUpCostPerLevel = tmp.PowerUpCostPerLevel;
             Player.Stardust -= EvolveCost;
+            DefaultName = Pokemon.Name;
             DialogViewModel.PopUp($"You have successfully evolved {tmpName} to {Pokemon.Name}");
         }
         public bool PowerUpButton() {

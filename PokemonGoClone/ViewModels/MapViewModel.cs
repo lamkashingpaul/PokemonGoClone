@@ -153,19 +153,22 @@ namespace PokemonGoClone.ViewModels
             Player = Trainers[0];
 
             // Add Pokemon to player
-            Player.AddPokemon((PokemonModel)MainWindowViewModel.Pokemons.Find(x => x.Id == choice).Clone());
-
-            // Add all pokemon to player if there is cheat
+            // Add all pokemon to player if there is cheat code
             if (Player.Name == "WhosYourDaddy")
             {
                 for (int i = 0; i < MainWindowViewModel.Pokemons.Count; i++)
                 {
                     Player.AddPokemon((PokemonModel)MainWindowViewModel.Pokemons[i].Clone());
                 }
+                Player.Candy = 9999999;
+                Player.Stardust = 9999999;
+            } else
+            {
+                Player.AddPokemon((PokemonModel)MainWindowViewModel.Pokemons.Find(x => x.Id == choice).Clone());
             }
 
             // Add Items to player
-            for (int i = 1; i < MainWindowViewModel.Items.Count; i++)
+            for (int i = 0; i < MainWindowViewModel.Items.Count; i++)
             {
                 Player.AddItem((ItemModel)MainWindowViewModel.Items[i].Clone());
             }
@@ -380,7 +383,7 @@ namespace PokemonGoClone.ViewModels
                     DialogViewModel.PopUp(Target.Quote, null, AcceptBattle);
                 } else if (Target.Type == "Gym")
                 {
-                    DialogViewModel.PopUp(Target.Quote, null, AcceptBattle);
+                    DialogViewModel.PopUp(Target.Quote, null, EnterGym);
                 }
             }
         }

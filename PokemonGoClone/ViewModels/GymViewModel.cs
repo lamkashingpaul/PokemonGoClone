@@ -97,8 +97,6 @@ namespace PokemonGoClone.ViewModels {
         public void SelectedPokemon(object sender) {
             var pokemon = sender as PokemonModel;
             Pokemon = pokemon;
-            
         }
-
     }
 }
