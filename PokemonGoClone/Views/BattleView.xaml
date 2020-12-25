@@ -24,19 +24,19 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                <TextBlock Text="{Binding PlayerPokemon.Name}"/>
-                <Image Source="{Binding PlayerPokemon.ImageSource}"
+                <TextBlock Margin="10" Text="{Binding PlayerPokemon.Name}" FontSize="20" HorizontalAlignment="Center"/>
+                <Image Margin="10" Source="{Binding PlayerPokemon.ImageSource}"
                    Height="64"
                    Width="64"
                    />
-                <TextBlock HorizontalAlignment="Center" FontSize="16">
-                    <Run Text="HP: "/>
-                    <Run Text="{Binding PlayerPokemon.Health}"/>
-                    <Run Text=" / "/>
+                <TextBlock Margin="10" HorizontalAlignment="Center" FontSize="16">
+                    <Run Text="HP: "/><LineBreak/>
+                    <Run Text="{Binding PlayerPokemon.Health}"/><LineBreak/>
+                    <Run Text=" / "/><LineBreak/>
                     <Run Text="{Binding PlayerPokemon.MaxHealth}"/>
                 </TextBlock>
-                <TextBlock HorizontalAlignment="Center" FontSize="16" Text="Turn Until Move :"/>
-                <TextBlock HorizontalAlignment="Center" FontSize="16" Text="{Binding Player.TurnsUntilAction}"/>
+                <TextBlock Margin="10" HorizontalAlignment="Center" FontSize="16" Text="Turn Until Move :" TextWrapping="Wrap" TextAlignment="Center"/>
+                <TextBlock Margin="10" HorizontalAlignment="Center" FontSize="16" Text="{Binding Player.TurnsUntilAction}"/>
             </StackPanel>
 
             <ulti:ScrollingListBox Grid.Column="1"
@@ -50,8 +50,8 @@
             </ulti:ScrollingListBox>
 
             <StackPanel Grid.Column="2" VerticalAlignment="Center">
-                <TextBlock Text="{Binding OpponentPokemon.Name}"/>
-                <Image Source="{Binding OpponentPokemon.ImageSource}"
+                <TextBlock Margin="10" Text="{Binding OpponentPokemon.Name}" FontSize="20" HorizontalAlignment="Center"/>
+                <Image Margin="10" Source="{Binding OpponentPokemon.ImageSource}"
                        Height="64"
                        Width="64"
                        RenderTransformOrigin="0.5,0.5">
@@ -59,14 +59,14 @@
                         <ScaleTransform ScaleX="-1"/>
                     </Image.RenderTransform>
                 </Image>
-                <TextBlock HorizontalAlignment="Center" FontSize="16">
-                    <Run Text="HP: "/>
-                    <Run Text="{Binding OpponentPokemon.Health}"/>
-                    <Run Text=" / "/>
+                <TextBlock Margin="10" HorizontalAlignment="Center" FontSize="16">
+                    <Run Text="HP: "/><LineBreak/>
+                    <Run Text="{Binding OpponentPokemon.Health}"/><LineBreak/>
+                    <Run Text=" / "/><LineBreak/>
                     <Run Text="{Binding OpponentPokemon.MaxHealth}"/>
                 </TextBlock>
-                <TextBlock HorizontalAlignment="Center" FontSize="16" Text="Turn Until Move :"/>
-                <TextBlock HorizontalAlignment="Center" FontSize="16" Text="{Binding Opponent.TurnsUntilAction}"/>
+                <TextBlock Margin="10" HorizontalAlignment="Center" FontSize="16" Text="Turn Until Move :" TextWrapping="Wrap" TextAlignment="Center"/>
+                <TextBlock Margin="10" HorizontalAlignment="Center" FontSize="16" Text="{Binding Opponent.TurnsUntilAction}"/>
             </StackPanel>
         </Grid>
 

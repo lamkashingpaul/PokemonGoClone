@@ -136,6 +136,5 @@ namespace PokemonGoClone.ViewModels {
             ((BattleViewModel)MainWindowViewModel.BattleViewModel).NewBattle(Player, CurrentOccupier, Pokemon, CurrentPokemon, "Gym");
             MainWindowViewModel.GoToBattleViewModel(null);
         }
-
     }
 }

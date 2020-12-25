@@ -35,12 +35,12 @@
             <Border BorderBrush="Black" BorderThickness="1">
                 <UniformGrid Columns="2">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock FontSize="24" Text=" Total Candy ($): " HorizontalAlignment="Left"/>
-                        <TextBlock FontSize="24" Text="{Binding CurrentViewModel.Trainer.Candy}"/>
+                        <TextBlock FontSize="20" Text=" Total Candy ($): " HorizontalAlignment="Left"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="16" Text="{Binding CurrentViewModel.Trainer.Candy}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock FontSize="24" Text=" Total Stardust (*): " HorizontalAlignment="Left"/>
-                        <TextBlock FontSize="24" Text="{Binding CurrentViewModel.Trainer.Stardust}"/>
+                        <TextBlock FontSize="20" Text=" Total Stardust (*): " HorizontalAlignment="Left"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="16" Text="{Binding CurrentViewModel.Trainer.Stardust}"/>
                     </StackPanel>
                 </UniformGrid>
             </Border>
@@ -59,7 +59,7 @@
 
                     <Button Content="Buy" FontSize="20" Command="{Binding CurrentViewModel.BuyCommand}"/>
                     <Button Content="Exit" FontSize="20" Command="{Binding CurrentViewModel.MainWindowViewModel.GoToMapViewModelCommand}"/>
-                    <Button Content="Stardust (500 Candy/each)" FontSize="20" Command="{Binding CurrentViewModel.BuyStardustCommand}"/>
+                    <Button Content="Stardust (5000 Candy/each)" FontSize="20" Command="{Binding CurrentViewModel.BuyStardustCommand}"/>
                     <Button Content="Random Pokemon $500 per time" FontSize="20" Command="{Binding CurrentViewModel.RandomCommand}"/>
 
                     <Border BorderBrush="Black" BorderThickness="1">
