@@ -261,19 +261,14 @@ namespace PokemonGoClone.ViewModels
                     int abilityId = 0;
                     var damageAbilities = OpponentPokemon.Abilities.Where(x => x.Damage > 0).ToList();
                     var healAbilities = OpponentPokemon.Abilities.Where(x => x.Heal > 0).ToList();
-                    
-                    if (OpponentPokemon.Health / (double)OpponentPokemon.MaxHealth < 0.4)
+
+                    // Pokemon must have at least one damage spell by default
+                    abilityId = damageAbilities[Opponent.Rng.Next(damageAbilities.Count)].Id;
+
+                    // If AI is in danger, he always try to heal if it is possible
+                    if (OpponentPokemon.Health / (double)OpponentPokemon.MaxHealth < 0.4 && healAbilities.Count > 0)
                     {
-                        // If AI is in danger, he always try to heal if it is possible
-                        if (healAbilities.Count > 0)
-                        {
-                            abilityId = healAbilities[Opponent.Rng.Next(healAbilities.Count)].Id;
-                        }
-                    }
-                    else
-                    {
-                        // Pokemon must have at least one damage spell by default
-                        abilityId = damageAbilities[Opponent.Rng.Next(damageAbilities.Count)].Id;
+                        abilityId = healAbilities[Opponent.Rng.Next(healAbilities.Count)].Id;
                     }
 
                     var ability = OpponentPokemon.Abilities.Where(x => x.Id == abilityId).FirstOrDefault();
