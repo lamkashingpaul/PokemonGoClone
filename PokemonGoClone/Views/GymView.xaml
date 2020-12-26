@@ -27,7 +27,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text=" Health: " FontSize="24"/>
-                    <TextBlock Text="{Binding CurrentViewModel.CurrentPokemon.Health}" FontSize="24"/>
+                    <TextBlock Text="{Binding CurrentViewModel.CurrentPokemon.MaxHealth}" FontSize="24"/>
                 </StackPanel>
             </StackPanel>
         </Border>
