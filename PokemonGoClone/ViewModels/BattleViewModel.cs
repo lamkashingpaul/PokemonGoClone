@@ -325,7 +325,10 @@ namespace PokemonGoClone.ViewModels
         private void AFK(object x)
         {
             BattleLogs.Add(new LogModel("You chose to AFK. ", Id++));
-            Player.TurnsUntilAction -= 1;
+            if (Player.TurnsUntilAction > 0)
+            {
+                Player.TurnsUntilAction -= 1;
+            }
             OpponentTurn();
         }
 
