@@ -229,13 +229,11 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <EmbeddedResource Include="Resources\Trainers\001.json" />
-    <EmbeddedResource Include="Resources\Trainers\002.json" />
-    <EmbeddedResource Include="Resources\Trainers\003.json" />
     <EmbeddedResource Include="Resources\Pokemons\pokemons.json" />
     <EmbeddedResource Include="Resources\Abilities\abilities.json" />
     <EmbeddedResource Include="Resources\Items\Pokeballs\pokeballs.json" />
     <EmbeddedResource Include="Resources\Items\Potions\potions.json" />
+    <EmbeddedResource Include="Resources\Trainers\trainers.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

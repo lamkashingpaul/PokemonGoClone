@@ -1,6 +1,7 @@
 ﻿using PokemonGoClone.Models.Abilities;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace PokemonGoClone.Models.Pokemons
@@ -12,7 +13,7 @@ namespace PokemonGoClone.Models.Pokemons
         private bool _isChecked;
 
         // All fields of Pokemon class
-        private List<AbilityModel> _abilities;
+        private ObservableCollection<AbilityModel> _abilities;
         private double _accuracy;
         private int[] _evolveId;
         private int _evolveCost;
@@ -48,7 +49,7 @@ namespace PokemonGoClone.Models.Pokemons
             PowerUpCostBase = powerUpCostBase;
             PowerUpCostPerLevel = powerUpCostPerLevel;
 
-            Abilities = new List<AbilityModel>();
+            Abilities = new ObservableCollection<AbilityModel>();
 
             if (ability != null)
             {
@@ -80,7 +81,7 @@ namespace PokemonGoClone.Models.Pokemons
             }
         }
 
-        public List<AbilityModel> Abilities
+        public ObservableCollection<AbilityModel> Abilities
         {
             get { return _abilities; }
             set
@@ -152,7 +153,7 @@ namespace PokemonGoClone.Models.Pokemons
 
         public void AddAbility(AbilityModel ability)
         {
-            if (!Abilities.Exists(x => x.Id == ability.Id))
+            if (!Abilities.Any(x => x.Id == ability.Id))
             {
                 Abilities.Add(ability);
             }
@@ -176,7 +177,7 @@ namespace PokemonGoClone.Models.Pokemons
         public object Clone()
         {
             var pokemonModel = (PokemonModel)MemberwiseClone();
-            pokemonModel.Abilities = new List<AbilityModel>();
+            pokemonModel.Abilities = new ObservableCollection<AbilityModel>();
             if (Abilities.Count > 0)
             {
                 foreach (var ability in Abilities)

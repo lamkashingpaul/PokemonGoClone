@@ -31,6 +31,8 @@ namespace PokemonGoClone.ViewModels
         private int _id;
         private Random _rng;
 
+        private string _typeOfBattle;
+
         public HashSet<string> BannedItems { get; set; }
         public ObservableCollection<LogModel> BattleLogs { get; set; }
         public ObservableCollection<AbilityModel> PlayerPokemonAbilities { get; set; }
@@ -106,6 +108,15 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(Id));
             }
         }
+        public string TypeOfBattle
+        {
+            get { return _typeOfBattle; }
+            set
+            {
+                _typeOfBattle = value;
+                OnPropertyChanged(nameof(TypeOfBattle));
+            }
+        }
 
         public TrainerModel Player
         {
@@ -146,36 +157,6 @@ namespace PokemonGoClone.ViewModels
             }
         }
 
-        public void NewBattle(TrainerModel player, TrainerModel opponent, string typeOfBattle)
-        {
-            Player = player;
-            Opponent = opponent;
-            PlayerPokemon = Player.Pokemons[0];
-            OpponentPokemon = Opponent.Pokemons[0];
-
-            // Test Environment, Opponent's Pokemon always starts with full HP
-            OpponentPokemon.Health = OpponentPokemon.MaxHealth;
-            // Test Environment ends
-
-            PlayerPokemonAbilities = new ObservableCollection<AbilityModel>(PlayerPokemon.Abilities);
-            PlayerItems = Player.Items;
-
-            // Create BannedItem table
-            BannedItems = new HashSet<string>();
-            if (typeOfBattle.Equals("Gym"))
-            {
-                BannedItems.Add("Pokeball");
-            }
-            else if (typeOfBattle.Equals("")) { }
-
-            BattleLogs.Clear();
-            DialogViewModel.DefaultDelegates();
-
-            Id = 0;
-            Player.TurnsUntilAction = 0;
-            Opponent.TurnsUntilAction = 0;
-        }
-
         public void NewBattle(TrainerModel player, TrainerModel opponent, PokemonModel playerPokemon, PokemonModel opponetPokemon,string typeOfBattle) {
             Player = player;
             Opponent = opponent;
@@ -190,10 +171,13 @@ namespace PokemonGoClone.ViewModels
             PlayerItems = Player.Items;
 
             // Create BannedItem table
+            TypeOfBattle = typeOfBattle;
             BannedItems = new HashSet<string>();
-            if (typeOfBattle.Equals("Gym")) {
+            if (TypeOfBattle.Equals("Gym") || TypeOfBattle.Equals("NPC"))
+            {
                 BannedItems.Add("Pokeball");
-            } else if (typeOfBattle.Equals("")) { }
+            }
+            else if (TypeOfBattle.Equals("WildPokemon")) { }
 
             BattleLogs.Clear();
             DialogViewModel.DefaultDelegates();
@@ -234,11 +218,24 @@ namespace PokemonGoClone.ViewModels
             }
 
             var item = x as ItemModel;
+            if (BannedItems.Contains(item.ItemType))
+            {
+                DialogViewModel.PopUp($"{item.ItemType} is not allowed in {TypeOfBattle} battle! ");
+                return;
+            }
+
             var result = item.Use(Player, Opponent, PlayerPokemon, OpponentPokemon);
 
             BattleLogs.Add(new LogModel(result.Item1, Id++));
+
+            // If the battle is terminated by using item
             if (result.Item2 == true)
             {
+                if (item is PokeballModel)
+                {
+                    // ball is used successfully and the wild pokemon carrier should be remove from the collection
+                    ((MapViewModel)MainWindowViewModel.MapViewModel).Trainers.Remove(Opponent);
+                }
                 DialogViewModel.PopUp(result.Item1, EndBattle);
             } else
             {
@@ -290,31 +287,30 @@ namespace PokemonGoClone.ViewModels
 
             if (OpponentPokemon.Health == 0)
             {
-                DialogViewModel.PopUp("You Win! ", EndBattle);
+                string result = "You win. " + Reward();
+                // If this is gym battle, update the gym occupier
+                if (TypeOfBattle.Equals("Gym"))
+                {
+                    ((GymViewModel)MainWindowViewModel.GymViewModel).UpdateOccupier(Player, PlayerPokemon);
+                    result += "You are now occupying this gym. ";
+                    ((MapViewModel)MainWindowViewModel.MapViewModel).GymTimerInit();
+                }
 
                 // AI also cheats, if he loses, his pokemon is fully restored
-                OpponentPokemon.Health = OpponentPokemon.MaxHealth;
-                foreach (var Ability in OpponentPokemon.Abilities)
-                {
-                    Ability.Charge = Ability.MaxCharge;
-                }
-                // AI cheat ends
+                NPCTraining();
+
+                DialogViewModel.PopUp(result, EndBattle);
                 return true;
             }
             else if (PlayerPokemon.Health == 0)
             {
-                ((MapViewModel)MainWindowViewModel.MapViewModel).RunTimer();
-                DialogViewModel.PopUp("You Lose! ", EndBattle);
-                /* Cheat, after losing player's pokemon will fully restored and has new ability
-                PlayerPokemon.Health = PlayerPokemon.MaxHealth;
-                PlayerPokemon.AddRandomNewAbility(MainWindowViewModel.Abilities);
-
-                // Fully charge all abilities
-                foreach (var Ability in PlayerPokemon.Abilities)
+                // AI's pokemon is fully recovered if it is not gym battle
+                if (!TypeOfBattle.Equals("Gym"))
                 {
-                    Ability.Charge = Ability.MaxCharge;
+                    OpponentPokemon.Health = OpponentPokemon.MaxHealth;
                 }
-                // Cheat ends*/
+
+                DialogViewModel.PopUp("You Lose! ", EndBattle);
                 return false;
             }
             else
@@ -322,6 +318,31 @@ namespace PokemonGoClone.ViewModels
                 return null;
             }
         }
+        private string Reward()
+        {
+            string result = "List of Reward: ";
+            double itemChance = Rng.NextDouble();
+            if (itemChance <= 0.2)
+            {
+                var item = MainWindowViewModel.Items[Rng.Next(MainWindowViewModel.Items.Count)];
+                Player.AddItem(item);
+                result += $"{item.Name}, and ";
+            }
+
+            int candy = Rng.Next(PlayerPokemon.Health, (int)(1.1 * PlayerPokemon.Health));
+            Player.Candy += candy;
+            result += $"{candy} Candy. ";
+            return result;
+
+        }
+        private void NPCTraining()
+        {
+            OpponentPokemon.Level++;
+            int add = Rng.Next(1, OpponentPokemon.MaxHealthPerLevel + 1);
+            OpponentPokemon.MaxHealth += add;
+            OpponentPokemon.Health = OpponentPokemon.MaxHealth;
+        }
+
         private void AFK(object x)
         {
             BattleLogs.Add(new LogModel("You chose to AFK. ", Id++));

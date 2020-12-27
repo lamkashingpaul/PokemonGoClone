@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using PokemonGoClone.Models;
 
 namespace PokemonGoClone.ViewModels {
     class GymViewModel : ViewModelBase {
@@ -20,6 +21,9 @@ namespace PokemonGoClone.ViewModels {
         private TrainerModel _currentOccupier;
         private PokemonModel _currentPokemon;
         private TrainerModel _player;
+
+        private Random _rng;
+
         private ICommand _challangePlayerCommand;
         private ICommand _selectedPokemonCommand;
 
@@ -34,6 +38,7 @@ namespace PokemonGoClone.ViewModels {
         public GymViewModel(MainWindowViewModel mainWindowViewModel) {
             MainWindowViewModel = mainWindowViewModel;
             DialogViewModel = (DialogViewModel)MainWindowViewModel.DialogViewModel;
+            Rng = new Random();
         }
 
         //properties of GymViewModel
@@ -98,7 +103,15 @@ namespace PokemonGoClone.ViewModels {
                 OnPropertyChanged(nameof(CurrentPokemon));
             }
         }
-
+        public Random Rng
+        {
+            get { return _rng; }
+            set
+            {
+                _rng = value;
+                OnPropertyChanged(nameof(Rng));
+            }
+        }
 
         //Method of GymViewModel
         public void UpdatePlayer(TrainerModel player) {
@@ -108,11 +121,14 @@ namespace PokemonGoClone.ViewModels {
 
         public void UpdateTrainers(ObservableCollection<TrainerModel> trainers) {
             Trainers = trainers;
-            Random rnd = new Random();
-            int index1 = rnd.Next(1,Trainers.Count - 1);
-            CurrentOccupier = Trainers[index1];
-            int index2 = rnd.Next(0, Trainers[index1].Pokemons.Count);
-            CurrentPokemon = CurrentOccupier.Pokemons[index2];
+
+            var npcs = Trainers.Where(x => x.Type.Equals("NPC"));
+            int randomNPCIndex = Rng.Next(npcs.Count());
+
+            CurrentOccupier = npcs.ElementAt(randomNPCIndex);
+
+            int randomPokemonIndex = Rng.Next(CurrentOccupier.Pokemons.Count);
+            CurrentPokemon = CurrentOccupier.Pokemons[randomPokemonIndex];
         }
 
         public void SelectedPokemon(object sender) {
@@ -133,6 +149,12 @@ namespace PokemonGoClone.ViewModels {
         }
 
         public void ChallangePlayer() {
+            if (Pokemon.Health <= 0)
+            {
+                DialogViewModel.PopUp("Your pokemon cannot fight, please select other pokemon. ");
+                return;
+            }
+
             ((BattleViewModel)MainWindowViewModel.BattleViewModel).NewBattle(Player, CurrentOccupier, Pokemon, CurrentPokemon, "Gym");
             MainWindowViewModel.GoToBattleViewModel(null);
         }

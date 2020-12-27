@@ -1,0 +1,16 @@
+[
+{
+    "Name": "Cheren",
+    "Id": 1,
+    "Quote": "Hi I'm Cheren, let's have a battle!"
+},
+{
+    "Name": "Ghetsis",
+    "Id": 2,
+    "Quote": "Hi I'm Ghetsis, let's have a battle!"
+},
+{
+    "Name": "Iris",
+    "Id": 3,
+    "Quote": "Hi I'm Iris, let's have a battle!"
+}]

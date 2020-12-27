@@ -3,6 +3,7 @@ using PokemonGoClone.Models.Pokemons;
 using PokemonGoClone.Models.Trainers;
 using PokemonGoClone.Utilities;
 using System;
+using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -213,39 +214,21 @@ namespace PokemonGoClone.ViewModels
         }
         public void Evolve() {
             Random rnd = new Random();
-            int number = rnd.Next(0, Pokemon.EvolveId.Length);
-            PokemonModel tmp = new PokemonModel(MainWindowViewModel.Pokemons[Pokemon.EvolveId[number] - 1].Name,
-                                                Pokemon.EvolveId[number],
-                                                Pokemon.Description,
-                                                1,
-                                                MainWindowViewModel.Pokemons[Pokemon.EvolveId[number] - 1].MaxLevel,
-                                                Pokemon.MaxHealth,
-                                                MainWindowViewModel.Pokemons[Pokemon.EvolveId[number] - 1].MaxHealthPerLevel,
-                                                Pokemon.Accuracy,
-                                                MainWindowViewModel.Pokemons[Pokemon.EvolveId[number] - 1].EvolveId,
-                                                MainWindowViewModel.Pokemons[Pokemon.EvolveId[number] - 1].EvolveCost,
-                                                MainWindowViewModel.Pokemons[Pokemon.EvolveId[number] - 1].PowerUpCostBase,
-                                                MainWindowViewModel.Pokemons[Pokemon.EvolveId[number] - 1].PowerUpCostPerLevel,
-                                                null
-                                                );
-            for (int i = 0; i < Pokemon.Abilities.Count; i++) {
-                tmp.AddAbility(Pokemon.Abilities[i]);
-            }
-            string tmpName = Pokemon.Name;
-            Pokemon.Name = tmp.Name;
-            Pokemon.ImageSource = tmp.ImageSource;
-            Pokemon.Id = tmp.Id;
-            Pokemon.Level = 1;
-            Pokemon.Health = tmp.MaxHealth;
-            Pokemon.MaxLevel = tmp.MaxLevel;
-            Pokemon.MaxHealthPerLevel = tmp.MaxHealthPerLevel;
-            Pokemon.EvolveId = tmp.EvolveId;
-            Pokemon.EvolveCost = tmp.EvolveCost;
-            Pokemon.PowerUpCostBase = tmp.PowerUpCostBase;
-            Pokemon.PowerUpCostPerLevel = tmp.PowerUpCostPerLevel;
-            Player.Stardust -= EvolveCost;
+
+            int originalPokemonIndex = Player.Pokemons.IndexOf(Pokemon);
+            int evolveId = Pokemon.EvolveId[rnd.Next(0, Pokemon.EvolveId.Length)];
+            var newPokemon = (PokemonModel)MainWindowViewModel.Pokemons.Find(x => x.Id == evolveId).Clone();
+            
+            newPokemon.Abilities = Pokemon.Abilities;
+            newPokemon.AddRandomNewAbility(MainWindowViewModel.Abilities);
+
+            string originalPokemon = Pokemon.Name;
             DefaultName = Pokemon.Name;
-            DialogViewModel.PopUp($"You have successfully evolved {tmpName} to {Pokemon.Name}");
+            Player.Pokemons[originalPokemonIndex] = newPokemon;
+
+            Player.Stardust -= EvolveCost;
+            Pokemon = newPokemon;
+            DialogViewModel.PopUp($"You have successfully evolved {originalPokemon} to {Pokemon.Name}. ");
         }
         public bool PowerUpButton() {
             if (DialogViewModel.IsVisible) {

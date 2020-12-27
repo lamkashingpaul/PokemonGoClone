@@ -30,7 +30,7 @@ namespace PokemonGoClone.ViewModels
             }
             else
             {
-                ((BattleViewModel)MainWindowViewModel.BattleViewModel).NewBattle(Player, Target, "");
+                ((BattleViewModel)MainWindowViewModel.BattleViewModel).NewBattle(Player, Target, Player.Pokemons[0], Target.Pokemons[0], Target.Type);
                 DialogViewModel.IsVisible = false;
                 MainWindowViewModel.GoToBattleViewModel(null);
             }
@@ -43,8 +43,7 @@ namespace PokemonGoClone.ViewModels
         }
         public void NotAccept(object x) {
             // You may want to do some update before going into GymViewModel
-            DialogViewModel.PopUp("You must accept the Battle", NotAccept, EnterGym);            
-            
+            DialogViewModel.PopUp("You must accept the Battle", NotAccept, EnterGym);
         }
 
 
@@ -57,10 +56,14 @@ namespace PokemonGoClone.ViewModels
         // All fields of MapViewModel
         private MainWindowViewModel _mainWindowViewMode;
         private DialogViewModel _dialogViewModel;
-        private DispatcherTimer _timer;
+        private DispatcherTimer _gymTimer;
+        private DispatcherTimer _spawnTimer;
+
+        private Random _rng;
 
         private const int _col = 11;
         private const int _row = 11;
+        private const int _maxWildPokemon = 7;
 
         public TrainerModel Player;
         public TrainerModel Target;
@@ -124,10 +127,33 @@ namespace PokemonGoClone.ViewModels
         {
             get { return _row; }
         }
-        public DispatcherTimer Timer {
-            get { return _timer; }
+        public int MaxWildPokemon
+        {
+            get { return _maxWildPokemon; }
+        }
+        public Random Rng
+        {
+            get { return _rng; }
+            set
+            {
+                _rng = value;
+                OnPropertyChanged(nameof(Rng));
+            }
+        }
+        public DispatcherTimer GymTimer {
+            get { return _gymTimer; }
             set { 
-                _timer = value;
+                _gymTimer = value;
+                OnPropertyChanged(nameof(GymTimer));
+            }
+        }
+        public DispatcherTimer SpawnTimer
+        {
+            get { return _spawnTimer; }
+            set
+            {
+                _spawnTimer = value;
+                OnPropertyChanged(nameof(SpawnTimer));
             }
         }
 
@@ -136,13 +162,15 @@ namespace PokemonGoClone.ViewModels
         {
             MainWindowViewModel = mainWindowViewModel;
             DialogViewModel = (DialogViewModel)MainWindowViewModel.DialogViewModel;
+            Rng = new Random();
+            GymTimer = new DispatcherTimer();
+            SpawnTimer = new DispatcherTimer();
         }
 
         // Game initialization for new game
         public void GameInitialization(string name, int choice)
         {
             LoadMap();
-
 
             // Create player
             // Note that the player is always the Trainers[0]
@@ -151,15 +179,14 @@ namespace PokemonGoClone.ViewModels
             {
                 new TrainerModel(name, "Player", 1)
                 {
-                    XCoordinate = ROW / 2,
+                    XCoordinate = ROW / 2 + 1,
                     YCoordinate = COL / 2,
-                    XFacing = ROW / 2 + 1,
+                    XFacing = ROW / 2 + 2,
                     YFacing = COL / 2,
                 }
             };
 
             Player = Trainers[0];
-
 
             // Add Pokemon to player
             // Add all pokemon to player if there is cheat code
@@ -189,10 +216,9 @@ namespace PokemonGoClone.ViewModels
             ((ShopViewModel)MainWindowViewModel.ShopViewModel).UpdatePlayer(Player);
             ((GymViewModel)MainWindowViewModel.GymViewModel).UpdatePlayer(Player);
 
-            //Initialize the timer
-            Timer = new DispatcherTimer();
-            RunTimer();
-                       
+            //Initialize the timers
+            GymTimerInit();
+            SpawnTimerInit();
 
             // Add more NPC trainers
             LoadOtherTrainers();
@@ -227,6 +253,11 @@ namespace PokemonGoClone.ViewModels
             ((ItemViewModel)MainWindowViewModel.ItemViewModel).UpdatePlayer(Player);
             ((ShopViewModel)MainWindowViewModel.ShopViewModel).UpdatePlayer(Player);
             ((GymViewModel)MainWindowViewModel.GymViewModel).UpdatePlayer(Player);
+            ((GymViewModel)MainWindowViewModel.GymViewModel).UpdateTrainers(Trainers);
+
+            //Initialize the timers
+            GymTimerInit();
+            SpawnTimerInit();
 
             // Create CompositeCollection from view binding
             Grid = new CompositeCollection
@@ -281,55 +312,50 @@ namespace PokemonGoClone.ViewModels
 
         private void LoadOtherTrainers()
         {
-            int i = 1;
-            while (true)
+            string json;
+            Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("PokemonGoClone.Resources.Trainers.trainers.json");
+            if (stream != null)
             {
-                string json;
-                Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("PokemonGoClone.Resources.Trainers." + $"{i:D3}.json");
-                if (stream != null)
+                using (var reader = new StreamReader(stream, Encoding.Default))
                 {
-                    using (var reader = new StreamReader(stream, Encoding.Default))
-                    {
-                        json = reader.ReadToEnd();
-                    }
+                    json = reader.ReadToEnd();
+                }
 
-                    var values = (JObject)JsonConvert.DeserializeObject(json);
-
-                    var rng = new Random();
+                var jArray = JArray.Parse(json);
+                
+                foreach(var obj in jArray)
+                {
                     int randomX, randomY;
                     do
                     {
-                        randomX = rng.Next(1, ROW - 1);
-                        randomY = rng.Next(1, ROW - 1);
+                        randomX = Rng.Next(1, ROW - 1);
+                        randomY = Rng.Next(1, ROW - 1);
                     } while (Trainers.Where(x => x.XCoordinate == randomX && x.YCoordinate == randomY).FirstOrDefault() != null);
 
-                    TrainerModel trainer = new TrainerModel(values["Name"].Value<string>(), "NPC", i)
+                    TrainerModel trainer = new TrainerModel(obj["Name"].Value<string>(), "NPC", obj["Id"].Value<int>())
                     {
                         XCoordinate = randomX,
                         YCoordinate = randomY,
-                        Quote = values["Quote"].Value<string>()
+                        Quote = obj["Quote"].Value<string>()
                     };
-                                        
-                    int randomPokemon = rng.Next(MainWindowViewModel.Pokemons.Count) + 1;
+
+                    int randomPokemon;
+                    do
+                    {
+                        randomPokemon = Rng.Next(MainWindowViewModel.Pokemons.Count) + 1;
+                    } while (MainWindowViewModel.BeastsId.Contains(randomPokemon));
+
                     trainer.AddPokemon((PokemonModel)MainWindowViewModel.Pokemons.Find(x => x.Id == randomPokemon).Clone());
                     Trainers.Add(trainer);
-
-                    i += 1;
-                }
-                else
-                {
-                    break;
                 }
             }
-
         }
 
         private void LoadGym() {
-            var rnd = new Random();
             int randomX, randomY;
             do {
-                randomX = rnd.Next(1, ROW - 1);
-                randomY = rnd.Next(1, ROW - 1);
+                randomX = Rng.Next(1, ROW - 1);
+                randomY = Rng.Next(1, ROW - 1);
             } while (Trainers.Where(x => x.XCoordinate == randomX && x.YCoordinate == randomY).FirstOrDefault() != null);
             TrainerModel gym = new TrainerModel("Gym", "Gym", 999) {
                 XCoordinate = randomX,
@@ -337,7 +363,6 @@ namespace PokemonGoClone.ViewModels
             };
 
             Trainers.Add(gym);
-
         }
 
         // Random Wild Pokemon Spawn
@@ -395,9 +420,8 @@ namespace PokemonGoClone.ViewModels
                 {
                     return;
                 }
-                else if (Target.Type == "NPC")
+                else if (Target.Type == "NPC" || Target.Type == "WildPokemon")
                 {
-                    Timer.Stop();
                     DialogViewModel.PopUp(Target.Quote, null, AcceptBattle);
                 } else if (Target.Type == "Gym")
                 {
@@ -419,23 +443,83 @@ namespace PokemonGoClone.ViewModels
             MainWindowViewModel.GoToShopViewModel(null);
         }
 
-        public void RunTimer() {
-            if (((GymViewModel)MainWindowViewModel.GymViewModel).Player == ((GymViewModel)MainWindowViewModel.GymViewModel).CurrentOccupier) {
-                Random rnd = new Random();
-                int time = rnd.Next(300, 600);
-                Timer.Interval = new TimeSpan(0, 0, time);
-                Timer.Tick += TimeCount;
-                Timer.Start();
+        public void GymTimerInit()
+        {
+            if (((GymViewModel)MainWindowViewModel.GymViewModel).CurrentOccupier == Player) {
+                //int time = Rng.Next(300, 600);
+                int time = 5;   // Debug
+                GymTimer.Interval = new TimeSpan(0, 0, time);
+                GymTimer.Tick += GymTimerCount;
+                GymTimer.Start();
             } else { 
-                //nothing
+                // do nothing
+            }
+        }
+
+        public void GymTimerCount(object sender, EventArgs e) {
+            DialogViewModel.PopUp("Someone challange you! You must accept", NotAccept, EnterGym);
+            GymTimer.Stop();
+        }
+
+        public void SpawnTimerInit()
+        {
+            int spawnTimer = Rng.Next(30, 60);
+            SpawnTimer.Interval = new TimeSpan(0, 0, spawnTimer);
+            SpawnTimer.Tick += SpawnTimerCount;
+            SpawnTimer.Start();
+        }
+        public void SpawnTimerCount(object sender, EventArgs e)
+        {
+            // Check the total number of wild pokemon in the map
+            int numberOfWildPokmeon = Trainers.Where(x => x.Type.Equals("WildPokemon")).Count();
+
+            double randomSpawnChane = 0.75;
+            double randomDestoryChane = 0.25;
+
+            // If the map is full of pokmeon
+            if (numberOfWildPokmeon >= MaxWildPokemon)
+            {
+                randomSpawnChane = 0;
+                randomDestoryChane = 0.75;
             }
 
-        }
+            // Random spawn
+            if (Rng.NextDouble() <= randomSpawnChane)
+            {
+                int wildPokemonId = Rng.Next(MainWindowViewModel.Pokemons.Count) + 1;
+                var wildPokemon = MainWindowViewModel.Pokemons[wildPokemonId];
 
-        public void TimeCount(object sender, EventArgs e) {
-            DialogViewModel.PopUp("Someone challange you! You must accept", NotAccept, EnterGym);
-            Timer.Stop();
-        }
+                int randomX, randomY;
+                do
+                {
+                    randomX = Rng.Next(1, ROW - 1);
+                    randomY = Rng.Next(1, ROW - 1);
+                } while (Trainers.Where(x => x.XCoordinate == randomX && x.YCoordinate == randomY).FirstOrDefault() != null);
 
+                TrainerModel wildPokemonCarrier = new TrainerModel($"newPokemon", "WildPokemon", 0)
+                {
+                    Quote = $"It is {wildPokemon.Name} (Id: {wildPokemon.Id}). Do you want to catch it? ",
+                    XCoordinate = randomX,
+                    YCoordinate = randomY,
+                    ImageSource = wildPokemon.ImageSource,
+                };
+                wildPokemonCarrier.AddPokemon((PokemonModel)wildPokemon.Clone());
+                Trainers.Add(wildPokemonCarrier);
+            }
+
+            // Random destroy oldest pokemon
+            if (Rng.NextDouble() <= randomDestoryChane)
+            {
+                var randomWildPokemonCarrier = Trainers.Where(x => x.Type.Equals("WildPokemon")).FirstOrDefault();
+                if(randomWildPokemonCarrier != null)
+                {
+                    Trainers.Remove(randomWildPokemonCarrier);
+                }
+            }
+
+            // Update time interval for next random spawn
+            int spawnTimer = Rng.Next(30, 60);
+            SpawnTimer.Interval = new TimeSpan(0, 0, spawnTimer);
+        }
     }
 }

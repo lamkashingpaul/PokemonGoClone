@@ -23,6 +23,8 @@ namespace PokemonGoClone.ViewModels
         public List<PokemonModel> Pokemons { get; private set; }   // Pokemon data
         public List<AbilityModel> Abilities { get; private set; }   // Abilities data
         public List<ItemModel> Items { get; private set; }   // Items data
+        public List<int> BeastsId { get; private set; }   // Beasts Pokemon Id
+
         public ObservableCollection<string> Saves { get; set; }   // List of *.pkmgc saves
 
         public string Name;   // Name of Player
@@ -123,6 +125,7 @@ namespace PokemonGoClone.ViewModels
             Abilities = new List<AbilityModel>();
             Items = new List<ItemModel>();
             Pokemons = new List<PokemonModel>();
+            BeastsId = new List<int>();
 
             LoadAbilities(Abilities);
             LoadItems(Items);
@@ -191,7 +194,6 @@ namespace PokemonGoClone.ViewModels
                                                             obj["Accuracy"].Value<double>());
                     abilities.Add(ability);
                 }
-
             }
         }
         private void LoadItems(List<ItemModel> items)
@@ -278,6 +280,8 @@ namespace PokemonGoClone.ViewModels
                     pokemons.Add(pokemon);
                 }
             }
+
+            BeastsId = new List<int>() { 144, 145, 146, 150, 151 };
         }
 
         // All properties of views and viewmodels
@@ -544,6 +548,7 @@ namespace PokemonGoClone.ViewModels
         }
         public void GoToMapViewModel(object x)
         {
+            ((MapViewModel)MapViewModel).GymTimer.Start();
             CurrentViewModel = MapViewModel;
             CurrentView = MapView;
         }
@@ -578,6 +583,7 @@ namespace PokemonGoClone.ViewModels
         }
         public void GoToBattleViewModel(object x)
         {
+            ((MapViewModel)MapViewModel).GymTimer.Stop();
             CurrentViewModel = BattleViewModel;
             CurrentView = BattleView;
         }
