@@ -161,10 +161,6 @@ namespace PokemonGoClone.ViewModels
             Random rnd = new Random();
             int x = rnd.Next(0, MainWindowViewModel.Pokemons.Count);
             int lucky = rnd.Next(0, 10000);
-            //cheat
-            lucky = 8888;
-            x = 150;
-            //cheat end
             PokemonModel pokemon = MainWindowViewModel.Pokemons[x];
             if (((pokemon.Id >= 144 && pokemon.Id <= 146) || (pokemon.Id >= 150 && pokemon.Id <= 151)) && lucky == 8888) { //special Pokemon
                 pokemon.Accuracy = 1;
