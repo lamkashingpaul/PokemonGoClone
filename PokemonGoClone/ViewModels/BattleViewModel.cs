@@ -293,6 +293,7 @@ namespace PokemonGoClone.ViewModels
                 {
                     ((GymViewModel)MainWindowViewModel.GymViewModel).UpdateOccupier(Player, PlayerPokemon);
                     result += "You are now occupying this gym. ";
+                    PlayerPokemon.Health = PlayerPokemon.MaxHealth;
                     ((MapViewModel)MainWindowViewModel.MapViewModel).GymTimerInit();
                 }
 

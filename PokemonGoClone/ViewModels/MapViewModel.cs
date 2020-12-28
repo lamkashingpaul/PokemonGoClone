@@ -41,9 +41,16 @@ namespace PokemonGoClone.ViewModels
             DialogViewModel.IsVisible = false;
             MainWindowViewModel.GoToGymViewModel(null);
         }
+        public void EnterBattle(object x) {
+            // You may want to do some update before going into GymViewModel
+            DialogViewModel.IsVisible = false;
+            ((GymViewModel)MainWindowViewModel.GymViewModel).ChallangePlayer();
+            MainWindowViewModel.GoToBattleViewModel(null);
+
+        }
         public void NotAccept(object x) {
             // You may want to do some update before going into GymViewModel
-            DialogViewModel.PopUp("You must accept the Battle", NotAccept, EnterGym);
+            DialogViewModel.PopUp("You must accept the Battle", NotAccept, EnterBattle);
         }
 
 
@@ -457,7 +464,7 @@ namespace PokemonGoClone.ViewModels
         }
 
         public void GymTimerCount(object sender, EventArgs e) {
-            DialogViewModel.PopUp("Someone challange you! You must accept", NotAccept, EnterGym);
+            DialogViewModel.PopUp("Someone challange you! You must accept", NotAccept, EnterBattle);
             GymTimer.Stop();
         }
 

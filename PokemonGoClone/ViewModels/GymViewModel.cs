@@ -149,14 +149,23 @@ namespace PokemonGoClone.ViewModels {
         }
 
         public void ChallangePlayer() {
-            if (Pokemon.Health <= 0)
-            {
-                DialogViewModel.PopUp("Your pokemon cannot fight, please select other pokemon. ");
-                return;
+            if (CurrentOccupier != Player) {
+                if (Pokemon.Health <= 0) {
+                    DialogViewModel.PopUp("Your pokemon cannot fight, please select other pokemon. ");
+                    return;
+                }
+
+                ((BattleViewModel)MainWindowViewModel.BattleViewModel).NewBattle(Player, CurrentOccupier, Pokemon, CurrentPokemon, "Gym");
+                MainWindowViewModel.GoToBattleViewModel(null);
+            } else {
+                Random rnd = new Random();
+                TrainerModel NewPlayer = MainWindowViewModel.Trainers[rnd.Next(1, Trainers.Count - 1)];
+                ((BattleViewModel)MainWindowViewModel.BattleViewModel).NewBattle(Player, NewPlayer, CurrentPokemon, NewPlayer.Pokemons[0], "Gym");
+                MainWindowViewModel.GoToBattleViewModel(null);
             }
 
-            ((BattleViewModel)MainWindowViewModel.BattleViewModel).NewBattle(Player, CurrentOccupier, Pokemon, CurrentPokemon, "Gym");
-            MainWindowViewModel.GoToBattleViewModel(null);
+
         }
+
     }
 }
