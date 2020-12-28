@@ -52,6 +52,8 @@ namespace PokemonGoClone.ViewModels
         private object _battleView;
         private object _saveView;
         private object _loadView;
+        private object _receptionView;
+        private object _racecourseView;
         private object _currentView;
 
         // All availabe viewmodels
@@ -68,6 +70,8 @@ namespace PokemonGoClone.ViewModels
         private object _battleViewModel;
         private object _saveViewModel;
         private object _loadViewModel;
+        private object _receptionViewModel;
+        private object _racecourseViewModel;
         private object _currentViewModel;
 
         // All ICommands to navigate between views and viewmodels
@@ -80,6 +84,10 @@ namespace PokemonGoClone.ViewModels
         private ICommand _goToBattleViewModelCommand;
         private ICommand _goToSaveViewModelCommand;
         private ICommand _goToLoadViewModelCommand;
+        private ICommand _goToReceptionViewModelCommand;
+        private ICommand _goToRacecourseViewModelCommand;
+
+        private Random _rng;
 
         // All properties of ICommands for views and viewmodels navigation
         public ICommand GoToStartViewModelCommand
@@ -117,10 +125,20 @@ namespace PokemonGoClone.ViewModels
         {
             get { return _goToBattleViewModelCommand ?? (_goToBattleViewModelCommand = new RelayCommand(x => { GoToBattleViewModel(x); })); }
         }
+        public ICommand GoToReceptionViewModelCommand
+        {
+            get { return _goToReceptionViewModelCommand ?? (_goToReceptionViewModelCommand = new RelayCommand(x => { GoToReceptionViewModel(x); })); }
+        }
+        public ICommand GoToRacecourseViewModelCommand
+        {
+            get { return _goToRacecourseViewModelCommand ?? (_goToRacecourseViewModelCommand = new RelayCommand(x => { GoToRacecourseViewModel(x); })); }
+        }
 
         // Default constructor
         public MainWindowViewModel()
         {
+            Rng = new Random();
+
             // Load predefined game data
             Abilities = new List<AbilityModel>();
             Items = new List<ItemModel>();
@@ -146,6 +164,8 @@ namespace PokemonGoClone.ViewModels
             ShopView = new ShopView();
             LoadView = new LoadView();
             SaveView = new SaveView();
+            ReceptionView = new ReceptionView();
+            RacecourseView = new RacecourseView();
 
             DialogViewModel = new DialogViewModel(this);
             StartViewModel = new StartViewModel(this);
@@ -160,6 +180,8 @@ namespace PokemonGoClone.ViewModels
             ShopViewModel = new ShopViewModel(this);
             LoadViewModel = new LoadViewModel(this);
             SaveViewModel = new SaveViewModel(this);
+            ReceptionViewModel = new ReceptionViewModel(this);
+            RacecourseViewModel = new RacecourseViewModel(this);
 
             // Set up the startup view and viewmodels
             CurrentViewModel = StartViewModel;
@@ -190,7 +212,6 @@ namespace PokemonGoClone.ViewModels
                                                             obj["Heal"].Value<int>(),
                                                             obj["HealPerLevel"].Value<int>(),
                                                             obj["MaxCharge"].Value<int>(),
-                                                            obj["MaxChargePerLevel"].Value<int>(),
                                                             obj["Accuracy"].Value<double>());
                     abilities.Add(ability);
                 }
@@ -256,12 +277,11 @@ namespace PokemonGoClone.ViewModels
 
                 var jArray = JArray.Parse(json);
 
-                var rng = new Random();
                 List<AbilityModel> damageAbilities = Abilities.FindAll(x => x.Damage > 0);
                 foreach (var obj in jArray)
                 {
                     // Each Pokemon must have one damage ability
-                    int randomAbilityIndex = rng.Next(damageAbilities.Count);
+                    int randomAbilityIndex = Rng.Next(damageAbilities.Count);
                     PokemonModel pokemon = new PokemonModel(obj["Name"].Value<string>(),
                                                             obj["Id"].Value<int>(),
                                                             obj["Description"].Value<string>(),
@@ -285,6 +305,15 @@ namespace PokemonGoClone.ViewModels
         }
 
         // All properties of views and viewmodels
+        public Random Rng
+        {
+            get { return _rng; }
+            set
+            {
+                _rng = value;
+                OnPropertyChanged(nameof(Rng));
+            }
+        }
         public object StartView
         {
             get { return _startView; }
@@ -498,6 +527,42 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(LoadViewModel));
             }
         }
+        public object ReceptionView
+        {
+            get { return _receptionView; }
+            set
+            {
+                _receptionView = value;
+                OnPropertyChanged(nameof(ReceptionView));
+            }
+        }
+        public object ReceptionViewModel
+        {
+            get { return _receptionViewModel; }
+            set
+            {
+                _receptionViewModel = value;
+                OnPropertyChanged(nameof(ReceptionViewModel));
+            }
+        }
+        public object RacecourseView
+        {
+            get { return _racecourseView; }
+            set
+            {
+                _racecourseView = value;
+                OnPropertyChanged(nameof(RacecourseView));
+            }
+        }
+        public object RacecourseViewModel
+        {
+            get { return _racecourseViewModel; }
+            set
+            {
+                _racecourseViewModel = value;
+                OnPropertyChanged(nameof(RacecourseViewModel));
+            }
+        }
         public object DialogView
         {
             get { return _dialogView; }
@@ -596,6 +661,16 @@ namespace PokemonGoClone.ViewModels
         {
             CurrentViewModel = SaveViewModel;
             CurrentView = SaveView;
+        }
+        public void GoToReceptionViewModel(object x)
+        {
+            CurrentViewModel = ReceptionViewModel;
+            CurrentView = ReceptionView;
+        }
+        public void GoToRacecourseViewModel(object x)
+        {
+            CurrentViewModel = RacecourseViewModel;
+            CurrentView = RacecourseView;
         }
     }
 }

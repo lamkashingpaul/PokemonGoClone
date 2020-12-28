@@ -24,6 +24,8 @@ namespace PokemonGoClone.ViewModels
         private int _powerUpCost;
         private int _evolveCost;
 
+        private Random _rng;
+
         //private bool _isEnabled;
         //private bool _evolveButtonIsEnabled;
 
@@ -64,6 +66,7 @@ namespace PokemonGoClone.ViewModels
         {
             MainWindowViewModel = mainWindowViewModel;
             DialogViewModel = (DialogViewModel)MainWindowViewModel.DialogViewModel;
+            Rng = new Random();
         }
 
         //Properties of PokemonStatusViewModel
@@ -145,9 +148,18 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(EvolveCost));
             }
         }
+        public Random Rng
+        {
+            get { return _rng; }
+            private set
+            {
+                _rng = value;
+                OnPropertyChanged(nameof(Rng));
+            }
+        }
 
         //Method of PokemonStatusViewModel
-        public void Update(TrainerModel player)
+        public void UpdatePlayer(TrainerModel player)
         {
             Player = player;
         }
@@ -204,19 +216,16 @@ namespace PokemonGoClone.ViewModels
         }
 
         public void PowerUp() {
-            Random rnd = new Random();
             Pokemon.Level++;
-            int add = rnd.Next(1, Pokemon.MaxHealthPerLevel + 1);
+            int add = Rng.Next(1, Pokemon.MaxHealthPerLevel + 1);
             Pokemon.MaxHealth += add;
             Pokemon.Health = Pokemon.MaxHealth;
             Player.Candy -= PowerUpCost;
             DialogViewModel.PopUp($"You have successfully Power Up {Pokemon.Name} \n Its MaxHealth is added by {add}");
         }
         public void Evolve() {
-            Random rnd = new Random();
-
             int originalPokemonIndex = Player.Pokemons.IndexOf(Pokemon);
-            int evolveId = Pokemon.EvolveId[rnd.Next(0, Pokemon.EvolveId.Length)];
+            int evolveId = Pokemon.EvolveId[Rng.Next(Pokemon.EvolveId.Length)];
             var newPokemon = (PokemonModel)MainWindowViewModel.Pokemons.Find(x => x.Id == evolveId).Clone();
             
             newPokemon.Abilities = Pokemon.Abilities;

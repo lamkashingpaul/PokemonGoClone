@@ -13,8 +13,6 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <util:MultipleBindingConverter x:Key="MultipleBindingConverter"></util:MultipleBindingConverter>
-            <ResourceDictionary.MergedDictionaries>
-            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
 

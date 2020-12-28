@@ -262,14 +262,18 @@ namespace PokemonGoClone.ViewModels
                     // Pokemon must have at least one damage spell by default
                     abilityId = damageAbilities[Opponent.Rng.Next(damageAbilities.Count)].Id;
 
-                    // If AI is in danger, he always try to heal if it is possible
+                    // If AI is in danger, he has 50% of chance to heal if it is possible
                     if (OpponentPokemon.Health / (double)OpponentPokemon.MaxHealth < 0.4 && healAbilities.Count > 0)
                     {
-                        abilityId = healAbilities[Opponent.Rng.Next(healAbilities.Count)].Id;
+                        double healChance = Rng.NextDouble();
+                        if (healChance <= 0.5)
+                        {
+                            abilityId = healAbilities[Opponent.Rng.Next(healAbilities.Count)].Id;
+                        }
                     }
 
                     var ability = OpponentPokemon.Abilities.Where(x => x.Id == abilityId).FirstOrDefault();
-                    ability.Charge += 1;   // AI's ability also has charge
+                    ability.Charge += 1;   // AI's ability always has charge
 
                     result = ability.Use(Opponent, Player, OpponentPokemon, PlayerPokemon);
                 }
@@ -297,7 +301,7 @@ namespace PokemonGoClone.ViewModels
                     ((MapViewModel)MainWindowViewModel.MapViewModel).GymTimerInit();
                 }
 
-                // AI also cheats, if he loses, his pokemon is fully restored
+                // AI will train his pokrmon if he loses. His pokemon is trained and level up
                 NPCTraining();
 
                 DialogViewModel.PopUp(result, EndBattle);
@@ -305,7 +309,7 @@ namespace PokemonGoClone.ViewModels
             }
             else if (PlayerPokemon.Health == 0)
             {
-                // AI's pokemon is fully recovered if it is not gym battle
+                // If it is not gym battle, AI's pokemon is fully recovered aftering he wins.
                 if (!TypeOfBattle.Equals("Gym"))
                 {
                     OpponentPokemon.Health = OpponentPokemon.MaxHealth;

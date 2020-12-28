@@ -34,7 +34,6 @@ namespace PokemonGoClone.Models.Abilities
 
         private int _charge;
         private int _maxCharge;
-        private int _maxChargePerLevel;
 
         private double _accuracy;
 
@@ -47,7 +46,6 @@ namespace PokemonGoClone.Models.Abilities
                             int heal,
                             int healPerLevel,
                             int maxCharge,
-                            int maxChargePerLevel,
                             double accuracy)
         {
             Name = name;
@@ -58,7 +56,6 @@ namespace PokemonGoClone.Models.Abilities
             Heal = heal;
             HealPerLevel = healPerLevel;
             MaxCharge = maxCharge;
-            MaxChargePerLevel = maxChargePerLevel;
             Charge = MaxCharge;
             Accuracy = accuracy;
         }
@@ -85,7 +82,7 @@ namespace PokemonGoClone.Models.Abilities
                 {
                     int originalHealth = playerPokemon.Health;
                     playerPokemon.Health = Math.Min(playerPokemon.MaxHealth, playerPokemon.Health + originalHealth);
-                    result += $"\"{playerPokemon.Name}\" healed [{totalHeal}] HP itself using [{Name}]. ";
+                    result += $"\"{playerPokemon.Name}\" healed [{playerPokemon.Health - originalHealth}] HP itself using [{Name}]. ";
                 }
 
                 // This ability has speical effect
@@ -192,15 +189,6 @@ namespace PokemonGoClone.Models.Abilities
                 OnPropertyChanged(nameof(MaxCharge));
             }
         }
-        public int MaxChargePerLevel
-        {
-            get { return _maxChargePerLevel; }
-            set
-            {
-                _maxChargePerLevel = value;
-                OnPropertyChanged(nameof(MaxChargePerLevel));
-            }
-        }
 
         public double Accuracy
         {
@@ -210,6 +198,10 @@ namespace PokemonGoClone.Models.Abilities
                 _accuracy = value;
                 OnPropertyChanged(nameof(Accuracy));
             }
+        }
+        public void FullyRestore()
+        {
+            Charge = MaxCharge;
         }
 
         // Return a deep copy of this abitliy

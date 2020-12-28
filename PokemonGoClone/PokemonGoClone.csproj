@@ -103,6 +103,8 @@
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\MapViewModel.cs" />
     <Compile Include="ViewModels\PokemonStatusViewModel.cs" />
+    <Compile Include="ViewModels\RacecourseViewModel.cs" />
+    <Compile Include="ViewModels\ReceptionViewModel.cs" />
     <Compile Include="ViewModels\SaveViewModel.cs" />
     <Compile Include="ViewModels\ShopViewModel.cs" />
     <Compile Include="ViewModels\StartViewModel.cs" />
@@ -132,6 +134,12 @@
     </Compile>
     <Compile Include="Views\PokemonStatusView.xaml.cs">
       <DependentUpon>PokemonStatusView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RacecourseView.xaml.cs">
+      <DependentUpon>RacecourseView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReceptionView.xaml.cs">
+      <DependentUpon>ReceptionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SaveView.xaml.cs">
       <DependentUpon>SaveView.xaml</DependentUpon>
@@ -186,6 +194,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PokemonStatusView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RacecourseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ReceptionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -424,8 +440,12 @@
     <Resource Include="Images\Items\Potions\002002.png" />
     <Resource Include="Images\Items\Potions\002003.png" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Resource Include="Images\Gym\999.png" />
+    <Resource Include="Images\Gyms\001S.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Receptions\001S.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

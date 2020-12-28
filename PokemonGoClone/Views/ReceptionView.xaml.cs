@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,12 +14,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PokemonGoClone.Views {
+namespace PokemonGoClone.Views
+{
     /// <summary>
-    /// Interaction logic for GymView.xaml
+    /// Interaction logic for ReceptionView.xaml
     /// </summary>
-    public partial class GymView : UserControl {
-        public GymView() {
+    public partial class ReceptionView : UserControl
+    {
+        public ReceptionView()
+        {
             InitializeComponent();
             Focusable = true;
             Loaded += (s, e) => Keyboard.Focus(this);

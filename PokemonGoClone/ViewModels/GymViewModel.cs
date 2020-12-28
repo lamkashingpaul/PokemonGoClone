@@ -158,14 +158,13 @@ namespace PokemonGoClone.ViewModels {
                 ((BattleViewModel)MainWindowViewModel.BattleViewModel).NewBattle(Player, CurrentOccupier, Pokemon, CurrentPokemon, "Gym");
                 MainWindowViewModel.GoToBattleViewModel(null);
             } else {
-                Random rnd = new Random();
-                TrainerModel NewPlayer = MainWindowViewModel.Trainers[rnd.Next(1, Trainers.Count - 1)];
-                ((BattleViewModel)MainWindowViewModel.BattleViewModel).NewBattle(Player, NewPlayer, CurrentPokemon, NewPlayer.Pokemons[0], "Gym");
+                var npcTrainers = MainWindowViewModel.Trainers.Where(x => x.Type.Equals("NPC"));
+                int newOccupierIndex = Rng.Next(npcTrainers.Count());
+                TrainerModel newOccupier = npcTrainers.ElementAt(newOccupierIndex);
+
+                ((BattleViewModel)MainWindowViewModel.BattleViewModel).NewBattle(Player, newOccupier, CurrentPokemon, newOccupier.Pokemons[0], "Gym");
                 MainWindowViewModel.GoToBattleViewModel(null);
             }
-
-
         }
-
     }
 }

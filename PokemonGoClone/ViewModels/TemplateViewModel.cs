@@ -1,4 +1,6 @@
-﻿namespace PokemonGoClone.ViewModels
+﻿using System;
+
+namespace PokemonGoClone.ViewModels
 {
     // This is a template for new ViewModel, not used by the program actually
     // Each viewmodel should be a child of MainWindowViewModel
@@ -8,11 +10,13 @@
     {
         private MainWindowViewModel _mainWindowViewMode;
         private DialogViewModel _dialogViewModel;
+        private Random _rng;
 
         public TemplateViewModel(MainWindowViewModel mainWindowViewModel)
         {
             MainWindowViewModel = mainWindowViewModel;
             DialogViewModel = (DialogViewModel)MainWindowViewModel.DialogViewModel;
+            Rng = new Random();
         }
         public MainWindowViewModel MainWindowViewModel
         {
@@ -30,6 +34,15 @@
             {
                 _dialogViewModel = value;
                 OnPropertyChanged(nameof(DialogViewModel));
+            }
+        }
+        public Random Rng
+        {
+            get { return _rng; }
+            set
+            {
+                _rng = value;
+                OnPropertyChanged(nameof(Rng));
             }
         }
     }

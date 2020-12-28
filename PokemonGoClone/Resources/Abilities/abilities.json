@@ -8,7 +8,6 @@
     "Heal": 0,
     "HealPerLevel": 0,
     "MaxCharge": 35,
-    "MaxChargePerLevel": 1,
     "Accuracy": 0.9,
 },
 {
@@ -20,7 +19,6 @@
     "Heal": 0,
     "HealPerLevel": 0,
     "MaxCharge": 15,
-    "MaxChargePerLevel": 1,
     "Accuracy": 0.9,
 },
 {
@@ -32,7 +30,6 @@
     "Heal": 0,
     "HealPerLevel": 0,
     "MaxCharge": 99,
-    "MaxChargePerLevel": 1,
     "Accuracy": 0.2,
 },
 {
@@ -44,6 +41,5 @@
     "Heal": 50,
     "HealPerLevel": 10,
     "MaxCharge": 99,
-    "MaxChargePerLevel": 1,
     "Accuracy": 0.2,
 }]

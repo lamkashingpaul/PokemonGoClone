@@ -28,15 +28,11 @@ namespace PokemonGoClone.Models.Trainers
             Health = 128;
 
             Candy = 5000;
-            Stardust = 0;
+            Stardust = 1;
 
             Facing = 'S';
 
-            if (Type == "Gym") {
-                ImageSource = $"/PokemonGoClone;component/Images/Gym/999.png";
-            } else {
-                ImageSource = $"/PokemonGoClone;component/Images/{Type}s/{Id:D3}{Facing}.png";
-            }
+            ImageSource = $"/PokemonGoClone;component/Images/{Type}s/{Id:D3}{Facing}.png";
             
             Pokemons = new ObservableCollection<PokemonModel>();
             Items = new ObservableCollection<ItemModel>();

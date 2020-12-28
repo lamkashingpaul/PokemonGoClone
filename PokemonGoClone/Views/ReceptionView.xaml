@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="PokemonGoClone.Views.ReceptionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PokemonGoClone.Views"
+             xmlns:util="clr-namespace:PokemonGoClone.Utilities"
+             mc:Ignorable="d" 
+             d:DesignHeight="480" d:DesignWidth="640"
+             Background="White"
+             FocusVisualStyle="{x:Null}">
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <util:MultipleBindingConverter x:Key="MultipleBindingConverter"></util:MultipleBindingConverter>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Reception of Racecourse" FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <DockPanel Grid.Row="0" VerticalAlignment="Center" Grid.ColumnSpan="2">
+            <TextBlock Height="50" Width="348" FontSize="35" TextAlignment="Center"/>
+            <TextBlock DockPanel.Dock="Top" FontSize="16" VerticalAlignment="Center">
+                <Run Text=" Total    Candy ($): "/>
+                <Run Text="{Binding CurrentViewModel.Player.Candy}"/>
+            </TextBlock>
+            <TextBlock DockPanel.Dock="Bottom" FontSize="16" VerticalAlignment="Center">
+                <Run Text=" Total Stardust (*): "/>
+                <Run Text="{Binding CurrentViewModel.Player.Stardust}"/>
+            </TextBlock>
+        </DockPanel>
+        <DockPanel Grid.Row="1" Grid.RowSpan="2" LastChildFill="True">
+            <TextBlock DockPanel.Dock="Top" Text="List of Racers" FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            
+            <DockPanel DockPanel.Dock="Bottom" LastChildFill="True" Height="40">
+                <TextBlock DockPanel.Dock="Left" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                    <Run Text="Your Bets" /><LineBreak/>
+                    <Run Text="(Stardust)" />
+                </TextBlock>
+                <Button DockPanel.Dock="Right" Content="Place Your Bets" Command="{Binding CurrentViewModel.PlaceBetsCommand}">
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource MultipleBindingConverter}">
+                            <Binding ElementName="Bets"/>
+                            <Binding ElementName="RacingPokemonsList" Path="SelectedItem"/>
+                        </MultiBinding>
+                    </Button.CommandParameter>
+                </Button>
+                <TextBox x:Name="Bets" FontSize="16" TextAlignment="Center" VerticalContentAlignment="Center"/>
+            </DockPanel>
+
+            <ListBox x:Name="RacingPokemonsList"
+                     ItemsSource="{Binding CurrentViewModel.RacingPokemons}"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Height="80">
+                            <Image Source="{Binding ImageSource}" HorizontalAlignment="Center"/>
+                            <TextBlock VerticalAlignment="Center" FontSize="26">
+                                <Run Text=" "/>
+                                <Run Text="{Binding Name}"/>
+                            </TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" >
+            <TextBlock FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Time"/>
+            <TextBlock FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Until Next"/>
+            <TextBlock FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Refreshment"/>
+            <TextBlock FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Center" Text=":"/>
+            <TextBlock FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding CurrentViewModel.SecondUntilRefreshment}"/>
+            <TextBlock FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Second(s)"/>
+            <TextBlock/>
+            <Button Margin="10" IsEnabled="{Binding CurrentViewModel.RefreshmentIsEnable}" Content="Have Refreshment" FontSize="26" Command="{Binding CurrentViewModel.RefreshmentCommand}"/>
+            <Button Margin="10" Content="Exit" FontSize="26" Command="{Binding CurrentViewModel.MainWindowViewModel.GoToMapViewModelCommand}"/>
+        </StackPanel>
+        
+    </Grid>
+
+    <UserControl.InputBindings>
+        <KeyBinding Command="{Binding CurrentViewModel.DialogViewModel.CloseCommand}" Key="Esc"/>
+    </UserControl.InputBindings>
+</UserControl>

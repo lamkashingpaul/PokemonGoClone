@@ -174,6 +174,15 @@ namespace PokemonGoClone.Models.Pokemons
             Abilities.Remove(ability);
         }
 
+        public void FullyRestore()
+        {
+            Health = MaxHealth;
+            foreach(var ability in Abilities)
+            {
+                ability.FullyRestore();
+            }
+        }
+
         public object Clone()
         {
             var pokemonModel = (PokemonModel)MemberwiseClone();

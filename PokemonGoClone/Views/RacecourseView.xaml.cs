@@ -13,12 +13,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PokemonGoClone.Views {
+namespace PokemonGoClone.Views
+{
     /// <summary>
-    /// Interaction logic for GymView.xaml
+    /// Interaction logic for RacecourseView.xaml
     /// </summary>
-    public partial class GymView : UserControl {
-        public GymView() {
+    public partial class RacecourseView : UserControl
+    {
+        public RacecourseView()
+        {
             InitializeComponent();
             Focusable = true;
             Loaded += (s, e) => Keyboard.Focus(this);

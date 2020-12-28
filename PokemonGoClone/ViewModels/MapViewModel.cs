@@ -24,9 +24,13 @@ namespace PokemonGoClone.ViewModels
         public void AcceptBattle(object x)
         {
             // If player's first pokemon has 0 health, it's not allowed to fight
-            if (Player.Pokemons[0].Health == 0)
+            if (Trainers.Contains(Target) == false)
             {
-                DialogViewModel.PopUp("Your lending pokemon cannot fight, please select other pokemon.");
+                DialogViewModel.PopUp("Your target is already gone. ");
+            }
+            else if (Player.Pokemons[0].Health == 0)
+            {
+                DialogViewModel.PopUp("Your lending pokemon cannot fight, please select other pokemon. ");
             }
             else
             {
@@ -40,6 +44,11 @@ namespace PokemonGoClone.ViewModels
             // You may want to do some update before going into GymViewModel
             DialogViewModel.IsVisible = false;
             MainWindowViewModel.GoToGymViewModel(null);
+        }
+        public void EnterReception(object x)
+        {
+            DialogViewModel.IsVisible = false;
+            MainWindowViewModel.GoToReceptionViewModel(null);
         }
         public void EnterBattle(object x) {
             // You may want to do some update before going into GymViewModel
@@ -186,9 +195,9 @@ namespace PokemonGoClone.ViewModels
             {
                 new TrainerModel(name, "Player", 1)
                 {
-                    XCoordinate = ROW / 2 + 1,
+                    XCoordinate = ROW / 2,
                     YCoordinate = COL / 2,
-                    XFacing = ROW / 2 + 2,
+                    XFacing = ROW / 2 + 1,
                     YFacing = COL / 2,
                 }
             };
@@ -216,18 +225,21 @@ namespace PokemonGoClone.ViewModels
                 Player.AddItem((ItemModel)MainWindowViewModel.Items[i].Clone());
             }
 
-            // Update the Bag, Item and Shop ViewModel
+            // Link Player to different ViewModels
             ((BagViewModel)MainWindowViewModel.BagViewModel).UpdatePlayer(Player);
-            ((PokemonStatusViewModel)MainWindowViewModel.PokemonStatusViewModel).Update(Player);
+            ((PokemonStatusViewModel)MainWindowViewModel.PokemonStatusViewModel).UpdatePlayer(Player);
             ((ItemViewModel)MainWindowViewModel.ItemViewModel).UpdatePlayer(Player);
             ((ShopViewModel)MainWindowViewModel.ShopViewModel).UpdatePlayer(Player);
             ((GymViewModel)MainWindowViewModel.GymViewModel).UpdatePlayer(Player);
+            ((ReceptionViewModel)MainWindowViewModel.ReceptionViewModel).UpdatePlayer(Player);
 
             //Initialize the timers
             GymTimerInit();
             SpawnTimerInit();
+            ((ReceptionViewModel)MainWindowViewModel.ReceptionViewModel).RefreshmentTimerInit();
 
             // Add more NPC trainers
+            LoadReception();
             LoadOtherTrainers();
             LoadGym();
            
@@ -254,17 +266,19 @@ namespace PokemonGoClone.ViewModels
             LoadMap();
             Trainers = trainers;
             Player = Trainers[0];
-            // Update the Bag, Item and Shop ViewModel
+            // Link Player to different ViewModels
             ((BagViewModel)MainWindowViewModel.BagViewModel).UpdatePlayer(Player);
-            ((PokemonStatusViewModel)MainWindowViewModel.PokemonStatusViewModel).Update(Player);
+            ((PokemonStatusViewModel)MainWindowViewModel.PokemonStatusViewModel).UpdatePlayer(Player);
             ((ItemViewModel)MainWindowViewModel.ItemViewModel).UpdatePlayer(Player);
             ((ShopViewModel)MainWindowViewModel.ShopViewModel).UpdatePlayer(Player);
             ((GymViewModel)MainWindowViewModel.GymViewModel).UpdatePlayer(Player);
             ((GymViewModel)MainWindowViewModel.GymViewModel).UpdateTrainers(Trainers);
+            ((ReceptionViewModel)MainWindowViewModel.ReceptionViewModel).UpdatePlayer(Player);
 
             //Initialize the timers
             GymTimerInit();
             SpawnTimerInit();
+            ((ReceptionViewModel)MainWindowViewModel.ReceptionViewModel).RefreshmentTimerInit();
 
             // Create CompositeCollection from view binding
             Grid = new CompositeCollection
@@ -316,7 +330,17 @@ namespace PokemonGoClone.ViewModels
                 }
             }
         }
-
+        private void LoadReception()
+        {
+            SafeDistance(out int randomX, out int randomY);
+            var reception = new TrainerModel("Reception", "Reception", 1)
+            {
+                XCoordinate = randomX,
+                YCoordinate = randomY,
+                Quote = $"Do you want to enter the reception of racecourse? ",
+            };
+            Trainers.Add(reception);
+        }
         private void LoadOtherTrainers()
         {
             string json;
@@ -332,13 +356,7 @@ namespace PokemonGoClone.ViewModels
                 
                 foreach(var obj in jArray)
                 {
-                    int randomX, randomY;
-                    do
-                    {
-                        randomX = Rng.Next(1, ROW - 1);
-                        randomY = Rng.Next(1, ROW - 1);
-                    } while (Trainers.Where(x => x.XCoordinate == randomX && x.YCoordinate == randomY).FirstOrDefault() != null);
-
+                    SafeDistance(out int randomX, out int randomY);
                     TrainerModel trainer = new TrainerModel(obj["Name"].Value<string>(), "NPC", obj["Id"].Value<int>())
                     {
                         XCoordinate = randomX,
@@ -359,25 +377,15 @@ namespace PokemonGoClone.ViewModels
         }
 
         private void LoadGym() {
-            int randomX, randomY;
-            do {
-                randomX = Rng.Next(1, ROW - 1);
-                randomY = Rng.Next(1, ROW - 1);
-            } while (Trainers.Where(x => x.XCoordinate == randomX && x.YCoordinate == randomY).FirstOrDefault() != null);
-            TrainerModel gym = new TrainerModel("Gym", "Gym", 999) {
+            SafeDistance(out int randomX, out int randomY);
+            TrainerModel gym = new TrainerModel("Gym", "Gym", 1) {
                 XCoordinate = randomX,
                 YCoordinate = randomY,
+                Quote = $"Do you want to enter the gym? ",
             };
 
             Trainers.Add(gym);
         }
-
-        // Random Wild Pokemon Spawn
-        private void WildPokemonSpawn()
-        {
-
-        }
-
 
         // All RelayCommands of MapViewModel
         private void Move(object sender)
@@ -433,6 +441,9 @@ namespace PokemonGoClone.ViewModels
                 } else if (Target.Type == "Gym")
                 {
                     DialogViewModel.PopUp(Target.Quote, null, EnterGym);
+                } else if (Target.Type == "Reception")
+                {
+                    DialogViewModel.PopUp(Target.Quote, null, EnterReception);
                 }
             }
         }
@@ -475,6 +486,8 @@ namespace PokemonGoClone.ViewModels
             SpawnTimer.Tick += SpawnTimerCount;
             SpawnTimer.Start();
         }
+
+        // Random Wild Pokemon Spawn
         public void SpawnTimerCount(object sender, EventArgs e)
         {
             // Check the total number of wild pokemon in the map
@@ -493,15 +506,10 @@ namespace PokemonGoClone.ViewModels
             // Random spawn
             if (Rng.NextDouble() <= randomSpawnChane)
             {
-                int wildPokemonId = Rng.Next(MainWindowViewModel.Pokemons.Count) + 1;
-                var wildPokemon = MainWindowViewModel.Pokemons[wildPokemonId];
+                int wildPokemonIndex = Rng.Next(MainWindowViewModel.Pokemons.Count);
+                var wildPokemon = MainWindowViewModel.Pokemons[wildPokemonIndex];
 
-                int randomX, randomY;
-                do
-                {
-                    randomX = Rng.Next(1, ROW - 1);
-                    randomY = Rng.Next(1, ROW - 1);
-                } while (Trainers.Where(x => x.XCoordinate == randomX && x.YCoordinate == randomY).FirstOrDefault() != null);
+                SafeDistance(out int randomX, out int randomY);
 
                 TrainerModel wildPokemonCarrier = new TrainerModel($"newPokemon", "WildPokemon", 0)
                 {
@@ -527,6 +535,39 @@ namespace PokemonGoClone.ViewModels
             // Update time interval for next random spawn
             int spawnTimer = Rng.Next(30, 60);
             SpawnTimer.Interval = new TimeSpan(0, 0, spawnTimer);
+        }
+
+        // Buildings and Trainers must separated at least by a cell to ensure their safety
+        // Wild pokemons are free to spawn anywhere however, since they aren't permanent
+        private void SafeDistance(out int xCoordinate, out int yCoordinate)
+        {
+            int[] dX = new int[] {0, -1, -1, 0, 1, 1, 1, 0, -1 };
+            int[] dY = new int[] { 0, 0, 1, 1, 1, 0, -1, -1, -1 };
+            int randomX, randomY;
+            while (true)
+            {
+                bool safe = true;
+                randomX = Rng.Next(1, ROW - 1);
+                randomY = Rng.Next(1, ROW - 1);
+
+                foreach(var neighbors in dX.Zip(dY, (x, y) => (dX: x, dY: y)))
+                {
+                    int neighborX = randomX + neighbors.dX;
+                    int neighborY = randomY + neighbors.dY;
+                    if (Trainers.Where(x => x.XCoordinate == neighborX && x.YCoordinate == neighborY).FirstOrDefault() != null)
+                    {
+                        safe = false;
+                        break;
+                    }
+                }
+
+                if (safe)
+                {
+                    break;
+                }
+            }
+            xCoordinate = randomX;
+            yCoordinate = randomY;
         }
     }
 }
