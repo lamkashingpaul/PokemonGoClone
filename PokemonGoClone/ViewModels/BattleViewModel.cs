@@ -157,15 +157,12 @@ namespace PokemonGoClone.ViewModels
             }
         }
 
-        public void NewBattle(TrainerModel player, TrainerModel opponent, PokemonModel playerPokemon, PokemonModel opponetPokemon,string typeOfBattle) {
+        public void NewBattle(TrainerModel player, TrainerModel opponent, PokemonModel playerPokemon, PokemonModel opponetPokemon, string typeOfBattle)
+        {
             Player = player;
             Opponent = opponent;
             PlayerPokemon = playerPokemon;
             OpponentPokemon = opponetPokemon;
-
-            // Test Environment, Opponent's Pokemon always starts with full HP
-            OpponentPokemon.Health = OpponentPokemon.MaxHealth;
-            // Test Environment ends
 
             PlayerPokemonAbilities = new ObservableCollection<AbilityModel>(PlayerPokemon.Abilities);
             PlayerItems = Player.Items;
@@ -237,7 +234,8 @@ namespace PokemonGoClone.ViewModels
                     ((MapViewModel)MainWindowViewModel.MapViewModel).Trainers.Remove(Opponent);
                 }
                 DialogViewModel.PopUp(result.Item1, EndBattle);
-            } else
+            }
+            else
             {
                 OpponentTurn();
             }
@@ -361,7 +359,7 @@ namespace PokemonGoClone.ViewModels
         private void Esacape(object x)
         {
             double chance = Rng.NextDouble();
-            double successfulEscape = 0.05 + (PlayerPokemon.MaxHealth) / (double)PlayerPokemon.MaxHealth / 5;
+            double successfulEscape = 0.05 + PlayerPokemon.Health / (double)PlayerPokemon.MaxHealth / 5;
             if (chance <= successfulEscape)
             {
                 DialogViewModel.PopUp("Successfully Escaped! ", EndBattle);

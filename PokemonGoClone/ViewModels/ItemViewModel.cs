@@ -1,7 +1,6 @@
 ﻿using PokemonGoClone.Models.Items;
 using PokemonGoClone.Models.Trainers;
 using PokemonGoClone.Utilities;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 

@@ -2,16 +2,14 @@
 using PokemonGoClone.Models.Trainers;
 using PokemonGoClone.Utilities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
-using PokemonGoClone.Models;
 
-namespace PokemonGoClone.ViewModels {
-    class GymViewModel : ViewModelBase {
+namespace PokemonGoClone.ViewModels
+{
+    class GymViewModel : ViewModelBase
+    {
         //field of GymViewModel
         private MainWindowViewModel _mainWindowViewModel;
         private DialogViewModel _dialogViewModel;
@@ -27,78 +25,97 @@ namespace PokemonGoClone.ViewModels {
         private ICommand _challangePlayerCommand;
         private ICommand _selectedPokemonCommand;
 
-        public ICommand ChallangePlayerCommand {
+        public ICommand ChallangePlayerCommand
+        {
             get { return _challangePlayerCommand ?? (_challangePlayerCommand = new RelayCommand(x => { ChallangePlayer(); }, x => EnableButton())); }
         }
-        public ICommand SelectedPokemonCommand {
+        public ICommand SelectedPokemonCommand
+        {
             get { return _selectedPokemonCommand ?? (_selectedPokemonCommand = new RelayCommand(x => { SelectedPokemon(x); }, x => !DialogViewModel.IsVisible)); }
         }
 
         //constructor of GymViewModel
-        public GymViewModel(MainWindowViewModel mainWindowViewModel) {
+        public GymViewModel(MainWindowViewModel mainWindowViewModel)
+        {
             MainWindowViewModel = mainWindowViewModel;
             DialogViewModel = (DialogViewModel)MainWindowViewModel.DialogViewModel;
             Rng = new Random();
         }
 
         //properties of GymViewModel
-        public MainWindowViewModel MainWindowViewModel {
+        public MainWindowViewModel MainWindowViewModel
+        {
             get { return _mainWindowViewModel; }
-            set {
+            set
+            {
                 _mainWindowViewModel = value;
                 OnPropertyChanged(nameof(MainWindowViewModel));
             }
         }
 
-        public DialogViewModel DialogViewModel {
+        public DialogViewModel DialogViewModel
+        {
             get { return _dialogViewModel; }
-            set {
+            set
+            {
                 _dialogViewModel = value;
                 OnPropertyChanged(nameof(DialogViewModel));
             }
         }
 
-        public ObservableCollection<PokemonModel> Pokemons {
+        public ObservableCollection<PokemonModel> Pokemons
+        {
             get { return _pokemons; }
-            set {
+            set
+            {
                 _pokemons = value;
                 OnPropertyChanged(nameof(Pokemons));
             }
         }
-        public ObservableCollection<TrainerModel> Trainers {
+        public ObservableCollection<TrainerModel> Trainers
+        {
             get { return _trainers; }
-            set {
+            set
+            {
                 _trainers = value;
                 OnPropertyChanged(nameof(Trainers));
             }
         }
-        public PokemonModel Pokemon {
+        public PokemonModel Pokemon
+        {
             get { return _pokemon; }
-            set {
+            set
+            {
                 _pokemon = value;
                 OnPropertyChanged(nameof(Pokemon));
             }
         }
 
-        public TrainerModel Player {
+        public TrainerModel Player
+        {
             get { return _player; }
-            set {
+            set
+            {
                 _player = value;
                 OnPropertyChanged(nameof(Player));
             }
         }
 
-        public TrainerModel CurrentOccupier {
+        public TrainerModel CurrentOccupier
+        {
             get { return _currentOccupier; }
-            set {
+            set
+            {
                 _currentOccupier = value;
                 OnPropertyChanged(nameof(CurrentOccupier));
             }
         }
 
-        public PokemonModel CurrentPokemon {
+        public PokemonModel CurrentPokemon
+        {
             get { return _currentPokemon; }
-            set {
+            set
+            {
                 _currentPokemon = value;
                 OnPropertyChanged(nameof(CurrentPokemon));
             }
@@ -114,12 +131,14 @@ namespace PokemonGoClone.ViewModels {
         }
 
         //Method of GymViewModel
-        public void UpdatePlayer(TrainerModel player) {
+        public void UpdatePlayer(TrainerModel player)
+        {
             Player = player;
-            Pokemons = player.Pokemons;            
+            Pokemons = player.Pokemons;
         }
 
-        public void UpdateTrainers(ObservableCollection<TrainerModel> trainers) {
+        public void UpdateTrainers(ObservableCollection<TrainerModel> trainers)
+        {
             Trainers = trainers;
 
             var npcs = Trainers.Where(x => x.Type.Equals("NPC"));
@@ -131,33 +150,42 @@ namespace PokemonGoClone.ViewModels {
             CurrentPokemon = CurrentOccupier.Pokemons[randomPokemonIndex];
         }
 
-        public void SelectedPokemon(object sender) {
+        public void SelectedPokemon(object sender)
+        {
             var pokemon = sender as PokemonModel;
-            Pokemon = pokemon;            
+            Pokemon = pokemon;
         }
-        public void UpdateOccupier(TrainerModel player,PokemonModel pokemon) {
+        public void UpdateOccupier(TrainerModel player, PokemonModel pokemon)
+        {
             CurrentOccupier = player;
             CurrentPokemon = pokemon;
         }
 
-        public bool EnableButton() {
-            if (CurrentOccupier == Player) {
+        public bool EnableButton()
+        {
+            if (CurrentOccupier == Player)
+            {
                 CurrentOccupier.ImageSource = $"/PokemonGoClone;component/Images/Players/{Player.Id:D3}S.png"; ;
                 return false;
             }
-            return true;        
+            return true;
         }
 
-        public void ChallangePlayer() {
-            if (CurrentOccupier != Player) {
-                if (Pokemon.Health <= 0) {
+        public void ChallangePlayer()
+        {
+            if (CurrentOccupier != Player)
+            {
+                if (Pokemon.Health <= 0)
+                {
                     DialogViewModel.PopUp("Your pokemon cannot fight, please select other pokemon. ");
                     return;
                 }
 
                 ((BattleViewModel)MainWindowViewModel.BattleViewModel).NewBattle(Player, CurrentOccupier, Pokemon, CurrentPokemon, "Gym");
                 MainWindowViewModel.GoToBattleViewModel(null);
-            } else {
+            }
+            else
+            {
                 var npcTrainers = MainWindowViewModel.Trainers.Where(x => x.Type.Equals("NPC"));
                 int newOccupierIndex = Rng.Next(npcTrainers.Count());
                 TrainerModel newOccupier = npcTrainers.ElementAt(newOccupierIndex);

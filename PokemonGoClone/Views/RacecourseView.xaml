@@ -9,10 +9,68 @@
              Background="White"
              FocusVisualStyle="{x:Null}">
     <Grid>
-        <StackPanel>
-            <TextBlock Text="THIS IS RACECOURSE"/>
-            <TextBlock Text="{Binding CurrentViewModel.Choice.Name}"/>
-            <TextBlock Text="{Binding CurrentViewModel.Bets}"/>
-        </StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition/>
+            <RowDefinition Height="80"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Racecourse" FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <DockPanel Grid.Row="0" VerticalAlignment="Center" Grid.ColumnSpan="2">
+            <TextBlock Height="50" Width="348" FontSize="35" TextAlignment="Center"/>
+            <TextBlock DockPanel.Dock="Top" FontSize="16" VerticalAlignment="Center">
+                <Run Text=" Total    Candy ($): "/>
+                <Run Text="{Binding CurrentViewModel.Player.Candy}"/>
+            </TextBlock>
+            <TextBlock DockPanel.Dock="Bottom" FontSize="16" VerticalAlignment="Center">
+                <Run Text=" Total Stardust (*): "/>
+                <Run Text="{Binding CurrentViewModel.Player.Stardust}"/>
+            </TextBlock>
+        </DockPanel>
+
+        <DockPanel Grid.Row="2" Grid.ColumnSpan="2" LastChildFill="True">
+            <Button DockPanel.Dock="Right" Content="Exit Racecourse" FontSize="26" Margin="10" Command="{Binding CurrentViewModel.ExitRacecourseCommand}"/>
+            <Button DockPanel.Dock="Right" IsEnabled="{Binding CurrentViewModel.CheerIsEnable}" Margin="10" Command="{Binding CurrentViewModel.CheerCommand}">
+                <TextBlock FontSize="20" TextAlignment="Center">
+                    <Run Text="Cheer Your Selected Pokemon!"/><LineBreak/>
+                    <Run Text="($"/>
+                    <Run Text="{Binding CurrentViewModel.CostPerCheer, Mode=OneWay}"/>
+                    <Run Text=" Each Hit)"/>
+                </TextBlock>
+            </Button>
+        </DockPanel>
+
+        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+            <ItemsControl ItemsSource="{Binding CurrentViewModel.RacingPokemons}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel VerticalAlignment="Center"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <DockPanel LastChildFill="True">
+                            <Image DockPanel.Dock="Left" Source="{Binding ImageSource}" Height="64" Margin="10"/>
+                            <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center" FontSize="26" Margin="10">
+                                <Run Text="#"/>
+                                <Run Text="{Binding Id}"/>
+                            </TextBlock>
+                            <ProgressBar Maximum="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.CurrentViewModel.Goal}"
+                                         Minimum="0"
+                                         Margin="10"
+                                         Value="{Binding Health, UpdateSourceTrigger=PropertyChanged}"/>
+                        </DockPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
     </Grid>
+
+    <UserControl.InputBindings>
+        <KeyBinding Command="{Binding CurrentViewModel.DialogViewModel.CloseCommand}" Key="Esc"/>
+    </UserControl.InputBindings>
 </UserControl>

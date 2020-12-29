@@ -27,7 +27,8 @@ namespace PokemonGoClone.Models.Items
             {
                 player.AddPokemon(opponentPokemon);
                 return ($"You caught {opponentPokemon.Name}.", true);
-            } else
+            }
+            else
             {
                 return ("Your pokeball missed", null);
             }

@@ -1,7 +1,6 @@
 ﻿using PokemonGoClone.Models.Items;
 using PokemonGoClone.Models.Pokemons;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -33,7 +32,7 @@ namespace PokemonGoClone.Models.Trainers
             Facing = 'S';
 
             ImageSource = $"/PokemonGoClone;component/Images/{Type}s/{Id:D3}{Facing}.png";
-            
+
             Pokemons = new ObservableCollection<PokemonModel>();
             Items = new ObservableCollection<ItemModel>();
         }

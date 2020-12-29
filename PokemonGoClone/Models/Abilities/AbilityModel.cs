@@ -89,7 +89,7 @@ namespace PokemonGoClone.Models.Abilities
                 MethodInfo specialEffect = GetType().GetMethod(Name);
                 if (specialEffect != null)
                 {
-                    result += specialEffect.Invoke(this, new object[] { player , opponent, playerPokemon, opponentPokemon });
+                    result += specialEffect.Invoke(this, new object[] { player, opponent, playerPokemon, opponentPokemon });
                 }
             }
             else

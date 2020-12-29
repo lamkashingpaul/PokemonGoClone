@@ -1,22 +1,23 @@
 ﻿[
-{
+  {
     "Name": "Small Potion",
     "Id": 2001,
     "Description": "Potion that restores small amount of HP of your pokemon during combat.",
     "HealHP": 250,
     "Cost": 40
-},
-{
+  },
+  {
     "Name": "Medium Potion",
     "Id": 2002,
     "Description": "Potion that restores medium amount of HP of your pokemon during combat.",
     "HealHP": 500,
     "Cost": 100
-},
-{
+  },
+  {
     "Name": "Large Potion",
     "Id": 2003,
     "Description": "Potion that restores large amount of HP of your pokemon during combat.",
     "HealHP": 1000,
     "Cost": 250
-}]
+  }
+]

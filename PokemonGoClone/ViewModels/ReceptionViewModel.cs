@@ -2,11 +2,8 @@
 using PokemonGoClone.Models.Trainers;
 using PokemonGoClone.Utilities;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -23,6 +20,7 @@ namespace PokemonGoClone.ViewModels
         private Random _rng;
 
         private const int _numberOfRacer = 4;
+        private const int _refreshmentperiod = 600;
 
         public ObservableCollection<PokemonModel> RacingPokemons { get; private set; }
         private ICommand _placeBetsCommand;
@@ -32,7 +30,7 @@ namespace PokemonGoClone.ViewModels
             get { return _placeBetsCommand ?? (_placeBetsCommand = new RelayCommand(x => { PlaceBets(x); }, x => !DialogViewModel.IsVisible)); }
 
         }
-        public  ICommand RefreshmentCommand
+        public ICommand RefreshmentCommand
         {
             get { return _refreshmentCommand ?? (_refreshmentCommand = new RelayCommand(x => { Refreshment(x); }, x => !DialogViewModel.IsVisible)); }
 
@@ -76,6 +74,10 @@ namespace PokemonGoClone.ViewModels
         {
             get { return _numberOfRacer; }
         }
+        public int Refreshmentperiod
+        {
+            get { return _refreshmentperiod; }
+        }
         public DispatcherTimer RefreshmentTimer
         {
             get { return _refreshmentTimer; }
@@ -114,7 +116,7 @@ namespace PokemonGoClone.ViewModels
         }
         public void RefreshmentTimerInit()
         {
-            SecondUntilRefreshment = 60;
+            SecondUntilRefreshment = Refreshmentperiod;
             RefreshmentTimer = new DispatcherTimer();
             RefreshmentTimer.Interval = new TimeSpan(0, 0, 1);
             RefreshmentTimer.Tick += RefreshmentTimerCount;
@@ -123,13 +125,18 @@ namespace PokemonGoClone.ViewModels
         private void RefreshmentTimerCount(object sender, EventArgs e)
         {
             SecondUntilRefreshment -= 1;
-            if(SecondUntilRefreshment == 0)
+            if (SecondUntilRefreshment == 0)
             {
                 RefreshmentTimer.Stop();
             }
         }
-        private void NewRace()
+        public void NewRace()
         {
+
+            // The race is simulated using pokemons health
+            // Pokemons start from Health = 0 and they try to reach the Goal as soon as possible
+            // The rank of Pokemon is represented using its Id
+
             RacingPokemons = new ObservableCollection<PokemonModel>();
             for (int i = 0; i < NumberOfRacer; i++)
             {
@@ -140,14 +147,19 @@ namespace PokemonGoClone.ViewModels
                 } while (RacingPokemons.Where(x => x.Id == randomPokemonId).FirstOrDefault() != null);
                 RacingPokemons.Add((PokemonModel)MainWindowViewModel.Pokemons.Where(x => x.Id == randomPokemonId).FirstOrDefault().Clone());
             }
+            foreach(var pokemon in RacingPokemons)
+            {
+                pokemon.Health = 0;
+                pokemon.Id = 0;
+            }
         }
         private void Refreshment(object x)
         {
-            foreach(var pokemon in Player.Pokemons)
+            foreach (var pokemon in Player.Pokemons)
             {
                 pokemon.FullyRestore();
             }
-            SecondUntilRefreshment = 60;
+            SecondUntilRefreshment = Refreshmentperiod;
             RefreshmentTimer.Start();
             DialogViewModel.PopUp("All your Pokemons are fully recoverd. ");
         }
@@ -181,7 +193,7 @@ namespace PokemonGoClone.ViewModels
                 return;
             }
 
-            ((RacecourseViewModel)MainWindowViewModel.RacecourseViewModel).StartRace(RacingPokemons, pokemonModel, bets);
+            ((RacecourseViewModel)MainWindowViewModel.RacecourseViewModel).StartRace(RacingPokemons, pokemonModel, bets, Player);
             MainWindowViewModel.GoToRacecourseViewModel(null);
         }
     }

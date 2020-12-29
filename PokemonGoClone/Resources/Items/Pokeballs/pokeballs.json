@@ -1,22 +1,23 @@
 ﻿[
-{
+  {
     "Name": "Normal Ball",
     "Id": 1001,
     "Description": "Pokemon that has 50% chance to catch pokemon successfully",
     "CatchProbability": 0.5,
     "Cost": 50
-},
-{
+  },
+  {
     "Name": "Great Ball",
     "Id": 1002,
     "Description": "Pokemon that has 75% chance to catch pokemon successfully",
     "CatchProbability": 0.75,
     "Cost": 100
-},
-{
+  },
+  {
     "Name": "Master Ball",
     "Id": 1003,
     "Description": "Pokemon that has 100% chance to catch pokemon successfully",
     "CatchProbability": 1,
     "Cost": 1000
-}]
+  }
+]

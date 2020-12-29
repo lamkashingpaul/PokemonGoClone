@@ -31,7 +31,8 @@ namespace PokemonGoClone.ViewModels
         {
             get { return _buyCommand ?? (_buyCommand = new RelayCommand(x => { Buy(); }, x => !DialogViewModel.IsVisible)); }
         }
-        public ICommand BuyStardustCommand {
+        public ICommand BuyStardustCommand
+        {
             get { return _buyStardustCommand ?? (_buyStardustCommand = new RelayCommand(x => { BuyStardust(); }, x => !DialogViewModel.IsVisible)); }
         }
         public ICommand RandomCommand
@@ -137,17 +138,22 @@ namespace PokemonGoClone.ViewModels
             if (Trainer.Candy < Choose.Cost)
             {
                 DialogViewModel.PopUp("You don't have enough Candy.");
-            } else
+            }
+            else
             {
                 Trainer.Candy -= Choose.Cost;
                 Trainer.AddItem(Choose);
                 OnPropertyChanged(nameof(CurrentChargeofChoose));
             }
         }
-        public void BuyStardust() {
-            if (Trainer.Candy < 5000) {
+        public void BuyStardust()
+        {
+            if (Trainer.Candy < 5000)
+            {
                 DialogViewModel.PopUp("You don't have enough Candy.");
-            } else {
+            }
+            else
+            {
                 Trainer.Candy -= 5000;
                 Trainer.Stardust++;
             }
@@ -155,9 +161,12 @@ namespace PokemonGoClone.ViewModels
 
         public void RandomPokemon()
         {
-            if (Trainer.Candy < 500) {
+            if (Trainer.Candy < 500)
+            {
                 DialogViewModel.PopUp("You don't have enough Candy.");
-            } else {
+            }
+            else
+            {
                 Trainer.Candy -= 500;
                 PokemonModel pokemon = RandomPokemonMethod();
                 Random = pokemon;
@@ -172,24 +181,36 @@ namespace PokemonGoClone.ViewModels
             int x = Rng.Next(0, MainWindowViewModel.Pokemons.Count);
             int lucky = Rng.Next(0, 10000);
             PokemonModel pokemon = MainWindowViewModel.Pokemons[x];
-            if (((pokemon.Id >= 144 && pokemon.Id <= 146) || (pokemon.Id >= 150 && pokemon.Id <= 151)) && lucky == 8888) { //special Pokemon
+            if (((pokemon.Id >= 144 && pokemon.Id <= 146) || (pokemon.Id >= 150 && pokemon.Id <= 151)) && lucky == 8888)
+            { //special Pokemon
                 pokemon.Accuracy = 1;
                 return pokemon;
-            } else if ((pokemon.Id >= 144 && pokemon.Id <= 146) || (pokemon.Id >= 150 && pokemon.Id <= 151)) {
+            }
+            else if ((pokemon.Id >= 144 && pokemon.Id <= 146) || (pokemon.Id >= 150 && pokemon.Id <= 151))
+            {
                 pokemon = MainWindowViewModel.Pokemons[x - 8];
-            } else {
+            }
+            else
+            {
                 int originalHealth = pokemon.MaxHealth;
                 pokemon.MaxHealth = pokemon.Health = Rng.Next(originalHealth - 200, originalHealth + 101);
-                if (pokemon.MaxHealth <= originalHealth) {
+                if (pokemon.MaxHealth <= originalHealth)
+                {
                     pokemon.Accuracy = Rng.Next(60, 70) / 100.0;
                     pokemon.Description = "It is Normal (N) Pokemon!";
-                } else if (pokemon.MaxHealth <= originalHealth + 90) {
+                }
+                else if (pokemon.MaxHealth <= originalHealth + 90)
+                {
                     pokemon.Accuracy = Rng.Next(70, 80) / 100.0;
                     pokemon.Description = "It is Rare (R) Pokemon!";
-                } else if (pokemon.MaxHealth < originalHealth + 100) {
+                }
+                else if (pokemon.MaxHealth < originalHealth + 100)
+                {
                     pokemon.Accuracy = Rng.Next(80, 90) / 100.0;
                     pokemon.Description = "It is Super Rare (SR) Pokemon!";
-                } else {
+                }
+                else
+                {
                     pokemon.Accuracy = Rng.Next(90, 96) / 100.0;
                     pokemon.Description = "It is Ultra Rare (UR) Pokemon!";
                 }

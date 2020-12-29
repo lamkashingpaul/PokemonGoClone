@@ -127,7 +127,7 @@
                     <TextBlock Text="Make Leader" TextWrapping="Wrap" TextAlignment="Center"/>
                 </Button.Content>
             </Button>
-            <Button Content="Drop" FontSize="24" Command="{Binding CurrentViewModel.DropPokemonCommand}"/>
+            <Button Content="Sell" FontSize="24" Command="{Binding CurrentViewModel.SellPokemonCommand}"/>
             <Button Content="Exit" FontSize="24" Command="{Binding CurrentViewModel.MainWindowViewModel.GoToBagViewModelCommand}"/>
         </UniformGrid>
     </Grid>

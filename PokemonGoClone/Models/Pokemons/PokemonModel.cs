@@ -177,7 +177,7 @@ namespace PokemonGoClone.Models.Pokemons
         public void FullyRestore()
         {
             Health = MaxHealth;
-            foreach(var ability in Abilities)
+            foreach (var ability in Abilities)
             {
                 ability.FullyRestore();
             }

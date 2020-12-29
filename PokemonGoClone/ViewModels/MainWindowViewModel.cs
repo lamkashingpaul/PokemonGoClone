@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using PokemonGoClone.Models;
 using PokemonGoClone.Models.Abilities;
 using PokemonGoClone.Models.Items;
@@ -114,7 +113,8 @@ namespace PokemonGoClone.ViewModels
         {
             get { return _goToBagViewModelCommand ?? (_goToBagViewModelCommand = new RelayCommand(x => { GoToBagViewModel(x); })); }
         }
-        public ICommand GoToGymViewModelCommand {
+        public ICommand GoToGymViewModelCommand
+        {
             get { return _goToGymViewModelCommand ?? (_goToGymViewModelCommand = new RelayCommand(x => { GoToGymViewModel(x); })); }
         }
         public ICommand GoToItemViewModelCommand
@@ -404,16 +404,20 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(BagViewModel));
             }
         }
-        public object GymView {
+        public object GymView
+        {
             get { return _gymView; }
-            set {
+            set
+            {
                 _gymView = value;
                 OnPropertyChanged(nameof(GymView));
             }
         }
-        public object GymViewModel {
+        public object GymViewModel
+        {
             get { return _gymViewModel; }
-            set {
+            set
+            {
                 _gymViewModel = value;
                 OnPropertyChanged(nameof(GymViewModel));
             }
@@ -613,16 +617,17 @@ namespace PokemonGoClone.ViewModels
         }
         public void GoToMapViewModel(object x)
         {
-            ((MapViewModel)MapViewModel).GymTimer.Start();
             CurrentViewModel = MapViewModel;
             CurrentView = MapView;
+            ((MapViewModel)MapViewModel).CheckMailBox();
         }
         public void GoToBagViewModel(object x)
         {
             CurrentViewModel = BagViewModel;
             CurrentView = BagView;
         }
-        public void GoToGymViewModel(object x) {
+        public void GoToGymViewModel(object x)
+        {
             CurrentViewModel = GymViewModel;
             CurrentView = GymView;
         }
@@ -648,7 +653,6 @@ namespace PokemonGoClone.ViewModels
         }
         public void GoToBattleViewModel(object x)
         {
-            ((MapViewModel)MapViewModel).GymTimer.Stop();
             CurrentViewModel = BattleViewModel;
             CurrentView = BattleView;
         }

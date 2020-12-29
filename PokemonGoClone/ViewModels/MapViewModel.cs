@@ -1,12 +1,10 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using PokemonGoClone.Models;
 using PokemonGoClone.Models.Items;
 using PokemonGoClone.Models.Pokemons;
 using PokemonGoClone.Models.Trainers;
 using PokemonGoClone.Utilities;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -50,16 +48,26 @@ namespace PokemonGoClone.ViewModels
             DialogViewModel.IsVisible = false;
             MainWindowViewModel.GoToReceptionViewModel(null);
         }
-        public void EnterBattle(object x) {
+        public void EnterBattle(object x)
+        {
             // You may want to do some update before going into GymViewModel
             DialogViewModel.IsVisible = false;
             ((GymViewModel)MainWindowViewModel.GymViewModel).ChallangePlayer();
             MainWindowViewModel.GoToBattleViewModel(null);
 
         }
-        public void NotAccept(object x) {
-            // You may want to do some update before going into GymViewModel
-            DialogViewModel.PopUp("You must accept the Battle", NotAccept, EnterBattle);
+        public void NotAccept(object x)
+        {
+            double dropChance = Rng.NextDouble();
+            if (dropChance <= 0.5)
+            {
+                DialogViewModel.PopUp("You gym drops. ");
+                ((GymViewModel)MainWindowViewModel.GymViewModel).UpdateTrainers(Trainers);
+            }
+            else
+            {
+                // Nothing happens
+            }
         }
 
 
@@ -83,6 +91,8 @@ namespace PokemonGoClone.ViewModels
 
         public TrainerModel Player;
         public TrainerModel Target;
+        public ObservableCollection<string> MailBox { get; private set; }
+
         public ObservableCollection<TrainerModel> Trainers { get; private set; }
         public ObservableCollection<TileModel> Map { get; private set; }
         public CompositeCollection Grid { get; private set; }
@@ -156,9 +166,11 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(Rng));
             }
         }
-        public DispatcherTimer GymTimer {
+        public DispatcherTimer GymTimer
+        {
             get { return _gymTimer; }
-            set { 
+            set
+            {
                 _gymTimer = value;
                 OnPropertyChanged(nameof(GymTimer));
             }
@@ -178,6 +190,7 @@ namespace PokemonGoClone.ViewModels
         {
             MainWindowViewModel = mainWindowViewModel;
             DialogViewModel = (DialogViewModel)MainWindowViewModel.DialogViewModel;
+            MailBox = new ObservableCollection<string>();
             Rng = new Random();
             GymTimer = new DispatcherTimer();
             SpawnTimer = new DispatcherTimer();
@@ -214,7 +227,8 @@ namespace PokemonGoClone.ViewModels
                 }
                 Player.Candy = 9999999;
                 Player.Stardust = 9999999;
-            } else
+            }
+            else
             {
                 Player.AddPokemon((PokemonModel)MainWindowViewModel.Pokemons.Find(x => x.Id == choice).Clone());
             }
@@ -242,7 +256,7 @@ namespace PokemonGoClone.ViewModels
             LoadReception();
             LoadOtherTrainers();
             LoadGym();
-           
+
             ((GymViewModel)MainWindowViewModel.GymViewModel).UpdateTrainers(Trainers);
 
             // Create CompositeCollection from view binding
@@ -353,8 +367,8 @@ namespace PokemonGoClone.ViewModels
                 }
 
                 var jArray = JArray.Parse(json);
-                
-                foreach(var obj in jArray)
+
+                foreach (var obj in jArray)
                 {
                     SafeDistance(out int randomX, out int randomY);
                     TrainerModel trainer = new TrainerModel(obj["Name"].Value<string>(), "NPC", obj["Id"].Value<int>())
@@ -376,9 +390,11 @@ namespace PokemonGoClone.ViewModels
             }
         }
 
-        private void LoadGym() {
+        private void LoadGym()
+        {
             SafeDistance(out int randomX, out int randomY);
-            TrainerModel gym = new TrainerModel("Gym", "Gym", 1) {
+            TrainerModel gym = new TrainerModel("Gym", "Gym", 1)
+            {
                 XCoordinate = randomX,
                 YCoordinate = randomY,
                 Quote = $"Do you want to enter the gym? ",
@@ -438,10 +454,12 @@ namespace PokemonGoClone.ViewModels
                 else if (Target.Type == "NPC" || Target.Type == "WildPokemon")
                 {
                     DialogViewModel.PopUp(Target.Quote, null, AcceptBattle);
-                } else if (Target.Type == "Gym")
+                }
+                else if (Target.Type == "Gym")
                 {
                     DialogViewModel.PopUp(Target.Quote, null, EnterGym);
-                } else if (Target.Type == "Reception")
+                }
+                else if (Target.Type == "Reception")
                 {
                     DialogViewModel.PopUp(Target.Quote, null, EnterReception);
                 }
@@ -463,20 +481,33 @@ namespace PokemonGoClone.ViewModels
 
         public void GymTimerInit()
         {
-            if (((GymViewModel)MainWindowViewModel.GymViewModel).CurrentOccupier == Player) {
-                //int time = Rng.Next(300, 600);
-                int time = 5;   // Debug
+            if (((GymViewModel)MainWindowViewModel.GymViewModel).CurrentOccupier == Player)
+            {
+                int time = Rng.Next(300, 600);
                 GymTimer.Interval = new TimeSpan(0, 0, time);
                 GymTimer.Tick += GymTimerCount;
                 GymTimer.Start();
-            } else { 
+            }
+            else
+            {
                 // do nothing
             }
         }
 
-        public void GymTimerCount(object sender, EventArgs e) {
-            DialogViewModel.PopUp("Someone challange you! You must accept", NotAccept, EnterBattle);
+        public void GymTimerCount(object sender, EventArgs e)
+        {
             GymTimer.Stop();
+            if (MainWindowViewModel.CurrentViewModel != MainWindowViewModel.BattleViewModel &&
+                MainWindowViewModel.CurrentViewModel != MainWindowViewModel.RacecourseViewModel)
+            {
+                DialogViewModel.PopUp("Someone challanges you! Do you want to accept? ", NotAccept, EnterBattle);
+            }
+            else
+            {
+                // Player is busy and cannot accept challenge, gym drops and the message is cached
+                ((GymViewModel)MainWindowViewModel.GymViewModel).UpdateTrainers(Trainers);
+                MailBox.Add("Your gym dropped. ");
+            }
         }
 
         public void SpawnTimerInit()
@@ -526,7 +557,7 @@ namespace PokemonGoClone.ViewModels
             if (Rng.NextDouble() <= randomDestoryChane)
             {
                 var randomWildPokemonCarrier = Trainers.Where(x => x.Type.Equals("WildPokemon")).FirstOrDefault();
-                if(randomWildPokemonCarrier != null)
+                if (randomWildPokemonCarrier != null)
                 {
                     Trainers.Remove(randomWildPokemonCarrier);
                 }
@@ -536,12 +567,24 @@ namespace PokemonGoClone.ViewModels
             int spawnTimer = Rng.Next(30, 60);
             SpawnTimer.Interval = new TimeSpan(0, 0, spawnTimer);
         }
+        public void CheckMailBox()
+        {
+            if (MailBox.Count() == 0)
+            {
+                // There is no mail
+            }
+            else
+            {
+                DialogViewModel.PopUp(MailBox.ElementAt(0));
+                MailBox.RemoveAt(0);
+            }
+        }
 
-        // Buildings and Trainers must separated at least by a cell to ensure their safety
+        // Buildings and Trainers must be separated by at least a cell to ensure their safety
         // Wild pokemons are free to spawn anywhere however, since they aren't permanent
         private void SafeDistance(out int xCoordinate, out int yCoordinate)
         {
-            int[] dX = new int[] {0, -1, -1, 0, 1, 1, 1, 0, -1 };
+            int[] dX = new int[] { 0, -1, -1, 0, 1, 1, 1, 0, -1 };
             int[] dY = new int[] { 0, 0, 1, 1, 1, 0, -1, -1, -1 };
             int randomX, randomY;
             while (true)
@@ -550,7 +593,7 @@ namespace PokemonGoClone.ViewModels
                 randomX = Rng.Next(1, ROW - 1);
                 randomY = Rng.Next(1, ROW - 1);
 
-                foreach(var neighbors in dX.Zip(dY, (x, y) => (dX: x, dY: y)))
+                foreach (var neighbors in dX.Zip(dY, (x, y) => (dX: x, dY: y)))
                 {
                     int neighborX = randomX + neighbors.dX;
                     int neighborY = randomY + neighbors.dY;

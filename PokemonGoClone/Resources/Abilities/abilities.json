@@ -1,5 +1,5 @@
 [
-{
+  {
     "Name": "Scratch",
     "Id": 1,
     "Description": "Scratch is one of the most common and basic moves a Pokemon learns. It deals damage with no additional effects.",
@@ -9,8 +9,8 @@
     "HealPerLevel": 0,
     "MaxCharge": 35,
     "Accuracy": 0.9,
-},
-{
+  },
+  {
     "Name": "Headbutt",
     "Id": 2,
     "Description": "Headbutt deals damage and has a 30% chance of causing the target to flinch (if the target has not yet moved).",
@@ -20,8 +20,8 @@
     "HealPerLevel": 0,
     "MaxCharge": 15,
     "Accuracy": 0.9,
-},
-{
+  },
+  {
     "Name": "Sleep",
     "Id": 3,
     "Description": "Sleep prevents Pokemon from making a move for a random number of its turns",
@@ -31,8 +31,8 @@
     "HealPerLevel": 0,
     "MaxCharge": 99,
     "Accuracy": 0.2,
-},
-{
+  },
+  {
     "Name": "Heal Pulse",
     "Id": 4,
     "Description": "Basic healing ability",
@@ -42,4 +42,5 @@
     "HealPerLevel": 10,
     "MaxCharge": 99,
     "Accuracy": 0.2,
-}]
+  }
+]

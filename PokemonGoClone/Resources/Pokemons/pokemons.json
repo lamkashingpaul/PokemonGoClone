@@ -2,7 +2,7 @@
   {
     "Name": "Bulbasaur",
     "Id": 1,
-    "Description": " ",
+    "Description": "Tihs is Bulbasaur. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 450,
@@ -16,7 +16,7 @@
   {
     "Name": "Ivysaur",
     "Id": 2,
-    "Description": " ",
+    "Description": "Tihs is Ivysaur. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 600,
@@ -30,7 +30,7 @@
   {
     "Name": "Venusaur",
     "Id": 3,
-    "Description": " ",
+    "Description": "Tihs is Venusaur. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 800,
@@ -44,7 +44,7 @@
   {
     "Name": "Charmander",
     "Id": 4,
-    "Description": " ",
+    "Description": "Tihs is Charmander. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 390,
@@ -58,7 +58,7 @@
   {
     "Name": "Charmeleon",
     "Id": 5,
-    "Description": " ",
+    "Description": "Tihs is Charmeleon. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 580,
@@ -72,7 +72,7 @@
   {
     "Name": "Charizard",
     "Id": 6,
-    "Description": " ",
+    "Description": "Tihs is Charizard. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 780,
@@ -86,7 +86,7 @@
   {
     "Name": "Squirtle",
     "Id": 7,
-    "Description": " ",
+    "Description": "Tihs is Squirtle. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 440,
@@ -100,7 +100,7 @@
   {
     "Name": "Wartortle",
     "Id": 8,
-    "Description": " ",
+    "Description": "Tihs is Wartortle. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 590,
@@ -114,7 +114,7 @@
   {
     "Name": "Blastoise",
     "Id": 9,
-    "Description": " ",
+    "Description": "Tihs is Blastoise. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 790,
@@ -128,7 +128,7 @@
   {
     "Name": "Caterpie",
     "Id": 10,
-    "Description": " ",
+    "Description": "Tihs is Caterpie. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 350,
@@ -142,7 +142,7 @@
   {
     "Name": "Metapod",
     "Id": 11,
-    "Description": " ",
+    "Description": "Tihs is Metapod. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 500,
@@ -156,7 +156,7 @@
   {
     "Name": "Butterfree",
     "Id": 12,
-    "Description": " ",
+    "Description": "Tihs is Butterfree. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 600,
@@ -170,7 +170,7 @@
   {
     "Name": "Weedle",
     "Id": 13,
-    "Description": " ",
+    "Description": "Tihs is Weedle. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 400,
@@ -184,7 +184,7 @@
   {
     "Name": "Kakuna",
     "Id": 14,
-    "Description": " ",
+    "Description": "Tihs is Kakuna. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 450,
@@ -198,7 +198,7 @@
   {
     "Name": "Beedrill",
     "Id": 15,
-    "Description": " ",
+    "Description": "Tihs is Beedrill. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 650,
@@ -212,7 +212,7 @@
   {
     "Name": "Pidgey",
     "Id": 16,
-    "Description": " ",
+    "Description": "Tihs is Pidgey. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 400,
@@ -226,7 +226,7 @@
   {
     "Name": "Pidgeotto",
     "Id": 17,
-    "Description": " ",
+    "Description": "Tihs is Pidgeotto. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 630,
@@ -240,7 +240,7 @@
   {
     "Name": "Pidgeot",
     "Id": 18,
-    "Description": " ",
+    "Description": "Tihs is Pidgeot. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 830,
@@ -254,7 +254,7 @@
   {
     "Name": "Rattata",
     "Id": 19,
-    "Description": " ",
+    "Description": "Tihs is Rattata. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 300,
@@ -268,7 +268,7 @@
   {
     "Name": "Raticate",
     "Id": 20,
-    "Description": " ",
+    "Description": "Tihs is Raticate. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 550,
@@ -282,7 +282,7 @@
   {
     "Name": "Spearow",
     "Id": 21,
-    "Description": " ",
+    "Description": "Tihs is Spearow. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 400,
@@ -296,7 +296,7 @@
   {
     "Name": "Fearow",
     "Id": 22,
-    "Description": " ",
+    "Description": "Tihs is Fearow. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 650,
@@ -310,7 +310,7 @@
   {
     "Name": "Ekans",
     "Id": 23,
-    "Description": " ",
+    "Description": "Tihs is Ekans. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 350,
@@ -324,7 +324,7 @@
   {
     "Name": "Arbok",
     "Id": 24,
-    "Description": " ",
+    "Description": "Tihs is Arbok. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 600,
@@ -338,7 +338,7 @@
   {
     "Name": "Pikachu",
     "Id": 25,
-    "Description": " ",
+    "Description": "Tihs is Pikachu. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 350,
@@ -352,7 +352,7 @@
   {
     "Name": "Raichu",
     "Id": 26,
-    "Description": " ",
+    "Description": "Tihs is Raichu. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 600,
@@ -366,7 +366,7 @@
   {
     "Name": "Sandshrew",
     "Id": 27,
-    "Description": " ",
+    "Description": "Tihs is Sandshrew. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 500,
@@ -380,7 +380,7 @@
   {
     "Name": "Sandslash",
     "Id": 28,
-    "Description": " ",
+    "Description": "Tihs is Sandslash. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 750,
@@ -394,7 +394,7 @@
   {
     "Name": "Nidoran(girl)",
     "Id": 29,
-    "Description": " ",
+    "Description": "Tihs is Nidoran. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 550,
@@ -408,7 +408,7 @@
   {
     "Name": "Nidorina",
     "Id": 30,
-    "Description": " ",
+    "Description": "Tihs is Nidorina. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 700,
@@ -422,7 +422,7 @@
   {
     "Name": "Nidoqueen",
     "Id": 31,
-    "Description": " ",
+    "Description": "Tihs is Nidoqueen. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 900,
@@ -436,7 +436,7 @@
   {
     "Name": "Nidoran(boy)",
     "Id": 32,
-    "Description": " ",
+    "Description": "Tihs is Nidoran. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 460,
@@ -450,7 +450,7 @@
   {
     "Name": "Nidorino",
     "Id": 33,
-    "Description": " ",
+    "Description": "Tihs is Nidorino. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 610,
@@ -464,7 +464,7 @@
   {
     "Name": "Nidoking",
     "Id": 34,
-    "Description": " ",
+    "Description": "Tihs is Nidoking. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 810,
@@ -478,7 +478,7 @@
   {
     "Name": "Clefairy",
     "Id": 35,
-    "Description": " ",
+    "Description": "Tihs is Clefairy. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 700,
@@ -492,7 +492,7 @@
   {
     "Name": "Clefable",
     "Id": 36,
-    "Description": " ",
+    "Description": "Tihs is Clefable. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 960,
@@ -506,7 +506,7 @@
   {
     "Name": "Vulpix",
     "Id": 37,
-    "Description": " ",
+    "Description": "Tihs is Vulpix. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 380,
@@ -520,7 +520,7 @@
   {
     "Name": "Ninetales",
     "Id": 38,
-    "Description": " ",
+    "Description": "Tihs is Ninetales. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 730,
@@ -534,7 +534,7 @@
   {
     "Name": "Jigglypuff",
     "Id": 39,
-    "Description": " ",
+    "Description": "Tihs is Jigglypuff. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 1150,
@@ -548,7 +548,7 @@
   {
     "Name": "Wigglytuff",
     "Id": 40,
-    "Description": " ",
+    "Description": "Tihs is Wigglytuff. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 1400,
@@ -562,7 +562,7 @@
   {
     "Name": "Zubat",
     "Id": 41,
-    "Description": " ",
+    "Description": "Tihs is Zubat. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 400,
@@ -576,7 +576,7 @@
   {
     "Name": "Golbat",
     "Id": 42,
-    "Description": " ",
+    "Description": "Tihs is Golbat. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 750,
@@ -590,7 +590,7 @@
   {
     "Name": "Oddish",
     "Id": 43,
-    "Description": " ",
+    "Description": "Tihs is Oddish. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 450,
@@ -604,7 +604,7 @@
   {
     "Name": "Gloom",
     "Id": 44,
-    "Description": " ",
+    "Description": "Tihs is Gloom. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 600,
@@ -618,7 +618,7 @@
   {
     "Name": "Vileplume",
     "Id": 45,
-    "Description": " ",
+    "Description": "Tihs is Vileplume. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 750,
@@ -632,7 +632,7 @@
   {
     "Name": "Paras",
     "Id": 46,
-    "Description": " ",
+    "Description": "Tihs is Paras. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 350,
@@ -646,7 +646,7 @@
   {
     "Name": "Parasect",
     "Id": 47,
-    "Description": " ",
+    "Description": "Tihs is Parasect. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 600,
@@ -660,7 +660,7 @@
   {
     "Name": "Venonat",
     "Id": 48,
-    "Description": " ",
+    "Description": "Tihs is Venonat. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 600,
@@ -674,7 +674,7 @@
   {
     "Name": "Venomoth",
     "Id": 49,
-    "Description": " ",
+    "Description": "Tihs is Venomoth. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 700,
@@ -688,7 +688,7 @@
   {
     "Name": "Diglett",
     "Id": 50,
-    "Description": " ",
+    "Description": "Tihs is Diglett. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 100,
@@ -702,7 +702,7 @@
   {
     "Name": "Dugtrio",
     "Id": 51,
-    "Description": " ",
+    "Description": "Tihs is Dugtrio. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 350,
@@ -716,7 +716,7 @@
   {
     "Name": "Meowth",
     "Id": 52,
-    "Description": " ",
+    "Description": "Tihs is Meowth. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 490,
@@ -730,7 +730,7 @@
   {
     "Name": "Persian",
     "Id": 53,
-    "Description": " ",
+    "Description": "Tihs is Persian. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 650,
@@ -744,7 +744,7 @@
   {
     "Name": "Psyduck",
     "Id": 54,
-    "Description": " ",
+    "Description": "Tihs is Psyduck. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 500,
@@ -758,7 +758,7 @@
   {
     "Name": "Golduck",
     "Id": 55,
-    "Description": " ",
+    "Description": "Tihs is Golduck. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 800,
@@ -772,7 +772,7 @@
   {
     "Name": "Mankey",
     "Id": 56,
-    "Description": " ",
+    "Description": "Tihs is Mankey. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 400,
@@ -786,7 +786,7 @@
   {
     "Name": "Primeape",
     "Id": 57,
-    "Description": " ",
+    "Description": "Tihs is Primeape. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 650,
@@ -800,7 +800,7 @@
   {
     "Name": "Growlithe",
     "Id": 58,
-    "Description": " ",
+    "Description": "Tihs is Growlithe. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 550,
@@ -814,7 +814,7 @@
   {
     "Name": "Arcanine",
     "Id": 59,
-    "Description": " ",
+    "Description": "Tihs is Arcanine. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 900,
@@ -828,7 +828,7 @@
   {
     "Name": "Poliwag",
     "Id": 60,
-    "Description": " ",
+    "Description": "Tihs is Poliwag. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 400,
@@ -842,7 +842,7 @@
   {
     "Name": "Poliwhirl",
     "Id": 61,
-    "Description": " ",
+    "Description": "Tihs is Poliwhirl. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 650,
@@ -856,7 +856,7 @@
   {
     "Name": "Poliwrath",
     "Id": 62,
-    "Description": " ",
+    "Description": "Tihs is Poliwrath. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 900,
@@ -870,7 +870,7 @@
   {
     "Name": "Abra",
     "Id": 63,
-    "Description": " ",
+    "Description": "Tihs is Abra. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 250,
@@ -884,7 +884,7 @@
   {
     "Name": "Kadabra",
     "Id": 64,
-    "Description": " ",
+    "Description": "Tihs is Kadabra. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 400,
@@ -898,7 +898,7 @@
   {
     "Name": "Alakazam",
     "Id": 65,
-    "Description": " ",
+    "Description": "Tihs is Alakazam. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 550,
@@ -912,7 +912,7 @@
   {
     "Name": "Machop",
     "Id": 66,
-    "Description": " ",
+    "Description": "Tihs is Machop. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 700,
@@ -926,7 +926,7 @@
   {
     "Name": "Machoke",
     "Id": 67,
-    "Description": " ",
+    "Description": "Tihs is Machoke. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 800,
@@ -940,7 +940,7 @@
   {
     "Name": "Machamp",
     "Id": 68,
-    "Description": " ",
+    "Description": "Tihs is Machamp. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 900,
@@ -954,7 +954,7 @@
   {
     "Name": "Bellsprout",
     "Id": 69,
-    "Description": " ",
+    "Description": "Tihs is Bellsprout. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 500,
@@ -968,7 +968,7 @@
   {
     "Name": "Weepinbell",
     "Id": 70,
-    "Description": " ",
+    "Description": "Tihs is Weepinbell. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 650,
@@ -982,7 +982,7 @@
   {
     "Name": "Victreebel",
     "Id": 71,
-    "Description": " ",
+    "Description": "Tihs is Victreebel. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 800,
@@ -996,7 +996,7 @@
   {
     "Name": "Tentacool",
     "Id": 72,
-    "Description": " ",
+    "Description": "Tihs is Tentacool. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 400,
@@ -1010,7 +1010,7 @@
   {
     "Name": "Tentacruel",
     "Id": 73,
-    "Description": " ",
+    "Description": "Tihs is Tentacruel. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 800,
@@ -1024,7 +1024,7 @@
   {
     "Name": "Geodude",
     "Id": 74,
-    "Description": " ",
+    "Description": "Tihs is Geodude. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 400,
@@ -1038,7 +1038,7 @@
   {
     "Name": "Graveler",
     "Id": 75,
-    "Description": " ",
+    "Description": "Tihs is Graveler. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 550,
@@ -1052,7 +1052,7 @@
   {
     "Name": "Golem",
     "Id": 76,
-    "Description": " ",
+    "Description": "Tihs is Golem. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 800,
@@ -1066,7 +1066,7 @@
   {
     "Name": "Ponyta",
     "Id": 77,
-    "Description": " ",
+    "Description": "Tihs is Ponyta. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 500,
@@ -1080,7 +1080,7 @@
   {
     "Name": "Rapidash",
     "Id": 78,
-    "Description": " ",
+    "Description": "Tihs is Rapidash. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 650,
@@ -1094,7 +1094,7 @@
   {
     "Name": "Slowpoke",
     "Id": 79,
-    "Description": " ",
+    "Description": "Tihs is Slowpoke. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 900,
@@ -1108,7 +1108,7 @@
   {
     "Name": "Slowbro",
     "Id": 80,
-    "Description": " ",
+    "Description": "Tihs is Slowbro. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 950,
@@ -1122,7 +1122,7 @@
   {
     "Name": "Magnemite",
     "Id": 81,
-    "Description": " ",
+    "Description": "Tihs is Magnemite. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 250,
@@ -1136,7 +1136,7 @@
   {
     "Name": "Magneton",
     "Id": 82,
-    "Description": " ",
+    "Description": "Tihs is Magneton. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 500,
@@ -1150,7 +1150,7 @@
   {
     "Name": "Farfetch'd",
     "Id": 83,
-    "Description": " ",
+    "Description": "Tihs is Farfetch. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 520,
@@ -1164,7 +1164,7 @@
   {
     "Name": "Doduo",
     "Id": 84,
-    "Description": " ",
+    "Description": "Tihs is Doduo. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 350,
@@ -1178,7 +1178,7 @@
   {
     "Name": "Dodrio",
     "Id": 85,
-    "Description": " ",
+    "Description": "Tihs is Dodrio. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 600,
@@ -1192,7 +1192,7 @@
   {
     "Name": "Seel",
     "Id": 86,
-    "Description": " ",
+    "Description": "Tihs is Seel. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 650,
@@ -1206,7 +1206,7 @@
   {
     "Name": "Dewgong",
     "Id": 87,
-    "Description": " ",
+    "Description": "Tihs is Dewgong. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 900,
@@ -1220,7 +1220,7 @@
   {
     "Name": "Grimer",
     "Id": 88,
-    "Description": " ",
+    "Description": "Tihs is Grimer. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 800,
@@ -1234,7 +1234,7 @@
   {
     "Name": "Muk",
     "Id": 89,
-    "Description": " ",
+    "Description": "Tihs is Muk. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 1050,
@@ -1248,7 +1248,7 @@
   {
     "Name": "Shellder",
     "Id": 90,
-    "Description": " ",
+    "Description": "Tihs is Shellder. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 300,
@@ -1262,7 +1262,7 @@
   {
     "Name": "Cloyster",
     "Id": 91,
-    "Description": " ",
+    "Description": "Tihs is Cloyster. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 500,
@@ -1276,7 +1276,7 @@
   {
     "Name": "Gastly",
     "Id": 92,
-    "Description": " ",
+    "Description": "Tihs is Gastly. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 300,
@@ -1290,7 +1290,7 @@
   {
     "Name": "Haunter",
     "Id": 93,
-    "Description": " ",
+    "Description": "Tihs is Haunter. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 450,
@@ -1304,7 +1304,7 @@
   {
     "Name": "Gengar",
     "Id": 94,
-    "Description": " ",
+    "Description": "Tihs is Gengar. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 600,
@@ -1318,7 +1318,7 @@
   {
     "Name": "Onix",
     "Id": 95,
-    "Description": " ",
+    "Description": "Tihs is Onix. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 350,
@@ -1332,7 +1332,7 @@
   {
     "Name": "Drowzee",
     "Id": 96,
-    "Description": " ",
+    "Description": "Tihs is Drowzee. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 600,
@@ -1346,7 +1346,7 @@
   {
     "Name": "Hypno",
     "Id": 97,
-    "Description": " ",
+    "Description": "Tihs is Hypno. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 850,
@@ -1360,7 +1360,7 @@
   {
     "Name": "Krabby",
     "Id": 98,
-    "Description": " ",
+    "Description": "Tihs is Krabby. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 300,
@@ -1374,7 +1374,7 @@
   {
     "Name": "Kingler",
     "Id": 99,
-    "Description": " ",
+    "Description": "Tihs is Kingler. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 550,
@@ -1388,7 +1388,7 @@
   {
     "Name": "Voltorb",
     "Id": 100,
-    "Description": " ",
+    "Description": "Tihs is Voltorb. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 400,
@@ -1402,7 +1402,7 @@
   {
     "Name": "Electrode",
     "Id": 101,
-    "Description": " ",
+    "Description": "Tihs is Electrode. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 600,
@@ -1416,7 +1416,7 @@
   {
     "Name": "Exeggcute",
     "Id": 102,
-    "Description": " ",
+    "Description": "Tihs is Exeggcute. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 600,
@@ -1430,7 +1430,7 @@
   {
     "Name": "Exeggutor",
     "Id": 103,
-    "Description": " ",
+    "Description": "Tihs is Exeggutor. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 950,
@@ -1444,7 +1444,7 @@
   {
     "Name": "Cubone",
     "Id": 104,
-    "Description": " ",
+    "Description": "Tihs is Cubone. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 500,
@@ -1458,7 +1458,7 @@
   {
     "Name": "Marowak",
     "Id": 105,
-    "Description": " ",
+    "Description": "Tihs is Marowak. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 600,
@@ -1472,7 +1472,7 @@
   {
     "Name": "Hitmonlee",
     "Id": 106,
-    "Description": " ",
+    "Description": "Tihs is Hitmonlee. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 500,
@@ -1486,7 +1486,7 @@
   {
     "Name": "Hitmonchan",
     "Id": 107,
-    "Description": " ",
+    "Description": "Tihs is Hitmonchan. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 500,
@@ -1500,7 +1500,7 @@
   {
     "Name": "Lickitung",
     "Id": 108,
-    "Description": " ",
+    "Description": "Tihs is Lickitung. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 900,
@@ -1514,7 +1514,7 @@
   {
     "Name": "Koffing",
     "Id": 109,
-    "Description": " ",
+    "Description": "Tihs is Koffing. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 400,
@@ -1528,7 +1528,7 @@
   {
     "Name": "Weezing",
     "Id": 110,
-    "Description": " ",
+    "Description": "Tihs is Weezing. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 650,
@@ -1542,7 +1542,7 @@
   {
     "Name": "Rhyhorn",
     "Id": 111,
-    "Description": " ",
+    "Description": "Tihs is Rhyhorn. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 800,
@@ -1556,7 +1556,7 @@
   {
     "Name": "Rhydon",
     "Id": 112,
-    "Description": " ",
+    "Description": "Tihs is Rhydon. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 1050,
@@ -1570,7 +1570,7 @@
   {
     "Name": "Chansey",
     "Id": 113,
-    "Description": " ",
+    "Description": "Tihs is Chansey. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 2500,
@@ -1584,7 +1584,7 @@
   {
     "Name": "Tangela",
     "Id": 114,
-    "Description": " ",
+    "Description": "Tihs is Tangela. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 650,
@@ -1598,7 +1598,7 @@
   {
     "Name": "Kangaskhan",
     "Id": 115,
-    "Description": " ",
+    "Description": "Tihs is Kangaskhan. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 1050,
@@ -1612,7 +1612,7 @@
   {
     "Name": "Horsea",
     "Id": 116,
-    "Description": " ",
+    "Description": "Tihs is Horsea. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 300,
@@ -1626,7 +1626,7 @@
   {
     "Name": "Seadra",
     "Id": 117,
-    "Description": " ",
+    "Description": "Tihs is Seadra. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 550,
@@ -1640,7 +1640,7 @@
   {
     "Name": "Goldeen",
     "Id": 118,
-    "Description": " ",
+    "Description": "Tihs is Goldeen. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 450,
@@ -1654,7 +1654,7 @@
   {
     "Name": "Seaking",
     "Id": 119,
-    "Description": " ",
+    "Description": "Tihs is Seaking. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 800,
@@ -1668,7 +1668,7 @@
   {
     "Name": "Staryu",
     "Id": 120,
-    "Description": " ",
+    "Description": "Tihs is Staryu. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 300,
@@ -1682,7 +1682,7 @@
   {
     "Name": "Starmie",
     "Id": 121,
-    "Description": " ",
+    "Description": "Tihs is Starmie. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 600,
@@ -1696,7 +1696,7 @@
   {
     "Name": "Mr. Mime",
     "Id": 122,
-    "Description": " ",
+    "Description": "Tihs is Mr. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 400,
@@ -1710,7 +1710,7 @@
   {
     "Name": "Scyther",
     "Id": 123,
-    "Description": " ",
+    "Description": "Tihs is Scyther. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 700,
@@ -1724,7 +1724,7 @@
   {
     "Name": "Jynx",
     "Id": 124,
-    "Description": " ",
+    "Description": "Tihs is Jynx. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 650,
@@ -1738,7 +1738,7 @@
   {
     "Name": "Electabuzz",
     "Id": 125,
-    "Description": " ",
+    "Description": "Tihs is Electabuzz. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 650,
@@ -1752,7 +1752,7 @@
   {
     "Name": "Magmar",
     "Id": 126,
-    "Description": " ",
+    "Description": "Tihs is Magmar. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 650,
@@ -1766,7 +1766,7 @@
   {
     "Name": "Pinsir",
     "Id": 127,
-    "Description": " ",
+    "Description": "Tihs is Pinsir. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 650,
@@ -1780,7 +1780,7 @@
   {
     "Name": "Tauros",
     "Id": 128,
-    "Description": " ",
+    "Description": "Tihs is Tauros. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 750,
@@ -1794,7 +1794,7 @@
   {
     "Name": "Magikarp",
     "Id": 129,
-    "Description": " ",
+    "Description": "Tihs is Magikarp. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 200,
@@ -1808,7 +1808,7 @@
   {
     "Name": "Gyarados",
     "Id": 130,
-    "Description": " ",
+    "Description": "Tihs is Gyarados. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 950,
@@ -1822,7 +1822,7 @@
   {
     "Name": "Lapras",
     "Id": 131,
-    "Description": " ",
+    "Description": "Tihs is Lapras. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 1300,
@@ -1836,7 +1836,7 @@
   {
     "Name": "Ditto",
     "Id": 132,
-    "Description": " ",
+    "Description": "Tihs is Ditto. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 480,
@@ -1850,7 +1850,7 @@
   {
     "Name": "Eevee",
     "Id": 133,
-    "Description": " ",
+    "Description": "Tihs is Eevee. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 550,
@@ -1864,7 +1864,7 @@
   {
     "Name": "Vaporeon",
     "Id": 134,
-    "Description": " ",
+    "Description": "Tihs is Vaporeon. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 1300,
@@ -1878,7 +1878,7 @@
   {
     "Name": "Jolteon",
     "Id": 135,
-    "Description": " ",
+    "Description": "Tihs is Jolteon. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 650,
@@ -1892,7 +1892,7 @@
   {
     "Name": "Flareon",
     "Id": 136,
-    "Description": " ",
+    "Description": "Tihs is Flareon. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 650,
@@ -1906,7 +1906,7 @@
   {
     "Name": "Porygon",
     "Id": 137,
-    "Description": " ",
+    "Description": "Tihs is Porygon. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 650,
@@ -1920,7 +1920,7 @@
   {
     "Name": "Omanyte",
     "Id": 138,
-    "Description": " ",
+    "Description": "Tihs is Omanyte. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 350,
@@ -1934,7 +1934,7 @@
   {
     "Name": "Omastar",
     "Id": 139,
-    "Description": " ",
+    "Description": "Tihs is Omastar. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 700,
@@ -1948,7 +1948,7 @@
   {
     "Name": "Kabuto",
     "Id": 140,
-    "Description": " ",
+    "Description": "Tihs is Kabuto. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 300,
@@ -1962,7 +1962,7 @@
   {
     "Name": "Kabutops",
     "Id": 141,
-    "Description": " ",
+    "Description": "Tihs is Kabutops. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 600,
@@ -1976,7 +1976,7 @@
   {
     "Name": "Aerodactyl",
     "Id": 142,
-    "Description": " ",
+    "Description": "Tihs is Aerodactyl. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 800,
@@ -1990,7 +1990,7 @@
   {
     "Name": "Snorlax",
     "Id": 143,
-    "Description": " ",
+    "Description": "Tihs is Snorlax. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 1600,
@@ -2004,7 +2004,7 @@
   {
     "Name": "Articuno",
     "Id": 144,
-    "Description": "This is Extremely Rare Pokemon",
+    "Description": "Tihs is Articuno, which is Extremely Rare Pokemon. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 4000,
@@ -2018,7 +2018,7 @@
   {
     "Name": "Zapdos",
     "Id": 145,
-    "Description": "This is Extremely Rare Pokemon",
+    "Description": "Tihs is Zapdos, which is Extremely Rare Pokemon. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 4000,
@@ -2032,7 +2032,7 @@
   {
     "Name": "Moltres",
     "Id": 146,
-    "Description": "This is Extremely Rare Pokemon",
+    "Description": "Tihs is Moltres, which is Extremely Rare Pokemon. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 4000,
@@ -2046,7 +2046,7 @@
   {
     "Name": "Dratini",
     "Id": 147,
-    "Description": " ",
+    "Description": "Tihs is Dratini. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 410,
@@ -2060,7 +2060,7 @@
   {
     "Name": "Dragonair",
     "Id": 148,
-    "Description": " ",
+    "Description": "Tihs is Dragonair. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 610,
@@ -2074,7 +2074,7 @@
   {
     "Name": "Dragonite",
     "Id": 149,
-    "Description": " ",
+    "Description": "Tihs is Dragonite. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 910,
@@ -2088,7 +2088,7 @@
   {
     "Name": "Mewtwo",
     "Id": 150,
-    "Description": "This is Extremely Rare Pokemon",
+    "Description": "Tihs is Mewtwo, which is Extremely Rare Pokemon. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 6000,
@@ -2102,7 +2102,7 @@
   {
     "Name": "Mew",
     "Id": 151,
-    "Description": "This is Extremely Rare Pokemon",
+    "Description": "Tihs is Mew, which is Extremely Rare Pokemon. ",
     "Level": 1,
     "MaxLevel": 40,
     "MaxHealth": 4000,
