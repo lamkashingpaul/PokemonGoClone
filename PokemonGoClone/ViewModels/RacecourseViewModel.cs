@@ -168,7 +168,6 @@ namespace PokemonGoClone.ViewModels
             if (Ranking.Count == RacingPokemons.Count)
             {
                 RacingTimer.Stop();
-                BettingResult();
             }
 
             // Pokemon runs (gains health) with random speed
