@@ -135,6 +135,7 @@ namespace PokemonGoClone.ViewModels
                 _priceReceived = value;
                 OnPropertyChanged(nameof(PriceReceived));
             }
+        }
         public TrainerModel Player
         {
             get { return _player; }
