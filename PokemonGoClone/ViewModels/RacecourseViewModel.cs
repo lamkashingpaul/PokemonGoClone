@@ -200,7 +200,7 @@ namespace PokemonGoClone.ViewModels
 
             if (MainWindowViewModel.CurrentViewModel == this)
             {
-                DialogViewModel.PopUp($"${Choice.Name} is #{Choice.Id}. You win {(int)price} Stardust. ");
+                DialogViewModel.PopUp($"{Choice.Name} is #{Choice.Id}. You win {(int)price} Stardust. ");
             }
         }
         private void Cheer(object x)
