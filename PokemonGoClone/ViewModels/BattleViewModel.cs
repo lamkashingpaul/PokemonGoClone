@@ -296,7 +296,7 @@ namespace PokemonGoClone.ViewModels
                     ((GymViewModel)MainWindowViewModel.GymViewModel).UpdateOccupier(Player, PlayerPokemon);
                     result += "You are now occupying this gym. ";
                     PlayerPokemon.Health = PlayerPokemon.MaxHealth;
-                    ((MapViewModel)MainWindowViewModel.MapViewModel).GymTimerInit();
+                    ((MapViewModel)MainWindowViewModel.MapViewModel).GymTimer.Start();
                 }
 
                 // AI will train his pokrmon if he loses. His pokemon is trained and level up

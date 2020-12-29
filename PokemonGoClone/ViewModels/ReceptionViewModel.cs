@@ -20,7 +20,7 @@ namespace PokemonGoClone.ViewModels
         private Random _rng;
 
         private const int _numberOfRacer = 4;
-        private const int _refreshmentperiod = 600;
+        private const int _refreshmentperiod = 60;
 
         public ObservableCollection<PokemonModel> RacingPokemons { get; private set; }
         private ICommand _placeBetsCommand;
@@ -99,7 +99,7 @@ namespace PokemonGoClone.ViewModels
         }
         public bool RefreshmentIsEnable
         {
-            get { return SecondUntilRefreshment == 0; }
+            get { return SecondUntilRefreshment <= 0; }
         }
         public TrainerModel Player
         {
@@ -125,8 +125,9 @@ namespace PokemonGoClone.ViewModels
         private void RefreshmentTimerCount(object sender, EventArgs e)
         {
             SecondUntilRefreshment -= 1;
-            if (SecondUntilRefreshment == 0)
+            if (SecondUntilRefreshment <= 0)
             {
+                SecondUntilRefreshment = 0;
                 RefreshmentTimer.Stop();
             }
         }

@@ -177,10 +177,9 @@ namespace PokemonGoClone.ViewModels
         //factory Method
         public PokemonModel RandomPokemonMethod()
         {
-
             int x = Rng.Next(0, MainWindowViewModel.Pokemons.Count);
             int lucky = Rng.Next(0, 10000);
-            PokemonModel pokemon = MainWindowViewModel.Pokemons[x];
+            PokemonModel pokemon = (PokemonModel)MainWindowViewModel.Pokemons[x].Clone();
             if (((pokemon.Id >= 144 && pokemon.Id <= 146) || (pokemon.Id >= 150 && pokemon.Id <= 151)) && lucky == 8888)
             { //special Pokemon
                 pokemon.Accuracy = 1;

@@ -23,6 +23,10 @@ namespace PokemonGoClone.Models.Items
             Charge -= 1;
             double chance = Rng.NextDouble();
             double successChance = 1 - (opponentPokemon.Health / (double)opponentPokemon.MaxHealth) + CatchProbability;
+            if (Charge == 0)
+            {
+                player.DropItem(this);
+            }
             if (chance <= successChance)
             {
                 player.AddPokemon(opponentPokemon);

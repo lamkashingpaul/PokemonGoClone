@@ -83,7 +83,8 @@
                 <Button Content="Exit" FontSize="24" Command="{Binding CurrentViewModel.MainWindowViewModel.GoToMapViewModelCommand}"/>
             </StackPanel>
         </Border>
-
-
     </Grid>
+    <UserControl.InputBindings>
+        <KeyBinding Command="{Binding CurrentViewModel.DialogViewModel.CloseCommand}" Key="Esc"/>
+    </UserControl.InputBindings>
 </UserControl>

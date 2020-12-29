@@ -18,6 +18,10 @@ namespace PokemonGoClone.Models.Abilities
             opponent.TurnsUntilAction += turnOfSleep;
             return $"\"{opponentPokemon.Name}\" falls into sleep for additional {turnOfSleep} turn{(turnOfSleep > 1 ? "s" : "")}. ";
         }
+        public string Splash(TrainerModel player, TrainerModel opponent, PokemonModel playerPokemon, PokemonModel opponentPokemon)
+        {
+            return $"{playerPokemon.Name} jumped and did nothing. ";
+        }
 
         // All fields shared by Ability class
         private Random Rng = new Random();

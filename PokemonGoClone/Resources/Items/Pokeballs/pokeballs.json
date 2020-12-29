@@ -2,15 +2,15 @@
   {
     "Name": "Normal Ball",
     "Id": 1001,
-    "Description": "Pokemon that has 50% chance to catch pokemon successfully",
-    "CatchProbability": 0.5,
+    "Description": "Pokemon that has 20% chance to catch pokemon successfully",
+    "CatchProbability": 0.20,
     "Cost": 50
   },
   {
     "Name": "Great Ball",
     "Id": 1002,
-    "Description": "Pokemon that has 75% chance to catch pokemon successfully",
-    "CatchProbability": 0.75,
+    "Description": "Pokemon that has 50% chance to catch pokemon successfully",
+    "CatchProbability": 0.5,
     "Cost": 100
   },
   {

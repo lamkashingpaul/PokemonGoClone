@@ -217,7 +217,7 @@ namespace PokemonGoClone.ViewModels
             }
             else
             {
-                DialogViewModel.PopUp($"You sold ${Pokemon.Name} for ${Pokemon.PowerUpCost} Candy. ");
+                DialogViewModel.PopUp($"You sold {Pokemon.Name} for {Pokemon.PowerUpCost} Candy. ");
                 Player.Candy += Pokemon.PowerUpCost;
                 Player.DropPokemon(Pokemon);
                 MainWindowViewModel.GoToBagViewModel(null);

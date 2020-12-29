@@ -66,7 +66,8 @@ namespace PokemonGoClone.ViewModels
             }
             else
             {
-                // Nothing happens
+                DialogViewModel.DefaultDelegates();
+                DialogViewModel.IsVisible = false;
             }
         }
 
@@ -192,8 +193,8 @@ namespace PokemonGoClone.ViewModels
             DialogViewModel = (DialogViewModel)MainWindowViewModel.DialogViewModel;
             MailBox = new ObservableCollection<string>();
             Rng = new Random();
-            GymTimer = new DispatcherTimer();
-            SpawnTimer = new DispatcherTimer();
+            GymTimer = null;
+            SpawnTimer = null;
         }
 
         // Game initialization for new game
@@ -248,9 +249,27 @@ namespace PokemonGoClone.ViewModels
             ((ReceptionViewModel)MainWindowViewModel.ReceptionViewModel).UpdatePlayer(Player);
 
             //Initialize the timers
-            GymTimerInit();
-            SpawnTimerInit();
-            ((ReceptionViewModel)MainWindowViewModel.ReceptionViewModel).RefreshmentTimerInit();
+            if (GymTimer != null)
+            {
+                GymTimer.Start();
+            } else
+            {
+                GymTimerInit();
+            }
+            if (SpawnTimer != null)
+            {
+                SpawnTimer.Start();
+            } else
+            {
+                SpawnTimerInit();
+            }
+            if (((ReceptionViewModel)MainWindowViewModel.ReceptionViewModel).RefreshmentTimer != null)
+            {
+                ((ReceptionViewModel)MainWindowViewModel.ReceptionViewModel).RefreshmentTimer.Start();
+            } else
+            {
+                ((ReceptionViewModel)MainWindowViewModel.ReceptionViewModel).RefreshmentTimerInit();
+            }
 
             // Add more NPC trainers
             LoadReception();
@@ -290,9 +309,30 @@ namespace PokemonGoClone.ViewModels
             ((ReceptionViewModel)MainWindowViewModel.ReceptionViewModel).UpdatePlayer(Player);
 
             //Initialize the timers
-            GymTimerInit();
-            SpawnTimerInit();
-            ((ReceptionViewModel)MainWindowViewModel.ReceptionViewModel).RefreshmentTimerInit();
+            if (GymTimer != null)
+            {
+                GymTimer.Start();
+            }
+            else
+            {
+                GymTimerInit();
+            }
+            if (SpawnTimer != null)
+            {
+                SpawnTimer.Start();
+            }
+            else
+            {
+                SpawnTimerInit();
+            }
+            if (((ReceptionViewModel)MainWindowViewModel.ReceptionViewModel).RefreshmentTimer != null)
+            {
+                ((ReceptionViewModel)MainWindowViewModel.ReceptionViewModel).RefreshmentTimer.Start();
+            }
+            else
+            {
+                ((ReceptionViewModel)MainWindowViewModel.ReceptionViewModel).RefreshmentTimerInit();
+            }
 
             // Create CompositeCollection from view binding
             Grid = new CompositeCollection
@@ -481,38 +521,35 @@ namespace PokemonGoClone.ViewModels
 
         public void GymTimerInit()
         {
-            if (((GymViewModel)MainWindowViewModel.GymViewModel).CurrentOccupier == Player)
-            {
-                int time = Rng.Next(300, 600);
-                GymTimer.Interval = new TimeSpan(0, 0, time);
-                GymTimer.Tick += GymTimerCount;
-                GymTimer.Start();
-            }
-            else
-            {
-                // do nothing
-            }
+            int time = 10;
+            GymTimer = new DispatcherTimer();
+            GymTimer.Interval = new TimeSpan(0, 0, time);
+            GymTimer.Tick += GymTimerCount;
+            GymTimer.Start();
         }
 
         public void GymTimerCount(object sender, EventArgs e)
         {
-            GymTimer.Stop();
-            if (MainWindowViewModel.CurrentViewModel != MainWindowViewModel.BattleViewModel &&
-                MainWindowViewModel.CurrentViewModel != MainWindowViewModel.RacecourseViewModel)
+             if (((GymViewModel)MainWindowViewModel.GymViewModel).CurrentOccupier == Player)
             {
-                DialogViewModel.PopUp("Someone challanges you! Do you want to accept? ", NotAccept, EnterBattle);
-            }
-            else
-            {
-                // Player is busy and cannot accept challenge, gym drops and the message is cached
-                ((GymViewModel)MainWindowViewModel.GymViewModel).UpdateTrainers(Trainers);
-                MailBox.Add("Your gym dropped. ");
+                if (MainWindowViewModel.CurrentViewModel != MainWindowViewModel.BattleViewModel &&
+                    MainWindowViewModel.CurrentViewModel != MainWindowViewModel.RacecourseViewModel)
+                {
+                    DialogViewModel.PopUp("Someone challanges you! Do you want to accept? ", NotAccept, EnterBattle);
+                }
+                else
+                {
+                    // Player is busy and cannot accept challenge, gym drops and the message is cached
+                    ((GymViewModel)MainWindowViewModel.GymViewModel).UpdateTrainers(Trainers);
+                    MailBox.Add("Your gym dropped. ");
+                }
             }
         }
 
         public void SpawnTimerInit()
         {
             int spawnTimer = Rng.Next(30, 60);
+            SpawnTimer = new DispatcherTimer();
             SpawnTimer.Interval = new TimeSpan(0, 0, spawnTimer);
             SpawnTimer.Tick += SpawnTimerCount;
             SpawnTimer.Start();

@@ -57,4 +57,7 @@
             </TextBlock>
         </DockPanel>
     </Grid>
+    <UserControl.InputBindings>
+        <KeyBinding Command="{Binding CurrentViewModel.DialogViewModel.CloseCommand}" Key="Esc"/>
+    </UserControl.InputBindings>
 </UserControl>
