@@ -194,6 +194,7 @@ namespace PokemonGoClone.ViewModels
                 return;
             }
 
+            Player.Stardust -= bets;
             ((RacecourseViewModel)MainWindowViewModel.RacecourseViewModel).StartRace(RacingPokemons, pokemonModel, bets, Player);
             MainWindowViewModel.GoToRacecourseViewModel(null);
         }
