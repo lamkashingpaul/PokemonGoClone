@@ -42,5 +42,71 @@
     "HealPerLevel": 10,
     "MaxCharge": 99,
     "Accuracy": 0.2,
+  },
+  {
+    "Name": "Double Slap",
+    "Id": 5,
+    "Description": "A basic ability to hit a Pokemon",
+    "Damage": 20,
+    "DamagePerLevel": 1,
+    "Heal": 0,
+    "HealPerLevel": 0,
+    "MaxCharge": 30,
+    "Accuracy": 0.9
+  },
+  {
+    "Name": "Body Slam",
+    "Id": 6,
+    "Description": "Use the Body to hit the Pokemon",
+    "Damage": 40,
+    "DamagePerLevel": 0,
+    "Heal": 0,
+    "HealPerLevel": 0,
+    "MaxCharge": 10,
+    "Accuracy": 0.8
+  },
+  {
+    "Name": "Hyper Beam",
+    "Id": 7,
+    "Description": "An extremely powerful ability",
+    "Damage": 100,
+    "DamagePerLevel": 0,
+    "Heal": 0,
+    "HealPerLevel": 0,
+    "MaxCharge": 5,
+    "Accuracy": 0.95
+  },
+  {
+    "Name": "Swift",
+    "Id": 8,
+    "Description": "Using a start to hit the Pokemon",
+    "Damage": 20,
+    "DamagePerLevel": 0,
+    "Heal": 0,
+    "HealPerLevel": 0,
+    "MaxCharge": 10,
+    "Accuracy": 1
+  },
+  {
+    "Name": "Splash",
+    "Id": 9,
+    "Description": "The Pokemon just jump, and doing nothing",
+    "Damage": 0,
+    "DamagePerLevel": 0,
+    "Heal": 0,
+    "HealPerLevel": 0,
+    "MaxCharge": 100,
+    "Accuracy": 1
+  },
+  {
+    "Name": "Slash",
+    "Id": 10,
+    "Description": "Hit the weakness of the Pokemon",
+    "Damage": 50,
+    "DamagePerLevel": 0,
+    "Heal": 0,
+    "HealPerLevel": 0,
+    "MaxCharge": 40,
+    "Accuracy": 0.7
   }
 ]
