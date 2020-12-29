@@ -26,6 +26,7 @@ namespace PokemonGoClone.ViewModels
         private DialogViewModel _dialogViewModel;
         private DispatcherTimer _racingTimer;
         private TrainerModel _player;
+        private bool _priceReceived;
         private Random _rng;
 
         private const int _costPerCheer = 500;
@@ -126,6 +127,14 @@ namespace PokemonGoClone.ViewModels
                 OnPropertyChanged(nameof(Bets));
             }
         }
+        public bool PriceReceived
+        {
+            get { return _priceReceived; }
+            set
+            {
+                _priceReceived = value;
+                OnPropertyChanged(nameof(PriceReceived));
+            }
         public TrainerModel Player
         {
             get { return _player; }
@@ -142,6 +151,7 @@ namespace PokemonGoClone.ViewModels
             Choice = choice;
             Bets = bets;
             Player = player;
+            PriceReceived = false;
             RacingTimerStart();
         }
         private void RacingTimerStart()
@@ -173,7 +183,7 @@ namespace PokemonGoClone.ViewModels
             }
 
             // Check if player's choice finishes the race
-            if (Ranking.Contains(Choice))
+            if (Ranking.Contains(Choice) && PriceReceived == false)
             {
                 BettingResult();
             }
@@ -197,6 +207,7 @@ namespace PokemonGoClone.ViewModels
                 price = Bets * 0;
             }
             Player.Stardust += (int)price;
+            PriceReceived = true;
 
             if (MainWindowViewModel.CurrentViewModel == this)
             {
