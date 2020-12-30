@@ -252,21 +252,24 @@ namespace PokemonGoClone.ViewModels
             if (GymTimer != null)
             {
                 GymTimer.Start();
-            } else
+            }
+            else
             {
                 GymTimerInit();
             }
             if (SpawnTimer != null)
             {
                 SpawnTimer.Start();
-            } else
+            }
+            else
             {
                 SpawnTimerInit();
             }
             if (((ReceptionViewModel)MainWindowViewModel.ReceptionViewModel).RefreshmentTimer != null)
             {
                 ((ReceptionViewModel)MainWindowViewModel.ReceptionViewModel).RefreshmentTimer.Start();
-            } else
+            }
+            else
             {
                 ((ReceptionViewModel)MainWindowViewModel.ReceptionViewModel).RefreshmentTimerInit();
             }
@@ -530,7 +533,7 @@ namespace PokemonGoClone.ViewModels
 
         public void GymTimerCount(object sender, EventArgs e)
         {
-             if (((GymViewModel)MainWindowViewModel.GymViewModel).CurrentOccupier == Player)
+            if (((GymViewModel)MainWindowViewModel.GymViewModel).CurrentOccupier == Player)
             {
                 if (MainWindowViewModel.CurrentViewModel != MainWindowViewModel.BattleViewModel &&
                     MainWindowViewModel.CurrentViewModel != MainWindowViewModel.RacecourseViewModel)

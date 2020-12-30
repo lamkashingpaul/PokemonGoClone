@@ -148,7 +148,7 @@ namespace PokemonGoClone.ViewModels
                 } while (RacingPokemons.Where(x => x.Id == randomPokemonId).FirstOrDefault() != null);
                 RacingPokemons.Add((PokemonModel)MainWindowViewModel.Pokemons.Where(x => x.Id == randomPokemonId).FirstOrDefault().Clone());
             }
-            foreach(var pokemon in RacingPokemons)
+            foreach (var pokemon in RacingPokemons)
             {
                 pokemon.Health = 0;
                 pokemon.Id = 0;

@@ -171,7 +171,7 @@ namespace PokemonGoClone.ViewModels
             }
 
             // Pokemon runs (gains health) with random speed
-            foreach(var pokemon in RacingPokemons)
+            foreach (var pokemon in RacingPokemons)
             {
                 pokemon.Health += Rng.Next(pokemon.MaxHealth);
 
@@ -194,7 +194,8 @@ namespace PokemonGoClone.ViewModels
             if (Choice.Id == 1)
             {
                 price = Bets * 1.5;
-            } else if (Choice.Id == 2)
+            }
+            else if (Choice.Id == 2)
             {
                 price = Bets * 1.25;
             }
