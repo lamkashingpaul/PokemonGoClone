@@ -2,6 +2,7 @@
 using PokemonGoClone.Models.Trainers;
 using PokemonGoClone.ViewModels;
 using System;
+using System.Linq;
 using System.Reflection;
 
 namespace PokemonGoClone.Models.Abilities
@@ -12,6 +13,7 @@ namespace PokemonGoClone.Models.Abilities
     {
         // Defintion of all speical effects
         // Method name of special effect must be same as Name of abitlity
+        // In case of non-alphanumeric character, such as space inside the name, remove them
         public string Sleep(TrainerModel player, TrainerModel opponent, PokemonModel playerPokemon, PokemonModel opponentPokemon)
         {
             int turnOfSleep = Rng.Next(1, 5);
@@ -90,7 +92,8 @@ namespace PokemonGoClone.Models.Abilities
                 }
 
                 // This ability has speical effect
-                MethodInfo specialEffect = GetType().GetMethod(Name);
+                var nameOfSpeicalEffectMethod = new String(Name.Where(Char.IsLetter).ToArray());
+                MethodInfo specialEffect = GetType().GetMethod(nameOfSpeicalEffectMethod);
                 if (specialEffect != null)
                 {
                     result += specialEffect.Invoke(this, new object[] { player, opponent, playerPokemon, opponentPokemon });

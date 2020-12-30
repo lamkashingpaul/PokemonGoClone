@@ -1,6 +1,8 @@
 
 # PokemonGoClone
-This is a program for the project of course IERG3080. This document is used to illustrate how to play the game. Report for the project should be referred to [here](PokemonGoClone/Report/Report.docx)
+This is a submission for the project of course IERG3080. This document is used to illustrate how to play the game only. Report for the project shall be referred to [Report.docx](PokemonGoClone/Report/Report.docx) or [Report.pdf](PokemonGoClone/Report/Report.pdf).
+
+ - Original repo and latest release shall be referred to [here](https://github.com/lamkashingpaul/PokemonGoClone).
 
 # Game Control
 The game is mainly controlled using mouse and keyboard. Key bindings for different views are listed.
@@ -21,20 +23,21 @@ The game is mainly controlled using mouse and keyboard. Key bindings for differe
      - <kbd>Q</kbd> : Go to shop
      - <kbd>B</kbd> : Open your bag
      - <kbd>M</kbd> : Show menu
+
 # Game play Demo
-- TrainerCreationView
+- Trainer Creation
     -
-    ![alt text](PokemonGoClone/Report/TrainerCreationView.gif?raw=true)
-- Bag and Item Views
+    ![TrainerCreationView](PokemonGoClone/Report/TrainerCreationView.gif?raw=true)
+- Bag and Item
     -
-    ![alt text](PokemonGoClone/Report/BagAndItemViews.gif?raw=true)
-- ShopView
+    ![BagAndItemViews](PokemonGoClone/Report/BagAndItemViews.gif?raw=true)
+- Shop
     -
-    ![alt text](PokemonGoClone/Report/ShopView.gif?raw=true)
-- Battle (v.s. NPC)
+    ![ShopView](PokemonGoClone/Report/ShopView.gif?raw=true)
+- Battle an NPC
     -
-    ![alt text](PokemonGoClone/Report/BattleView.gif?raw=true)
-- Catching Wild Pokemon
+    ![BattleView](PokemonGoClone/Report/BattleView.gif?raw=true)
+- Catch Wild Pokemon
     -
     ![alt text](PokemonGoClone/Report/CatchPokemon.gif?raw=true)
 - Gym Battle
